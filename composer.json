@@ -1,0 +1,17 @@
+{
+    "name": "stroker/stroker-form",
+    "type": "directory",
+    "version": "dev-master",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4",
+        "dlu/dlutwbootstrap": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "StrokerForm": "src/",
+            "StrokerFormSandbox": "src/",
+            "StrokerFormTest": "tests/"
+        }
+    }
+}
