@@ -49,16 +49,15 @@ class Renderer extends AbstractValidateRenderer
 		$inlineScript = $view->plugin('inlineScript');
 		$inlineScript->appendScript($this->getInlineJavascript($form));
 
-		$assetBaseUri = $this->getHttpRouter()->assemble(array(), array('name' => 'strokerform-asset'));
-
-		if ($this->getOptions()->getIncludeAssets())
+		if ($this->getOptions()->isIncludeAssets())
 		{
-			$inlineScript->appendFile($assetBaseUri . '/js/jqueryvalidate/jquery.validate.js');
-			$inlineScript->appendFile($assetBaseUri . '/js/jqueryvalidate/jquery.validate.bootstrap.js');
+			$assetBaseUri = $this->getHttpRouter()->assemble(array(), array('name' => 'strokerform-asset'));
+			$inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.js');
+			if ($this->getOptions()->isUseTwitterBootstrap() === true)
+			{
+				$inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.bootstrap.js');
+			}
 		}
-
-		$headLink = $view->plugin('headLink');
-		//$headLink->appendStylesheet($assetBaseUri . '/css/styles.css');
 	}
 
 	/**
@@ -87,6 +86,10 @@ class Renderer extends AbstractValidateRenderer
 	 */
 	protected function addValidationAttributesForElement($formAlias, ElementInterface $element, ValidatorInterface $validator = null)
 	{
+		if ($element instanceof \Zend\Form\Element\Email && $validator instanceof \Zend\Validator\Regex)
+		{
+			$validator = new \Zend\Validator\EmailAddress();
+		}
 		if (in_array($this->getValidatorClassName($validator), $this->skipValidators))
 		{
 			return;

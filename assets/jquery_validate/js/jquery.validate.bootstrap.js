@@ -1,6 +1,5 @@
 $.extend($.validator.prototype, {
     showLabel: function(element, message) {
-        console.log('show label');
         var label = this.errorsFor( element );
 
         if (label.length == 0) {

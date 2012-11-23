@@ -11,9 +11,7 @@
 
 namespace StrokerForm\Renderer\JqueryValidate;
 
-use Zend\Stdlib\AbstractOptions;
-
-class Options extends AbstractOptions
+class Options extends \StrokerForm\Renderer\Options
 {
 	/**
 	 * @var array
@@ -23,7 +21,7 @@ class Options extends AbstractOptions
 	/**
 	 * @var bool
 	 */
-	private $includeAssets = true;
+	private $useTwitterBootstrap = true;
 
 	/**
 	 * @return array
@@ -45,27 +43,26 @@ class Options extends AbstractOptions
 	}
 
 	/**
-	 * @param $key
-	 * @param $value
+	 * @param string $options
 	 */
-	public function addValidateOption($key, $value)
+	public function addValidateOption($option)
 	{
-		$this->validateOptions[$key] = $value;
+		$this->validateOptions[] = $option;
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function getIncludeAssets()
+	public function isUseTwitterBootstrap()
 	{
-		return $this->includeAssets;
+		return $this->useTwitterBootstrap;
 	}
 
 	/**
-	 * @param bool $includeAssets
+	 * @param bool $useTwitterBootstrap
 	 */
-	public function setIncludeAssets($includeAssets)
+	public function setUseTwitterBootstrap($useTwitterBootstrap)
 	{
-		$this->includeAssets = $includeAssets;
+		$this->useTwitterBootstrap = $useTwitterBootstrap;
 	}
 }

@@ -233,7 +233,7 @@ $.extend($.validator, {
 		},
 		onclick: function(element, event) {
 			// click on selects, radiobuttons and checkboxes
-			if ( element.name in this.submitted ) {
+			if ( element.name in this.submitted  || element.type=='radio' || element.type=='checkbox') {
 				this.element(element);
 			}
 			// or option elements, check parent select in that case
