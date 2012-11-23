@@ -10,10 +10,10 @@
         "zend framework 2",
         "module"
     ],
-    "homepage": "https://bitbucket.org/dlu/dlutwbootstrap",
     "authors": [
         {
-            "name": "Bram Gerritsen"
+            "name": "Bram Gerritsen",
+            "email": "bgerritsen@gmail.com"
         }
     ],
     "version": "dev-master",
