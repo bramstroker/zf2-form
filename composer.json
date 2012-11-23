@@ -1,6 +1,7 @@
 {
     "name": "stroker/form",
     "description": "ZF2 module for extending forms with live clientside validation",
+    "type": "library",
     "license": "New-BSD-License",
     "keywords": [
         "jquery validate",
