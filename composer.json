@@ -27,6 +27,9 @@
         "psr-0": {
             "StrokerForm": "src/",
             "StrokerFormTest": "tests/"
-        }
+        },
+        "classmap": [
+            "./Module.php"
+        ]
     }
 }

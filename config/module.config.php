@@ -1,11 +1,6 @@
 <?php
 return array(
 	'stroker_form' => array(
-		'forms' => array(
-			'factories' => array(
-				'test' => 'StrokerForm\Service\TestFormFactory',
-			)
-		),
 		'activeRenderers' => array(
 			'stroker_form.renderer.jqueryvalidate',
 		),
@@ -15,7 +10,7 @@ return array(
 				'include_assets' => true,
 				'use_twitter_bootstrap' => true,
 				'validateOptions' => array(
-					'onsubmit : false',
+					//'onsubmit : false',
 					'onkeyup : false',
 				)
 			)
