@@ -3,6 +3,8 @@
 ZF2 module for extending forms with live clientside validation without need to write js validation code.
 For basic usage examples see the sandbox project [StrokerFormSandbox](https://github.com/bramstroker/zf2-form-sandbox).
 
+[![Build Status](https://travis-ci.org/bramstroker/zf2-form.png?branch=master)](https://travis-ci.org/bramstroker/zf2-form)
+
 ## Installation
 
 Installation of StrokerCache uses composer. For composer documentation, please refer to
