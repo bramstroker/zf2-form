@@ -15,7 +15,7 @@ Installation of StrokerCache uses composer. For composer documentation, please r
      ```json
      {
          "require": {
-             "stroker/cache": "*"
+             "stroker/form": "*"
          }
      }
      ```
@@ -24,7 +24,7 @@ Installation of StrokerCache uses composer. For composer documentation, please r
   4. open `my/project/directory/configs/application.config.php` and add the following key to your `modules`:
 
      ```php
-     'StrokerCache',
+     'StrokerForm',
      ```
   5. copy the assets to your public folder (my/project/directory/public).
 
