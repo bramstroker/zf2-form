@@ -12,11 +12,12 @@ namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
 class StringLength extends AbstractRule
 {
-	/**
-	 * Get the validation rules
-	 *
-	 * @return array
-	 */
+    /**
+     * Get the validation rules
+     *
+     * @param \Zend\Validator\ValidatorInterface $validator
+     * @return array
+     */
 	public function getRules(\Zend\Validator\ValidatorInterface $validator)
 	{
 		$rules = array();
@@ -31,11 +32,12 @@ class StringLength extends AbstractRule
 		return $rules;
 	}
 
-	/**
-	 * Get the validation message
-	 *
-	 * @return string
-	 */
+    /**
+     * Get the validation message
+     *
+     * @param \Zend\Validator\ValidatorInterface $validator
+     * @return string
+     */
 	public function getMessages(\Zend\Validator\ValidatorInterface $validator)
 	{
 		$messages = array();
