@@ -21,10 +21,10 @@ interface RendererInterface
 	/**
 	 * Excecuted before the ZF2 view helper renders the element
 	 *
-	 * @param Form $form
+	 * @param string $formAlias
 	 * @param View $view
 	 */
-	public function preRenderForm(FormInterface $form, $formAlias, View $view);
+	public function preRenderForm($formAlias, View $view);
 
 	/**
 	 * Excecuted before the ZF2 view helper renders the element

@@ -20,13 +20,14 @@ class RendererFactory implements FactoryInterface
 	 * Create service
 	 *
 	 * @param ServiceLocatorInterface $serviceLocator
-	 * @return RendererInterface
+	 * @return \StrokerForm\Renderer\RendererInterface
 	 */
 	public function createService(ServiceLocatorInterface $serviceLocator)
 	{
 		/** @var $options \StrokerForm\Options\ModuleOptions */
 		$options = $serviceLocator->get('StrokerForm\Options\ModuleOptions');
-		$rendererCollection = new RendererCollection();
+        $formManager = $serviceLocator->get('StrokerForm\FormManager');
+		$rendererCollection = new RendererCollection($formManager);
 		foreach($options->getActiveRenderers() as $rendererAlias)
 		{
 			/** @var $renderer \StrokerForm\Renderer\RendererInterface */

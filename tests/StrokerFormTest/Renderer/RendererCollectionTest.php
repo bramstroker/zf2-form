@@ -22,7 +22,7 @@ class RendererCollectionTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->rendererCollection = new RendererCollection();
+		$this->rendererCollection = new RendererCollection($this->getMock('StrokerForm\FormManager'));
 		for ($i = 0; $i < 3; $i++)
 		{
 			$renderer = $this->getMock('StrokerForm\Renderer\RendererInterface');
@@ -37,7 +37,6 @@ class RendererCollectionTest extends \PHPUnit_Framework_TestCase
 
 	public function testPreRenderFormIsCalledOnInnerRenderers()
 	{
-		$formMock = $this->getMock('Zend\Form\Form');
 		$formAlias = 'testAlias';
 		$viewMock = $this->getMock('Zend\View\Renderer\PhpRenderer');
 
@@ -46,10 +45,10 @@ class RendererCollectionTest extends \PHPUnit_Framework_TestCase
 		{
 			$renderer->expects($this->once())
 			         ->method('preRenderForm')
-			         ->with($this->equalTo($formMock), $formAlias, $this->equalTo($viewMock));
+			         ->with($formAlias, $this->equalTo($viewMock));
 		}
 
-		$this->rendererCollection->preRenderForm($formMock, $formAlias, $viewMock);
+		$this->rendererCollection->preRenderForm($formAlias, $viewMock);
 	}
 
 	public function testPreRenderInputFieldIsCalledOnInnerRenderers()

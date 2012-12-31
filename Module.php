@@ -48,7 +48,7 @@ class Module implements
 		return array(
 			'factories' => array(
 				'StrokerForm\Options\ModuleOptions' => 'StrokerForm\Service\ModuleOptionsFactory',
-				'StrokerForm\FormPluginManager' => 'StrokerForm\Service\FormPluginManagerFactory',
+				'StrokerForm\FormManager' => 'StrokerForm\Service\FormManagerFactory',
 				'stroker_form.renderer' => 'StrokerForm\Service\RendererFactory',
 				'forminput' => 'StrokerForm\Service\FormInputFactory',
 			),

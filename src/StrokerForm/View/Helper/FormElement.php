@@ -22,7 +22,7 @@ class FormElement extends \Zend\Form\View\Helper\FormElement
 	private $renderer;
 
 	/**
-	 * @param RendererInterface $jsValidator
+	 * @param RendererInterface $renderer
 	 */
 	public function __construct(RendererInterface $renderer)
 	{

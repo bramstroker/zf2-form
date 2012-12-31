@@ -42,10 +42,11 @@ class Renderer extends AbstractValidateRenderer
 	 * @param ElementInterface $element
 	 * @return mixed
 	 */
-	public function preRenderForm(FormInterface $form, $formAlias, View $view)
+	public function preRenderForm($formAlias, View $view)
 	{
-		parent::preRenderForm($form, $formAlias, $view);
+		parent::preRenderForm($formAlias, $view);
 
+        $form = $this->getFormManager()->get($formAlias);
 		$inlineScript = $view->plugin('inlineScript');
 		$inlineScript->appendScript($this->getInlineJavascript($form));
 

@@ -40,18 +40,18 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 	 */
 	private $translatorMock;
 
+    /**
+     * @var \Mockery\MockInterface
+     */
+    private $formManager;
+
 	/**
 	 * Setup
 	 */
 	public function setUp()
 	{
-		$this->renderer = new Renderer();
-
-		/*$this->inlineScriptMock = \Mockery::mock('Zend\View\Helper\InlineScript');
-		$this->viewMock = \Mockery::mock('Zend\View\Renderer\PhpRenderer')
-			->shouldReceive('plugin')
-			->with('inlineScript')
-			->andReturn()*/
+        $this->formManager = \Mockery::mock('StrokerForm\FormManager');
+		$this->renderer = new Renderer($this->formManager);
 
 		$this->view = new \Zend\View\Renderer\PhpRenderer();
 
@@ -73,7 +73,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return \Zend\Form\FormInterface
 	 */
-	protected function createForm()
+	protected function createForm($alias)
 	{
 		$factory = new Factory();
 		$form = $factory->createForm(array(
@@ -104,6 +104,13 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 				),
 			)
 		));
+
+        // Register form to the form manager
+        $this->formManager
+            ->shouldReceive('get')
+            ->with($alias)
+            ->andReturn($form);
+
 		return $form;
 	}
 
@@ -112,7 +119,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testCorrectRulesAreAdded()
 	{
-		$form = $this->createForm();
+		$form = $this->createForm('test');
 
 		$inputFilter = new \Zend\InputFilter\InputFilter();
 		$inputFilter->add(array(
@@ -131,7 +138,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
 		$form->setInputFilter($inputFilter);
 
-		$this->renderer->preRenderForm($form, 'test', $this->view);
+		$this->renderer->preRenderForm('test', $this->view);
 
 		$matches = $this->getMatchesFromInlineScript();
 
@@ -152,7 +159,8 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testNoRulesAddedWhenNoInputfilterIsSet()
 	{
-		$this->renderer->preRenderForm($this->createForm(), 'test', $this->view);
+        $this->createForm('test');
+		$this->renderer->preRenderForm('test', $this->view);
 		$matches = $this->getMatchesFromInlineScript();
 		$rules = json_decode($matches['rules']);
 		$this->assertEmpty($rules);
@@ -163,10 +171,11 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testExtraValidateOptionsCouldBeSet()
 	{
+        $this->createForm('test');
 		$this->rendererOptions->setValidateOptions(array(
 			'onsubmit: false'
 		));
-		$this->renderer->preRenderForm($this->createForm(), 'test', $this->view);
+		$this->renderer->preRenderForm('test', $this->view);
 		$matches = $this->getMatchesFromInlineScript();
 		$this->assertContains('onsubmit: false', $matches['validate_options']);
 	}
@@ -176,7 +185,8 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testJavascriptAssetsAreIncludedToInlineScript()
 	{
-		$this->renderer->preRenderForm($this->createForm(), 'test', $this->view);
+        $this->createForm('test');
+		$this->renderer->preRenderForm('test', $this->view);
 
 		/** @var $inlineScript \Zend\View\Helper\InlineScript */
 		$inlineScript = $this->view->plugin('inlineScript');
@@ -206,4 +216,12 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 		preg_match('/\$\(\'\#(?P<form>.*)\'\)\.validate\((?P<validate_options>.*)rules:(?P<rules>.*),messages:(?P<messages>.*),}\);.*/', $inlineString, $matches);
 		return $matches;
 	}
+
+    /**
+     * @return \Mockery\MockInterface
+     */
+    public function getFormManager()
+    {
+        return $this->formManager;
+    }
 }

@@ -53,7 +53,7 @@ class AjaxControllerTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->setFormManager(new \StrokerForm\FormPluginManager());
+		$this->setFormManager(new \StrokerForm\FormManager());
 		$this->controller = new AjaxController($this->getFormManager());
 		$this->request    = new Request();
 		$this->response   = new Response();
@@ -192,7 +192,7 @@ class AjaxControllerTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @return \StrokerForm\FormPluginManager
+	 * @return \StrokerForm\FormManager
 	 */
 	public function getFormManager()
 	{
@@ -200,9 +200,9 @@ class AjaxControllerTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @param \StrokerForm\FormPluginManager $formManager
+	 * @param \StrokerForm\FormManager $formManager
 	 */
-	public function setFormManager(\StrokerForm\FormPluginManager $formManager)
+	public function setFormManager(\StrokerForm\FormManager $formManager)
 	{
 		$this->formManager = $formManager;
 	}

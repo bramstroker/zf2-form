@@ -22,7 +22,7 @@ class FormPrepare extends AbstractHelper
 	private $renderer;
 
 	/**
-	 * @param RendererInterface $jsValidator
+	 * @param RendererInterface $renderer
 	 */
 	public function __construct(RendererInterface $renderer)
 	{
@@ -30,10 +30,10 @@ class FormPrepare extends AbstractHelper
 	}
 
 	/**
-	 * @param Form $form
+	 * @param string $formAlias
 	 */
-	public function __invoke($form, $formAlias)
+	public function __invoke($formAlias)
 	{
-		$this->renderer->preRenderForm($form, $formAlias, $this->getView());
+		$this->renderer->preRenderForm($formAlias, $this->getView());
 	}
 }

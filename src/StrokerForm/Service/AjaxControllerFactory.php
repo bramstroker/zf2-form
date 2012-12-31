@@ -25,7 +25,7 @@ class AjaxControllerFactory implements FactoryInterface
 	public function createService(ServiceLocatorInterface $serviceLocator)
 	{
 		$locator = $serviceLocator->getServiceLocator();
-		$formManager = $locator->get('StrokerForm\FormPluginManager');
+		$formManager = $locator->get('StrokerForm\FormManager');
 		$controller = new AjaxController($formManager);
 		return $controller;
 	}

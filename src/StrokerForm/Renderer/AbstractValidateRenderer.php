@@ -24,8 +24,9 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
 	 * @param ElementInterface $element
 	 * @return mixed
 	 */
-	public function preRenderForm(FormInterface $form, $formAlias, View $view)
+	public function preRenderForm($formAlias, View $view)
 	{
+        $form = $this->getFormManager()->get($formAlias);
 		$inputFilter = $form->getInputFilter();
 		foreach ($form->getElements() as $element)
 		{

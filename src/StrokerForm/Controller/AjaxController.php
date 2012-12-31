@@ -10,21 +10,21 @@
 
 namespace StrokerForm\Controller;
 
-use StrokerForm\FormPluginManager;
+use StrokerForm\FormManager;
 
 class AjaxController extends \Zend\Mvc\Controller\AbstractActionController
 {
 	/**
-	 * @var FormPluginManager
+	 * @var FormManager
 	 */
 	protected $formManager;
 
 	/**
 	 * Default constructor
 	 *
-	 * @param ModuleOptions $options
+	 * @param FormManager $formManager
 	 */
-	public function __construct(FormPluginManager $formManager)
+	public function __construct(FormManager $formManager)
 	{
 		$this->setFormManager($formManager);
 	}
@@ -77,7 +77,7 @@ class AjaxController extends \Zend\Mvc\Controller\AbstractActionController
 	}
 
 	/**
-	 * @return \StrokerForm\FormPluginManager
+	 * @return \StrokerForm\FormManager
 	 */
 	public function getFormManager()
 	{
@@ -85,7 +85,7 @@ class AjaxController extends \Zend\Mvc\Controller\AbstractActionController
 	}
 
 	/**
-	 * @param \StrokerForm\FormPluginManager $formManager
+	 * @param \StrokerForm\FormManager $formManager
 	 */
 	public function setFormManager($formManager)
 	{

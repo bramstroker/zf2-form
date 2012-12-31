@@ -11,6 +11,7 @@
 namespace StrokerForm\Renderer;
 
 use Zend\I18n\Translator\TranslatorAwareInterface;
+use Zend\I18n\Translator\Translator;
 use Zend\Stdlib\AbstractOptions;
 
 abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInterface
@@ -46,6 +47,16 @@ abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInt
 	 */
 	protected $options = array();
 
+    /**
+     * @var \StrokerForm\FormManager
+     */
+    protected $formManager;
+
+    public function __construct(\StrokerForm\FormManager $formManager)
+    {
+        $this->formManager = $formManager;
+    }
+
 	/**
 	 * Sets translator to use in helper
 	 *
@@ -55,7 +66,7 @@ abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInt
 	 *                                 Default is null, which skips setTranslatorTextDomain
 	 * @return AbstractTranslatorHelper
 	 */
-	public function setTranslator(\Zend\I18n\Translator\Translator $translator = null, $textDomain = null)
+	public function setTranslator(Translator $translator = null, $textDomain = null)
 	{
 		$this->translator = $translator;
 		if (null !== $textDomain)
@@ -166,4 +177,20 @@ abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInt
 	{
 		$this->options = $options;
 	}
+
+    /**
+     * @return \StrokerForm\FormManager
+     */
+    public function getFormManager()
+    {
+        return $this->formManager;
+    }
+
+    /**
+     * @param \StrokerForm\FormManager $formManager
+     */
+    public function setFormManager($formManager)
+    {
+        $this->formManager = $formManager;
+    }
 }

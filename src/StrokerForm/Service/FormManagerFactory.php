@@ -10,10 +10,10 @@
 
 namespace StrokerForm\Service;
 
-use StrokerForm\FormPluginManager;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use StrokerForm\FormManager;
 
-class FormPluginManagerFactory implements \Zend\ServiceManager\FactoryInterface
+class FormManagerFactory implements \Zend\ServiceManager\FactoryInterface
 {
 	/**
 	 * Create service
@@ -25,6 +25,6 @@ class FormPluginManagerFactory implements \Zend\ServiceManager\FactoryInterface
 	{
 		/** @var $moduleOptions \StrokerForm\Options\ModuleOptions  */
 		$moduleOptions = $serviceLocator->get('StrokerForm\Options\ModuleOptions');
-		return new FormPluginManager($moduleOptions->getForms());
+		return new FormManager($moduleOptions->getForms());
 	}
 }

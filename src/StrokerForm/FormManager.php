@@ -13,7 +13,7 @@ namespace StrokerForm;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\Form\FormInterface;
 
-class FormPluginManager extends AbstractPluginManager
+class FormManager extends AbstractPluginManager
 {
 	/**
 	 * Validate the plugin
