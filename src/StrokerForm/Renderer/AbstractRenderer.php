@@ -52,11 +52,6 @@ abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInt
      */
     protected $formManager;
 
-    public function __construct(\StrokerForm\FormManager $formManager)
-    {
-        $this->formManager = $formManager;
-    }
-
 	/**
 	 * Sets translator to use in helper
 	 *

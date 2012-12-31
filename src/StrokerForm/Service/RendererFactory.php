@@ -26,13 +26,13 @@ class RendererFactory implements FactoryInterface
 	{
 		/** @var $options \StrokerForm\Options\ModuleOptions */
 		$options = $serviceLocator->get('StrokerForm\Options\ModuleOptions');
-        $formManager = $serviceLocator->get('StrokerForm\FormManager');
-		$rendererCollection = new RendererCollection($formManager);
+		$rendererCollection = new RendererCollection();
 		foreach($options->getActiveRenderers() as $rendererAlias)
 		{
 			/** @var $renderer \StrokerForm\Renderer\RendererInterface */
 			$renderer = $serviceLocator->get($rendererAlias);
 			$renderer->setOptions($options->getRendererOptions($rendererAlias));
+            $renderer->setFormManager($serviceLocator->get('StrokerForm\FormManager'));
 			if ($serviceLocator->has('translator'))
 			{
 				$renderer->setTranslator($serviceLocator->get('translator'));

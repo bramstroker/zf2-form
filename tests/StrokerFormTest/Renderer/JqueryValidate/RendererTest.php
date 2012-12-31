@@ -51,8 +51,8 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 	public function setUp()
 	{
         $this->formManager = \Mockery::mock('StrokerForm\FormManager');
-		$this->renderer = new Renderer($this->formManager);
-
+		$this->renderer = new Renderer();
+        $this->renderer->setFormManager($this->formManager);
 		$this->view = new \Zend\View\Renderer\PhpRenderer();
 
 		$this->routerMock = \Mockery::mock('Zend\Mvc\Router\SimpleRouteStack')
