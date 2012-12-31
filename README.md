@@ -1,6 +1,8 @@
 # StrokerForm
 
-ZF2 module for extending forms with live clientside validation without need to write js validation code.
+ZF2 module for extending forms with live clientside validation without need to write js validation code. 
+You only need to define your validation rules server side with ZF2 and this module automaticaly adds the same rules with [jQueryValidate](http://docs.jquery.com/Plugins/Validation). 
+In case a client side version of the validation rule doesn't exist a fallback is done using ajax.
 For basic usage examples see the sandbox project [StrokerFormSandbox](https://github.com/bramstroker/zf2-form-sandbox).
 
 [![Build Status](https://travis-ci.org/bramstroker/zf2-form.png?branch=master)](https://travis-ci.org/bramstroker/zf2-form)
@@ -34,16 +36,18 @@ Installation of StrokerCache uses composer. For composer documentation, please r
 
 First we need to make sure jquery is loaded by our application and the headScript() and inlineScript() view helpers are called. If you already have this in place you can skip this step.
 
-  <head>
-    <?php echo $this->headLink() ?>
-  	<?php echo $this->headScript()->prependFile('//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js') ?>
-  </head>
-  <body>
-  <div class="container">
-  	<?php echo $this->content; ?>
-  </div>
-  <?php echo $this->inlineScript() ?>
-  </body>
+```html
+<head>
+  <?php echo $this->headLink() ?>
+	<?php echo $this->headScript()->prependFile('//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js') ?>
+</head>
+<body>
+<div class="container">
+	<?php echo $this->content; ?>
+</div>
+<?php echo $this->inlineScript() ?>
+</body>
+```
 
 For the ajax validation to work inputfilters needs to be hooked to the form.
 We need to create a serviceFactory and register it with a unique alias to the formManager (this is an pluginManager).
@@ -90,3 +94,7 @@ This view helper add all the needed javascripts to the headScript view helper
 echo $this->strokerFormPrepare('my_form_alias');
 
 // Do your normal form rendering here
+
+## Renderers
+
+TODO
