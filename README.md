@@ -9,7 +9,7 @@ For basic usage examples see the sandbox project [StrokerFormSandbox](https://gi
 
 ## Installation
 
-Installation of StrokerCache uses composer. For composer documentation, please refer to
+Installation of StrokerForm uses composer. For composer documentation, please refer to
 [getcomposer.org](http://getcomposer.org/).
 
   1. `cd my/project/directory`
@@ -94,6 +94,7 @@ This view helper add all the needed javascripts to the headScript view helper
 echo $this->strokerFormPrepare('my_form_alias');
 
 // Do your normal form rendering here
+```
 
 ## Renderers
 
