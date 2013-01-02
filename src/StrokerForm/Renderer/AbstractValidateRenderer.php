@@ -18,13 +18,14 @@ use Zend\Form\Form;
 
 abstract class AbstractValidateRenderer extends AbstractRenderer
 {
-	/**
-	 * Excecuted before the ZF2 view helper renders the element
-	 *
-	 * @param ElementInterface $element
-	 * @return mixed
-	 */
-	public function preRenderForm($formAlias, View $view)
+    /**
+     * Excecuted before the ZF2 view helper renders the element
+     *
+     * @param string $formAlias
+     * @param \Zend\View\Renderer\PhpRenderer $view
+     * @param \Zend\Form\FormInterface $form
+     */
+	public function preRenderForm($formAlias, View $view, FormInterface $form = null)
 	{
         $form = $this->getFormManager()->get($formAlias);
 		$inputFilter = $form->getInputFilter();

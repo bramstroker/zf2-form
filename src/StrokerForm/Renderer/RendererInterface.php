@@ -18,13 +18,14 @@ use Zend\View\Renderer\PhpRenderer as View;
 
 interface RendererInterface
 {
-	/**
-	 * Excecuted before the ZF2 view helper renders the element
-	 *
-	 * @param string $formAlias
-	 * @param View $view
-	 */
-	public function preRenderForm($formAlias, View $view);
+    /**
+     * Excecuted before the ZF2 view helper renders the element
+     *
+     * @param string $formAlias
+     * @param View $view
+     * @param \Zend\Form\FormInterface $form
+     */
+	public function preRenderForm($formAlias, View $view, FormInterface $form = null);
 
 	/**
 	 * Excecuted before the ZF2 view helper renders the element

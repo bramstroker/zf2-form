@@ -36,17 +36,21 @@ class Renderer extends AbstractValidateRenderer
 		'Explode'
 	);
 
-	/**
-	 * Executed before the ZF2 view helper renders the element
-	 *
-	 * @param ElementInterface $element
-	 * @return mixed
-	 */
-	public function preRenderForm($formAlias, View $view)
+    /**
+     * Executed before the ZF2 view helper renders the element
+     *
+     * @param string $formAlias
+     * @param \Zend\View\Renderer\PhpRenderer $view
+     * @param \Zend\Form\FormInterface $form
+     */
+	public function preRenderForm($formAlias, View $view, FormInterface $form = null)
 	{
-		parent::preRenderForm($formAlias, $view);
+        if ($form === null) {
+            $form = $this->getFormManager()->get($formAlias);
+        }
 
-        $form = $this->getFormManager()->get($formAlias);
+		parent::preRenderForm($formAlias, $view, $form);
+
 		$inlineScript = $view->plugin('inlineScript');
 		$inlineScript->appendScript($this->getInlineJavascript($form));
 

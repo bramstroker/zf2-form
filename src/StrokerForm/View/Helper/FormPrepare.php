@@ -11,6 +11,7 @@
 namespace StrokerForm\View\Helper;
 
 use Zend\Form\View\Helper\AbstractHelper;
+use Zend\Form\FormInterface;
 use StrokerForm\Renderer\RendererInterface;
 use Zend\Form\Form;
 
@@ -29,10 +30,11 @@ class FormPrepare extends AbstractHelper
 		$this->renderer = $renderer;
 	}
 
-	/**
-	 * @param string $formAlias
-	 */
-	public function __invoke($formAlias)
+    /**
+     * @param string $formAlias
+     * @param \Zend\Form\FormInterface $form
+     */
+	public function __invoke($formAlias, FormInterface $form = null)
 	{
 		$this->renderer->preRenderForm($formAlias, $this->getView());
 	}

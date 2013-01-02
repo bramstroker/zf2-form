@@ -11,6 +11,7 @@
 namespace StrokerForm\Renderer;
 
 use Zend\Form\ElementInterface;
+use Zend\Form\FormInterface;
 use Zend\View\Renderer\PhpRenderer as View;
 use Zend\Form\Form;
 
@@ -56,13 +57,14 @@ class RendererCollection extends AbstractRenderer
      *
      * @param string $formAlias
      * @param \Zend\View\Renderer\PhpRenderer $view
+     * @param \Zend\Form\FormInterface $form
      * @return mixed
      */
-	function preRenderForm($formAlias, View $view)
+	public function preRenderForm($formAlias, View $view, FormInterface $form = null)
 	{
 		foreach($this->getRenderers() as $renderer)
 		{
-			$renderer->preRenderForm($formAlias, $view);
+			$renderer->preRenderForm($formAlias, $view, $form);
 		}
 	}
 
@@ -72,7 +74,7 @@ class RendererCollection extends AbstractRenderer
 	 * @param ElementInterface $element
 	 * @return mixed
 	 */
-	function preRenderInputField(ElementInterface $element)
+	public function preRenderInputField(ElementInterface $element)
 	{
 		foreach ($this->getRenderers() as $renderer)
 		{
