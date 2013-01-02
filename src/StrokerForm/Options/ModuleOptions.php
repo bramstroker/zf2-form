@@ -13,7 +13,7 @@ namespace StrokerForm\Options;
 use Zend\Stdlib\AbstractOptions;
 use Zend\ServiceManager\ConfigInterface;
 use Zend\ServiceManager\Config;
-use StrokerForm\Options\RendererOptions;
+use \InvalidArgumentException;
 
 class ModuleOptions extends AbstractOptions
 {
@@ -49,29 +49,29 @@ class ModuleOptions extends AbstractOptions
 	}
 
 	/**
-	 * @return array
+	 * @return Config
+     * @throws InvalidArgumentException
 	 */
 	public function getForms()
 	{
+        if (is_array($this->forms))
+        {
+            $this->forms = new Config($this->forms);
+        }
+
+        if (!$this->forms instanceof ConfigInterface)
+        {
+            throw new InvalidArgumentException('Plugins argument must be an array or instanceof Zend\ServiceManager\ConfigInterface');
+        }
+
 		return $this->forms;
 	}
 
 	/**
 	 * @param array $forms
-	 * @throws InvalidArgumentException
 	 */
 	public function setForms($forms)
 	{
-		if (is_array($forms))
-		{
-			$forms = new Config($forms);
-		}
-
-		if (!$forms instanceof ConfigInterface)
-		{
-			throw new InvalidArgumentException('Plugins argument must be an array or instanceof Zend\ServiceManager\ConfigInterface');
-		}
-
 		$this->forms = $forms;
 	}
 
@@ -81,16 +81,17 @@ class ModuleOptions extends AbstractOptions
 	public function setRendererOptions(array $options)
 	{
 		$this->rendererOptions = array();
-		foreach($options as $renderer => $options)
+		foreach($options as $renderer => $rendererOptions)
 		{
-			$this->addRendererOptions($renderer, $options);
+			$this->addRendererOptions($renderer, $rendererOptions);
 		}
 	}
 
-	/**
-	 * @param $renderer
-	 * @param $options
-	 */
+    /**
+     * @param string $renderer
+     * @param array $options
+     * @throws \InvalidArgumentException
+     */
 	public function addRendererOptions($renderer, $options)
 	{
 		if (!is_array($options))
@@ -117,21 +118,5 @@ class ModuleOptions extends AbstractOptions
 	public function getRendererOptions($renderer)
 	{
 		return $this->rendererOptions[$renderer];
-	}
-
-	/**
-	 * @return \StrokerForm\Renderer\JqueryValidate\Options
-	 */
-	public function getJqueryValidateOptions()
-	{
-		return $this->jqueryValidateOptions;
-	}
-
-	/**
-	 * @param array $jqueryValidateOptions
-	 */
-	public function setJqueryValidateOptions(array $jqueryValidateOptions)
-	{
-		$this->jqueryValidateOptions = new \StrokerForm\Renderer\JqueryValidate\Options($jqueryValidateOptions);
 	}
 }
