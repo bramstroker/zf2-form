@@ -98,4 +98,18 @@ echo $this->strokerFormPrepare('my_form_alias');
 
 ## Renderers
 
-TODO
+A renderer should implement the RendererInterface and is responsible for modifying the form rendering (setting inline javascript, modifying the form element attributes, view helpers etc.). 
+Currently only the jqueryValidate renderer is available. Support for other validation libraries can be implemented as a seperate renderer. 
+
+### JqueryValidate
+
+#### Options
+
+- `include_assets`: Whether you want the view helper to include the needed assets or you like to do it yourself using a asset manager
+- `use_twitter_bootstrap`: Set this to true if you are using twitter bootstrap. 
+- `validate_options`: Options for the jquery validate plugin. See (jqueryValidate options)[docs.jquery.com/Plugins/Validation/validate#toptions] for all possible options. i.e. if you also want to validate on keypress you can set onkeyup to true. 
+
+#### Styling
+
+If you are using twitter bootstrap and the recommended form structure the styling works out of the box. 
+When you are using the ZF2 view helpers for your form you could style the input fields `error` and `valid` classes which are added on the fly by the jquery plugin.
