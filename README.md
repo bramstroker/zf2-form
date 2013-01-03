@@ -107,7 +107,7 @@ Currently only the jqueryValidate renderer is available. Support for other valid
 
 - `include_assets`: Whether you want the view helper to include the needed assets or you like to do it yourself using a asset manager
 - `use_twitter_bootstrap`: Set this to true if you are using twitter bootstrap. 
-- `validate_options`: Options for the jquery validate plugin. See (jqueryValidate options)[docs.jquery.com/Plugins/Validation/validate#toptions] for all possible options. i.e. if you also want to validate on keypress you can set onkeyup to true. 
+- `validate_options`: Options for the jquery validate plugin. See [jqueryValidate options](docs.jquery.com/Plugins/Validation/validate#toptions) for all possible options. i.e. if you also want to validate on keypress you can set onkeyup to true. 
 
 #### Styling
 
