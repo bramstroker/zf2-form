@@ -27,7 +27,11 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
      */
 	public function preRenderForm($formAlias, View $view, FormInterface $form = null)
 	{
-        $form = $this->getFormManager()->get($formAlias);
+		if ($form === null)
+		{
+			$form = $this->getFormManager()->get($formAlias);
+		}
+		
 		$inputFilter = $form->getInputFilter();
 		foreach ($form->getElements() as $element)
 		{
