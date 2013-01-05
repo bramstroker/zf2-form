@@ -36,6 +36,6 @@ class FormPrepare extends AbstractHelper
      */
 	public function __invoke($formAlias, FormInterface $form = null)
 	{
-		$this->renderer->preRenderForm($formAlias, $this->getView());
+		$this->renderer->preRenderForm($formAlias, $this->getView(), $form);
 	}
 }
