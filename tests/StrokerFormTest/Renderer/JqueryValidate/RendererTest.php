@@ -218,7 +218,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         /** @var $inlineScript \Zend\View\Helper\InlineScript */
         $inlineScript = $this->view->plugin('inlineScript');
         $inlineString = preg_replace('/(\r\n|\r|\n|\t)+/', '', $inlineScript->toString());
-        preg_match('/\$\(\'\#(?P<form>.*)\'\)\.validate\((?P<validate_options>.*)rules:(?P<rules>.*),messages:(?P<messages>.*),}\);.*/', $inlineString, $matches);
+        preg_match('/\$\(\'\#(?P<form>.*)\'\)\.validate\((?P<validate_options>.*)rules:(?P<rules>.*), +messages:(?P<messages>.*),.*}\); +/', $inlineString, $matches);
 
         return $matches;
     }
