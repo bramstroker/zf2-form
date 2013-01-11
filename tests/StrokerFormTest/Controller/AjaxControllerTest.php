@@ -18,192 +18,192 @@ use Zend\Http\Request;
 
 class AjaxControllerTest extends \PHPUnit_Framework_TestCase
 {
-	/**
-	 * @var AbstractController
-	 */
-	protected $controller;
+    /**
+     * @var AbstractController
+     */
+    protected $controller;
 
-	/**
-	 * @var RequestInterface
-	 */
-	protected $request;
+    /**
+     * @var RequestInterface
+     */
+    protected $request;
 
-	/**
-	 * @var ResponseInterface
-	 */
-	protected $response;
+    /**
+     * @var ResponseInterface
+     */
+    protected $response;
 
-	/**
-	 * @var RouteMatch
-	 */
-	protected $routeMatch;
+    /**
+     * @var RouteMatch
+     */
+    protected $routeMatch;
 
-	/**
-	 * @var MvcEvent
-	 */
-	protected $event;
+    /**
+     * @var MvcEvent
+     */
+    protected $event;
 
-	/**
-	 * @var ServiceManager
-	 */
-	protected $formManager;
+    /**
+     * @var ServiceManager
+     */
+    protected $formManager;
 
-	/**
-	 * Setup
-	 */
-	public function setUp()
-	{
-		$this->setFormManager(new \StrokerForm\FormManager());
-		$this->controller = new AjaxController($this->getFormManager());
-		$this->request    = new Request();
-		$this->response   = new Response();
+    /**
+     * Setup
+     */
+    public function setUp()
+    {
+        $this->setFormManager(new \StrokerForm\FormManager());
+        $this->controller = new AjaxController($this->getFormManager());
+        $this->request    = new Request();
+        $this->response   = new Response();
 
-		$controllerName = strtolower(str_replace('Controller', '', get_class($this->controller)));
-		$this->routeMatch = new RouteMatch(array('controller' => $controllerName));
-		$this->event      = new MvcEvent();
-		$this->event->setRouteMatch($this->routeMatch);
-		$this->controller->setEvent($this->event);
-	}
+        $controllerName = strtolower(str_replace('Controller', '', get_class($this->controller)));
+        $this->routeMatch = new RouteMatch(array('controller' => $controllerName));
+        $this->event      = new MvcEvent();
+        $this->event->setRouteMatch($this->routeMatch);
+        $this->controller->setEvent($this->event);
+    }
 
-	/**
-	 * testExceptionWhenNoPostDataIsProvided
-	 *
-	 * @expectedException \InvalidArgumentException
-	 */
-	public function testExceptionWhenNoPostDataIsProvided()
-	{
-		$this->dispatchAction('validate');
-	}
+    /**
+     * testExceptionWhenNoPostDataIsProvided
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testExceptionWhenNoPostDataIsProvided()
+    {
+        $this->dispatchAction('validate');
+    }
 
-	/**
-	 * @param string $actionName
-	 * @return mixed|\Zend\Stdlib\ResponseInterface
-	 */
-	protected function dispatchAction($actionName)
-	{
-		$this->getRouteMatch()->setParam('action', $actionName);
-		return $this->getController()->dispatch($this->getRequest(), $this->getResponse());
-	}
+    /**
+     * @param  string                               $actionName
+     * @return mixed|\Zend\Stdlib\ResponseInterface
+     */
+    protected function dispatchAction($actionName)
+    {
+        $this->getRouteMatch()->setParam('action', $actionName);
 
-	/**
-	 * Assert response code matches given responseCode
-	 *
-	 * @param int $responseCode
-	 */
-	protected function assertResponseCode($responseCode)
-	{
-		$this->assertEquals($responseCode, $this->getResponse()->getStatusCode());
-	}
+        return $this->getController()->dispatch($this->getRequest(), $this->getResponse());
+    }
 
-	/**
-	 * Assert certain header is found
-	 *
-	 * @param string $expectedValue
-	 * @param string $headerType
-	 */
-	protected function assertHeader($expectedValue, $headerType)
-	{
-		$header = $this->getResponse()->getHeaders()->get($headerType);
-		if ($header === false)
-		{
-			$this->fail('No ' . $headerType . ' header found');
-		}
-		$this->assertEquals($expectedValue, $header->getFieldValue());
-	}
+    /**
+     * Assert response code matches given responseCode
+     *
+     * @param int $responseCode
+     */
+    protected function assertResponseCode($responseCode)
+    {
+        $this->assertEquals($responseCode, $this->getResponse()->getStatusCode());
+    }
 
-	/**
-	 * @return \Zend\Mvc\Controller\AbstractController
-	 */
-	public function getController()
-	{
-		return $this->controller;
-	}
+    /**
+     * Assert certain header is found
+     *
+     * @param string $expectedValue
+     * @param string $headerType
+     */
+    protected function assertHeader($expectedValue, $headerType)
+    {
+        $header = $this->getResponse()->getHeaders()->get($headerType);
+        if ($header === false) {
+            $this->fail('No ' . $headerType . ' header found');
+        }
+        $this->assertEquals($expectedValue, $header->getFieldValue());
+    }
 
-	/**
-	 * @param \Zend\Mvc\Controller\AbstractController $controller
-	 */
-	public function setController($controller)
-	{
-		$this->controller = $controller;
-	}
+    /**
+     * @return \Zend\Mvc\Controller\AbstractController
+     */
+    public function getController()
+    {
+        return $this->controller;
+    }
 
-	/**
-	 * @return RequestInterface
-	 */
-	public function getRequest()
-	{
-		return $this->request;
-	}
+    /**
+     * @param \Zend\Mvc\Controller\AbstractController $controller
+     */
+    public function setController($controller)
+    {
+        $this->controller = $controller;
+    }
 
-	/**
-	 * @param RequestInterface $request
-	 */
-	public function setRequest($request)
-	{
-		$this->request = $request;
-	}
+    /**
+     * @return RequestInterface
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
 
-	/**
-	 * @return \Zend\Stdlib\ResponseInterface
-	 */
-	public function getResponse()
-	{
-		return $this->response;
-	}
+    /**
+     * @param RequestInterface $request
+     */
+    public function setRequest($request)
+    {
+        $this->request = $request;
+    }
 
-	/**
-	 * @param \Zend\Stdlib\ResponseInterface $response
-	 */
-	public function setResponse($response)
-	{
-		$this->response = $response;
-	}
+    /**
+     * @return \Zend\Stdlib\ResponseInterface
+     */
+    public function getResponse()
+    {
+        return $this->response;
+    }
 
-	/**
-	 * @return \Zend\Mvc\Router\RouteMatch
-	 */
-	public function getRouteMatch()
-	{
-		return $this->routeMatch;
-	}
+    /**
+     * @param \Zend\Stdlib\ResponseInterface $response
+     */
+    public function setResponse($response)
+    {
+        $this->response = $response;
+    }
 
-	/**
-	 * @param \Zend\Mvc\Router\RouteMatch $routeMatch
-	 */
-	public function setRouteMatch($routeMatch)
-	{
-		$this->routeMatch = $routeMatch;
-	}
+    /**
+     * @return \Zend\Mvc\Router\RouteMatch
+     */
+    public function getRouteMatch()
+    {
+        return $this->routeMatch;
+    }
 
-	/**
-	 * @return \Zend\Mvc\MvcEvent
-	 */
-	public function getEvent()
-	{
-		return $this->event;
-	}
+    /**
+     * @param \Zend\Mvc\Router\RouteMatch $routeMatch
+     */
+    public function setRouteMatch($routeMatch)
+    {
+        $this->routeMatch = $routeMatch;
+    }
 
-	/**
-	 * @param \Zend\Mvc\MvcEvent $event
-	 */
-	public function setEvent($event)
-	{
-		$this->event = $event;
-	}
+    /**
+     * @return \Zend\Mvc\MvcEvent
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
 
-	/**
-	 * @return \StrokerForm\FormManager
-	 */
-	public function getFormManager()
-	{
-		return $this->formManager;
-	}
+    /**
+     * @param \Zend\Mvc\MvcEvent $event
+     */
+    public function setEvent($event)
+    {
+        $this->event = $event;
+    }
 
-	/**
-	 * @param \StrokerForm\FormManager $formManager
-	 */
-	public function setFormManager(\StrokerForm\FormManager $formManager)
-	{
-		$this->formManager = $formManager;
-	}
+    /**
+     * @return \StrokerForm\FormManager
+     */
+    public function getFormManager()
+    {
+        return $this->formManager;
+    }
+
+    /**
+     * @param \StrokerForm\FormManager $formManager
+     */
+    public function setFormManager(\StrokerForm\FormManager $formManager)
+    {
+        $this->formManager = $formManager;
+    }
 }

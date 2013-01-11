@@ -16,29 +16,30 @@ use Zend\Form\Exception;
 
 class FormElement extends \Zend\Form\View\Helper\FormElement
 {
-	/**
-	 * @var RendererInterface
-	 */
-	private $renderer;
+    /**
+     * @var RendererInterface
+     */
+    private $renderer;
 
-	/**
-	 * @param RendererInterface $renderer
-	 */
-	public function __construct(RendererInterface $renderer)
-	{
-		$this->renderer = $renderer;
-	}
+    /**
+     * @param RendererInterface $renderer
+     */
+    public function __construct(RendererInterface $renderer)
+    {
+        $this->renderer = $renderer;
+    }
 
-	/**
-	 * Render a form <input> element from the provided $element
-	 *
-	 * @param  ElementInterface $element
-	 * @throws Exception\DomainException
-	 * @return string
-	 */
-	public function render(ElementInterface $element)
-	{
-		$this->renderer->preRenderInputField($element);
-		return parent::render($element);
-	}
+    /**
+     * Render a form <input> element from the provided $element
+     *
+     * @param  ElementInterface          $element
+     * @throws Exception\DomainException
+     * @return string
+     */
+    public function render(ElementInterface $element)
+    {
+        $this->renderer->preRenderInputField($element);
+
+        return parent::render($element);
+    }
 }

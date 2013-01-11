@@ -15,24 +15,24 @@ interface RuleInterface
     /**
      * Get the validation rules
      *
-     * @param \Zend\Validator\ValidatorInterface $validator
+     * @param  \Zend\Validator\ValidatorInterface $validator
      * @return array
      */
-	public function getRules(\Zend\Validator\ValidatorInterface $validator);
+    public function getRules(\Zend\Validator\ValidatorInterface $validator);
 
     /**
      * Get the validation message
      *
-     * @param \Zend\Validator\ValidatorInterface $validator
+     * @param  \Zend\Validator\ValidatorInterface $validator
      * @return string
      */
-	public function getMessages(\Zend\Validator\ValidatorInterface $validator);
+    public function getMessages(\Zend\Validator\ValidatorInterface $validator);
 
-	/**
-	 * Set the translator
-	 *
-	 * @param \Zend\I18n\Translator\Translator $translator
-	 * @return mixed
-	 */
-	public function setTranslator(\Zend\I18n\Translator\Translator $translator = null);
+    /**
+     * Set the translator
+     *
+     * @param  \Zend\I18n\Translator\Translator $translator
+     * @return mixed
+     */
+    public function setTranslator(\Zend\I18n\Translator\Translator $translator = null);
 }

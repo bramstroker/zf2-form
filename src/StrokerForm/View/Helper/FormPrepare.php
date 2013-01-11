@@ -17,25 +17,25 @@ use Zend\Form\Form;
 
 class FormPrepare extends AbstractHelper
 {
-	/**
-	 * @var RendererInterface
-	 */
-	private $renderer;
-
-	/**
-	 * @param RendererInterface $renderer
-	 */
-	public function __construct(RendererInterface $renderer)
-	{
-		$this->renderer = $renderer;
-	}
+    /**
+     * @var RendererInterface
+     */
+    private $renderer;
 
     /**
-     * @param string $formAlias
+     * @param RendererInterface $renderer
+     */
+    public function __construct(RendererInterface $renderer)
+    {
+        $this->renderer = $renderer;
+    }
+
+    /**
+     * @param string                   $formAlias
      * @param \Zend\Form\FormInterface $form
      */
-	public function __invoke($formAlias, FormInterface $form = null)
-	{
-		$this->renderer->preRenderForm($formAlias, $this->getView(), $form);
-	}
+    public function __invoke($formAlias, FormInterface $form = null)
+    {
+        $this->renderer->preRenderForm($formAlias, $this->getView(), $form);
+    }
 }

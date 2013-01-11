@@ -17,162 +17,163 @@ use StrokerForm\FormManager;
 
 abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInterface
 {
-	/**
-	 * @var \Zend\Mvc\Router\RouteInterface
-	 */
-	protected $httpRouter;
+    /**
+     * @var \Zend\Mvc\Router\RouteInterface
+     */
+    protected $httpRouter;
 
-	/**
-	 * Translator (optional)
-	 *
-	 * @var Translator
-	 */
-	protected $translator;
+    /**
+     * Translator (optional)
+     *
+     * @var Translator
+     */
+    protected $translator;
 
-	/**
-	 * Translator text domain (optional)
-	 *
-	 * @var string
-	 */
-	protected $translatorTextDomain = 'default';
+    /**
+     * Translator text domain (optional)
+     *
+     * @var string
+     */
+    protected $translatorTextDomain = 'default';
 
-	/**
-	 * Whether translator should be used
-	 *
-	 * @var bool
-	 */
-	protected $translatorEnabled = true;
+    /**
+     * Whether translator should be used
+     *
+     * @var bool
+     */
+    protected $translatorEnabled = true;
 
-	/**
-	 * @var AbstractOptions
-	 */
-	protected $options = array();
+    /**
+     * @var AbstractOptions
+     */
+    protected $options = array();
 
     /**
      * @var FormManager
      */
     protected $formManager;
 
-	/**
-	 * Sets translator to use in helper
-	 *
-	 * @param  Translator $translator  [optional] translator.
-	 *                                 Default is null, which sets no translator.
-	 * @param  string     $textDomain  [optional] text domain
-	 *                                 Default is null, which skips setTranslatorTextDomain
-	 * @return AbstractTranslatorHelper
-	 */
-	public function setTranslator(Translator $translator = null, $textDomain = null)
-	{
-		$this->translator = $translator;
-		if (null !== $textDomain)
-		{
-			$this->setTranslatorTextDomain($textDomain);
-		}
-		return $this;
-	}
+    /**
+     * Sets translator to use in helper
+     *
+     * @param Translator $translator [optional] translator.
+     *                                 Default is null, which sets no translator.
+     * @param string $textDomain [optional] text domain
+     *                                 Default is null, which skips setTranslatorTextDomain
+     * @return AbstractTranslatorHelper
+     */
+    public function setTranslator(Translator $translator = null, $textDomain = null)
+    {
+        $this->translator = $translator;
+        if (null !== $textDomain) {
+            $this->setTranslatorTextDomain($textDomain);
+        }
 
-	/**
-	 * Returns translator used in helper
-	 *
-	 * @return Translator|null
-	 */
-	public function getTranslator()
-	{
-		if (!$this->isTranslatorEnabled())
-		{
-			return null;
-		}
+        return $this;
+    }
 
-		return $this->translator;
-	}
+    /**
+     * Returns translator used in helper
+     *
+     * @return Translator|null
+     */
+    public function getTranslator()
+    {
+        if (!$this->isTranslatorEnabled()) {
+            return null;
+        }
 
-	/**
-	 * Checks if the helper has a translator
-	 *
-	 * @return bool
-	 */
-	public function hasTranslator()
-	{
-		return (bool) $this->getTranslator();
-	}
+        return $this->translator;
+    }
 
-	/**
-	 * Sets whether translator is enabled and should be used
-	 *
-	 * @param  bool $enabled [optional] whether translator should be used.
-	 *                       Default is true.
-	 * @return AbstractTranslatorHelper
-	 */
-	public function setTranslatorEnabled($enabled = true)
-	{
-		$this->translatorEnabled = (bool) $enabled;
-		return $this;
-	}
+    /**
+     * Checks if the helper has a translator
+     *
+     * @return bool
+     */
+    public function hasTranslator()
+    {
+        return (bool) $this->getTranslator();
+    }
 
-	/**
-	 * Returns whether translator is enabled and should be used
-	 *
-	 * @return bool
-	 */
-	public function isTranslatorEnabled()
-	{
-		return $this->translatorEnabled;
-	}
+    /**
+     * Sets whether translator is enabled and should be used
+     *
+     * @param bool $enabled [optional] whether translator should be used.
+     *                       Default is true.
+     * @return AbstractTranslatorHelper
+     */
+    public function setTranslatorEnabled($enabled = true)
+    {
+        $this->translatorEnabled = (bool) $enabled;
 
-	/**
-	 * Set translation text domain
-	 *
-	 * @param  string $textDomain
-	 * @return AbstractTranslatorHelper
-	 */
-	public function setTranslatorTextDomain($textDomain = 'default')
-	{
-		$this->translatorTextDomain = $textDomain;
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Return the translation text domain
-	 *
-	 * @return string
-	 */
-	public function getTranslatorTextDomain()
-	{
-		return $this->translatorTextDomain;
-	}
+    /**
+     * Returns whether translator is enabled and should be used
+     *
+     * @return bool
+     */
+    public function isTranslatorEnabled()
+    {
+        return $this->translatorEnabled;
+    }
 
-	/**
-	 * @return \Zend\Mvc\Router\RouteInterface
-	 */
-	public function getHttpRouter()
-	{
-		return $this->httpRouter;
-	}
+    /**
+     * Set translation text domain
+     *
+     * @param  string                   $textDomain
+     * @return AbstractTranslatorHelper
+     */
+    public function setTranslatorTextDomain($textDomain = 'default')
+    {
+        $this->translatorTextDomain = $textDomain;
 
-	/**
-	 * @param \Zend\Mvc\Router\RouteInterface $assetRoute
-	 */
-	public function setHttpRouter(\Zend\Mvc\Router\RouteInterface $httpRouter)
-	{
-		$this->httpRouter = $httpRouter;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return AbstractOptions
-	 */
-	public function getOptions()
-	{
-		return $this->options;
-	}
+    /**
+     * Return the translation text domain
+     *
+     * @return string
+     */
+    public function getTranslatorTextDomain()
+    {
+        return $this->translatorTextDomain;
+    }
 
-	/**
-	 * @param AbstractOptions $options
-	 */
-	public function setOptions(AbstractOptions $options = null)
-	{
-		$this->options = $options;
-	}
+    /**
+     * @return \Zend\Mvc\Router\RouteInterface
+     */
+    public function getHttpRouter()
+    {
+        return $this->httpRouter;
+    }
+
+    /**
+     * @param \Zend\Mvc\Router\RouteInterface $assetRoute
+     */
+    public function setHttpRouter(\Zend\Mvc\Router\RouteInterface $httpRouter)
+    {
+        $this->httpRouter = $httpRouter;
+    }
+
+    /**
+     * @return AbstractOptions
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * @param AbstractOptions $options
+     */
+    public function setOptions(AbstractOptions $options = null)
+    {
+        $this->options = $options;
+    }
 
     /**
      * @return FormManager

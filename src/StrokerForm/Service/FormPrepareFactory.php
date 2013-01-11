@@ -16,15 +16,16 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 class FormPrepareFactory implements FactoryInterface
 {
-	/**
-	 * Create service
-	 *
-	 * @param ServiceLocatorInterface $serviceLocator
-	 * @return mixed
-	 */
-	public function createService(ServiceLocatorInterface $serviceLocator)
-	{
-		$renderer = $serviceLocator->getServiceLocator()->get('stroker_form.renderer');
-		return new FormPrepare($renderer);
-	}
+    /**
+     * Create service
+     *
+     * @param  ServiceLocatorInterface $serviceLocator
+     * @return mixed
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $renderer = $serviceLocator->getServiceLocator()->get('stroker_form.renderer');
+
+        return new FormPrepare($renderer);
+    }
 }

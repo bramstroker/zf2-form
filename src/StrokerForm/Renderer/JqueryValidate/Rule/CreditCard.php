@@ -15,22 +15,22 @@ class CreditCard extends AbstractRule
     /**
      * Get the validation rules
      *
-     * @param \Zend\Validator\ValidatorInterface $validator
+     * @param  \Zend\Validator\ValidatorInterface $validator
      * @return array
      */
-	public function getRules(\Zend\Validator\ValidatorInterface $validator)
-	{
-		return array('creditcard' => true);
-	}
+    public function getRules(\Zend\Validator\ValidatorInterface $validator)
+    {
+        return array('creditcard' => true);
+    }
 
     /**
      * Get the validation message
      *
-     * @param \Zend\Validator\ValidatorInterface $validator
+     * @param  \Zend\Validator\ValidatorInterface $validator
      * @return string
      */
-	public function getMessages(\Zend\Validator\ValidatorInterface $validator)
-	{
-		return array('creditcard' => $this->translateMessage('The creditcard number is invalid'));
-	}
+    public function getMessages(\Zend\Validator\ValidatorInterface $validator)
+    {
+        return array('creditcard' => $this->translateMessage('The creditcard number is invalid'));
+    }
 }
