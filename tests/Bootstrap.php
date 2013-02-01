@@ -68,12 +68,12 @@ class Bootstrap
             AutoloaderFactory::factory(
                 array(
                     'Zend\Loader\ClassMapAutoloader' => array(array(
-                        'StrokerCache\Module' => __DIR__ . '/../Module.php',
+                        'StrokerForm\Module' => __DIR__ . '/../Module.php',
                     )),
                     'Zend\Loader\StandardAutoloader' => array(
                         'autoregister_zf' => true,
                         'namespaces' => array(
-                            'StrokerCache' => __DIR__ . '/../src/StrokerCache',
+                            'StrokerForm' => __DIR__ . '/../src/StrokerForm',
                             __NAMESPACE__ => __DIR__ . '/' . __NAMESPACE__,
                         ),
                     ),

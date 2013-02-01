@@ -28,12 +28,7 @@ class ModuleOptionsFactory implements FactoryInterface
         $options = isset($options['stroker_form']) ? $options['stroker_form'] : null;
 
         if (null === $options) {
-            throw new RuntimeException(
-                sprintf(
-                    'Configuration with name "%s" could not be found in "doctrine.configuration".',
-                    $this->name
-                )
-            );
+            throw new RuntimeException('Configuration with key stroker_form not found');
         }
 
         return new ModuleOptions($options);
