@@ -35,17 +35,6 @@ interface RendererInterface
     public function preRenderInputField(ElementInterface $element);
 
     /**
-     * Sets translator to use in helper
-     *
-     * @param Translator $translator [optional] translator.
-     *                                 Default is null, which sets no translator.
-     * @param string $textDomain [optional] text domain
-     *                                 Default is null, which skips setTranslatorTextDomain
-     * @return AbstractTranslatorHelper
-     */
-    public function setTranslator(\Zend\I18n\Translator\Translator $translator = null, $textDomain = null);
-
-    /**
      * Set the route to use for serving assets
      *
      * @param  \Zend\Mvc\Router\RouteInterface $route
