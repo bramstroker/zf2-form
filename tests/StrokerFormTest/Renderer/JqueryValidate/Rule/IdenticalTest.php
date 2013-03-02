@@ -59,7 +59,7 @@ class IdenticalTest extends AbstractRuleTest
      */
     public function testToken()
     {
-        $this->assertEquals(array('equalTo' => '[name="' . $this->token . '"]'));
+        $this->assertEquals(array('equalTo' => '[name="' . $this->token . '"]'), $this->getRules());
         $this->assertArrayHasKey('equalTo', $this->getMessages());
     }
 }
