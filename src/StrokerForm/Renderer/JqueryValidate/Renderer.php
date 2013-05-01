@@ -81,8 +81,8 @@ class Renderer extends AbstractValidateRenderer
 
         return sprintf($options->getInitializeTrigger(), '
         $(\'form[name="' . $form->getName() . '"]\').validate({' . $validateOptions . '
-        rules: ' . \Zend\Json\Json::encode($this->rules) . ',
-        messages: ' . \Zend\Json\Json::encode($this->messages) . '
+        "rules": ' . \Zend\Json\Json::encode($this->rules) . ',
+        "messages": ' . \Zend\Json\Json::encode($this->messages) . '
         });');
     }
 

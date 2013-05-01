@@ -149,16 +149,16 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
         $matches = $this->getMatchesFromInlineScript();
 
-        $rules = json_decode($matches['rules']);
-        $messages = json_decode($matches['messages']);
+        $rules = $matches['rules'];
+        $messages = $matches['messages'];
 
         $this->assertEquals('test', $matches['form']);
-        $this->assertTrue($rules->name->required);
-        $this->assertTrue($rules->email->required);
-        $this->assertTrue($rules->email->email);
-        $this->assertNotEmpty($messages->name->required);
-        $this->assertNotEmpty($messages->email->required);
-        $this->assertNotEmpty($messages->email->email);
+        $this->assertTrue($rules['name']['required']);
+        $this->assertTrue($rules['email']['required']);
+        $this->assertTrue($rules['email']['email']);
+        $this->assertNotEmpty($messages['name']['required']);
+        $this->assertNotEmpty($messages['email']['required']);
+        $this->assertNotEmpty($messages['email']['email']);
     }
 
     /**
@@ -169,8 +169,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $this->createForm('test');
         $this->renderer->preRenderForm('test', $this->view);
         $matches = $this->getMatchesFromInlineScript();
-        $rules = json_decode($matches['rules']);
-        $this->assertEmpty($rules);
+        $this->assertEmpty($matches['rules']);
     }
 
     /**
@@ -180,11 +179,12 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     {
         $this->createForm('test');
         $this->rendererOptions->setValidateOptions(array(
-            'onsubmit: false'
+            '"onsubmit": false'
         ));
         $this->renderer->preRenderForm('test', $this->view);
         $matches = $this->getMatchesFromInlineScript();
-        $this->assertContains('onsubmit: false', $matches['validate_options']);
+        $this->assertTrue(isset($matches['onsubmit']));
+        $this->assertFalse($matches['onsubmit']);
     }
 
     /**
@@ -218,9 +218,14 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         /** @var $inlineScript \Zend\View\Helper\InlineScript */
         $inlineScript = $this->view->plugin('inlineScript');
         $inlineString = preg_replace('/(\r\n|\r|\n|\t)+/', '', $inlineScript->toString());
-        preg_match('/\$\(\'\#(?P<form>.*)\'\)\.validate\((?P<validate_options>.*)rules:(?P<rules>.*), +messages:(?P<messages>.*),.*}\); +/', $inlineString, $matches);
+        if(preg_match('/\$\(\'form\[name=\"(?P<form>[a-z]*)"\]\'\)\.validate\((?P<options>.*)\);}\);/', $inlineString, $matches))
+        {
+            $data = json_decode($matches['options'], true);
+            $data['form'] = $matches['form'];
+            return $data;
+        }
 
-        return $matches;
+        return array();
     }
 
     /**
