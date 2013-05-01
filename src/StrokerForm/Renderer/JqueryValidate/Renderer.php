@@ -42,22 +42,26 @@ class Renderer extends AbstractValidateRenderer
      * @param string                          $formAlias
      * @param \Zend\View\Renderer\PhpRenderer $view
      * @param \Zend\Form\FormInterface        $form
+     * @param array                           $options
      */
-    public function preRenderForm($formAlias, View $view, FormInterface $form = null)
+    public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = array())
     {
         if ($form === null) {
             $form = $this->getFormManager()->get($formAlias);
         }
 
-        parent::preRenderForm($formAlias, $view, $form);
+        parent::preRenderForm($formAlias, $view, $form, $options);
+
+        /** @var $options Options */
+        $options = $this->getOptions($options);
 
         $inlineScript = $view->plugin('inlineScript');
-        $inlineScript->appendScript($this->getInlineJavascript($form));
+        $inlineScript->appendScript($this->getInlineJavascript($form, $options));
 
-        if ($this->getOptions()->isIncludeAssets()) {
+        if ($options->isIncludeAssets()) {
             $assetBaseUri = $this->getHttpRouter()->assemble(array(), array('name' => 'strokerform-asset'));
             $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.js');
-            if ($this->getOptions()->isUseTwitterBootstrap() === true) {
+            if ($options->isUseTwitterBootstrap() === true) {
                 $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.bootstrap.js');
             }
         }
@@ -65,21 +69,21 @@ class Renderer extends AbstractValidateRenderer
 
     /**
      * @param  \Zend\Form\FormInterface $form
+     * @param Options $options
      * @return string
      */
-    protected function getInlineJavascript(FormInterface $form)
+    protected function getInlineJavascript(FormInterface $form, Options $options)
     {
-        $validateOptions = implode(',', $this->getOptions()->getValidateOptions());
+        $validateOptions = implode(',', $options->getValidateOptions());
         if (!empty($validateOptions)) {
             $validateOptions .= ',';
         }
 
-        return '$(document).ready(function(){
-        $(\'#' . $form->getName() . '\').validate({' . $validateOptions . '
+        return sprintf($options->getInitializeTrigger(), '
+        $(\'form[name="' . $form->getName() . '"]\').validate({' . $validateOptions . '
         rules: ' . \Zend\Json\Json::encode($this->rules) . ',
-        messages: ' . \Zend\Json\Json::encode($this->messages) . ',
-        });
-        });';
+        messages: ' . \Zend\Json\Json::encode($this->messages) . '
+        });');
     }
 
     /**
@@ -139,14 +143,17 @@ class Renderer extends AbstractValidateRenderer
 
     /**
      * @param  \Zend\Validator\ValidatorInterface $validator
-     * @return null|RuleInterface
+     * @return null|Rule\AbstractRule
      */
     protected function getRule(ValidatorInterface $validator = null)
     {
         $ruleClass = 'StrokerForm\\Renderer\\JqueryValidate\\Rule\\' . $this->getValidatorClassName($validator);
         if (class_exists($ruleClass)) {
+            /** @var $rule Rule\AbstractRule */
             $rule = new $ruleClass;
             $rule->setTranslator($this->getTranslator());
+            $rule->setTranslatorEnabled($this->isTranslatorEnabled());
+            $rule->setTranslatorTextDomain($this->getTranslatorTextDomain());
 
             return $rule;
         }

@@ -24,8 +24,9 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
      * @param string                          $formAlias
      * @param \Zend\View\Renderer\PhpRenderer $view
      * @param \Zend\Form\FormInterface        $form
+     * @param array                           $options
      */
-    public function preRenderForm($formAlias, View $view, FormInterface $form = null)
+    public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = array())
     {
         if ($form === null) {
             $form = $this->getFormManager()->get($formAlias);
