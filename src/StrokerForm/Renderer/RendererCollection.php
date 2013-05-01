@@ -58,12 +58,13 @@ class RendererCollection extends AbstractRenderer
      * @param  string                          $formAlias
      * @param  \Zend\View\Renderer\PhpRenderer $view
      * @param  \Zend\Form\FormInterface        $form
+     * @param array                            $options
      * @return mixed
      */
-    public function preRenderForm($formAlias, View $view, FormInterface $form = null)
+    public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = array())
     {
         foreach ($this->getRenderers() as $renderer) {
-            $renderer->preRenderForm($formAlias, $view, $form);
+            $renderer->preRenderForm($formAlias, $view, $form, $options);
         }
     }
 
