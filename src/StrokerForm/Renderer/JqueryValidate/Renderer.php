@@ -33,7 +33,8 @@ class Renderer extends AbstractValidateRenderer
      */
     protected $skipValidators = array(
         'InArray',
-        'Explode'
+        'Explode',
+        'Upload'
     );
 
     /**
