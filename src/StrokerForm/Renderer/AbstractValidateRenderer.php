@@ -32,7 +32,12 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
         }
 
         $inputFilter = $form->getInputFilter();
+        /** @var $element \Zend\Form\Element */
         foreach ($form->getElements() as $element) {
+            if($element->getOption('strokerform-exclude'))
+            {
+                continue;
+            }
             $input = null;
             if ($inputFilter !== null && $inputFilter->has($element->getName())) {
                 $input = $inputFilter->get($element->getName());
