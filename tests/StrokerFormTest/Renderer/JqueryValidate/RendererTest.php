@@ -10,8 +10,13 @@
 
 namespace StrokerFormTest\Renderer\JqueryValidate;
 
+use Mockery\MockInterface;
+use StrokerForm\Renderer\JqueryValidate\Rule\RulePluginManager;
 use Zend\Form\Factory;
 use StrokerForm\Renderer\JqueryValidate\Renderer;
+use Zend\I18n\Translator\Translator;
+use Zend\InputFilter\InputFilter;
+use Zend\View\Renderer\PhpRenderer;
 
 class RendererTest extends \PHPUnit_Framework_TestCase
 {
@@ -31,17 +36,17 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     private $view;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Zend\Mvc\Router\RouteInterface
+     * @var MockInterface|\Zend\Mvc\Router\RouteInterface
      */
     private $routerMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Zend\I18n\Translator\Translator
+     * @var MockInterface|\Zend\I18n\Translator\Translator
      */
     private $translatorMock;
 
     /**
-     * @var \Mockery\MockInterface
+     * @var MockInterface
      */
     private $formManager;
 
@@ -52,11 +57,13 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     {
         $this->formManager = \Mockery::mock('StrokerForm\FormManager');
         $this->renderer = new Renderer();
+        $this->renderer->setRulePluginManager(new RulePluginManager());
         $this->renderer->setFormManager($this->formManager);
-        $this->view = new \Zend\View\Renderer\PhpRenderer();
+        $this->view = new PhpRenderer();
 
         $this->routerMock = \Mockery::mock('Zend\Mvc\Router\SimpleRouteStack')
             ->shouldReceive('assemble')
+            ->byDefault()
             ->getMock();
         $this->translatorMock = \Mockery::mock('Zend\I18n\Translator\Translator')
             ->shouldReceive('translate')
@@ -121,14 +128,11 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         return $form;
     }
 
-    /**
-     * testCorrectRulesAreAdded
-     */
     public function testCorrectRulesAreAdded()
     {
         $form = $this->createForm('test');
 
-        $inputFilter = new \Zend\InputFilter\InputFilter();
+        $inputFilter = new InputFilter();
         $inputFilter->add(array(
             'name'     => 'email',
             'required' => true,
@@ -161,9 +165,36 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($messages['email']['email']);
     }
 
-    /**
-     * testNoRulesAddedWhenNoInputfilterIsSet
-     */
+    public function testFallbackToAjaxWhenNoClientsideValidatorAvailable()
+    {
+        $form = $this->createForm('test');
+
+        $this->routerMock
+            ->shouldReceive('assemble')
+            ->andReturn('/the/uri/to/ajax');
+
+        $inputFilter = new InputFilter();
+        $inputFilter->add(array(
+            'name'     => 'name',
+            'validators' => array(
+                array(
+                    'name' => 'isbn'
+                )
+            )
+        ));
+
+        $form->setInputFilter($inputFilter);
+
+        $this->renderer->preRenderForm('test', $this->view);
+
+        $matches = $this->getMatchesFromInlineScript();
+
+        $rules = $matches['rules'];
+
+        $this->assertEquals('/the/uri/to/ajax', $rules['name']['remote']['url']);
+        $this->assertEquals('POST', $rules['name']['remote']['type']);
+    }
+
     public function testNoRulesAddedWhenNoInputfilterIsSet()
     {
         $this->createForm('test');
@@ -172,9 +203,6 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($matches['rules']);
     }
 
-    /**
-     * testExtraValidateOptionsCouldBeSet
-     */
     public function testExtraValidateOptionsCouldBeSet()
     {
         $this->createForm('test');
@@ -187,9 +215,6 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($matches['onsubmit']);
     }
 
-    /**
-     * testJavascriptAssetsAreIncludedToInlineScript
-     */
     public function testJavascriptAssetsAreIncludedToInlineScript()
     {
         $this->createForm('test');

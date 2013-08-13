@@ -37,30 +37,23 @@ class Module implements
     }
 
     /**
-     * Expected to return \Zend\ServiceManager\Config object or array to
-     * seed such an object.
-     *
-     * @return array|\Zend\ServiceManager\Config
+     * {@inheritDoc}
      */
     public function getServiceConfig()
     {
         return array(
             'factories' => array(
-                'StrokerForm\Options\ModuleOptions' => 'StrokerForm\Service\ModuleOptionsFactory',
-                'StrokerForm\FormManager' => 'StrokerForm\Service\FormManagerFactory',
-                'stroker_form.renderer' => 'StrokerForm\Service\RendererFactory',
-                'forminput' => 'StrokerForm\Service\FormInputFactory',
-            ),
-            'invokables' => array (
-                'stroker_form.renderer.jqueryvalidate' => 'StrokerForm\Renderer\JqueryValidate\Renderer',
+                'StrokerForm\Options\ModuleOptions' => 'StrokerForm\Factory\ModuleOptionsFactory',
+                'StrokerForm\FormManager' => 'StrokerForm\Factory\FormManagerFactory',
+                'stroker_form.renderer' => 'StrokerForm\Factory\RendererFactory',
+                'forminput' => 'StrokerForm\Factory\FormInputFactory',
+                'stroker_form.renderer.jqueryvalidate' => 'StrokerForm\Factory\Renderer\JqueryValidate\RendererFactory',
             ),
         );
     }
 
     /**
-     * Returns configuration to merge with application configuration
-     *
-     * @return array|\Traversable
+     * {@inheritDoc}
      */
     public function getConfig()
     {
@@ -68,32 +61,26 @@ class Module implements
     }
 
     /**
-     * Expected to return \Zend\ServiceManager\Config object or array to seed
-     * such an object.
-     *
-     * @return array|\Zend\ServiceManager\Config
+     * {@inheritDoc}
      */
     public function getControllerConfig()
     {
         return array(
             'factories' => array(
-                'StrokerForm\Controller\Ajax' => 'StrokerForm\Service\AjaxControllerFactory'
+                'StrokerForm\Controller\Ajax' => 'StrokerForm\Factory\AjaxControllerFactory'
             ),
         );
     }
 
     /**
-     * Expected to return \Zend\ServiceManager\Config object or array to
-     * seed such an object.
-     *
-     * @return array|\Zend\ServiceManager\Config
+     * {@inheritDoc}
      */
     public function getViewHelperConfig()
     {
         return array(
             'factories' => array(
-                'form_element' => 'StrokerForm\Service\FormElementFactory',
-                'strokerFormPrepare' => 'StrokerForm\Service\FormPrepareFactory'
+                'form_element' => 'StrokerForm\Factory\FormElementFactory',
+                'strokerFormPrepare' => 'StrokerForm\Factory\FormPrepareFactory'
             )
         );
     }

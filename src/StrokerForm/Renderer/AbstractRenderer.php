@@ -165,8 +165,7 @@ abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInt
      */
     public function getOptions(array $options = array())
     {
-        if(!count($options))
-        {
+        if (!count($options)) {
             return $this->options;
         }
 

@@ -19,6 +19,15 @@ use Zend\Form\Form;
 abstract class AbstractValidateRenderer extends AbstractRenderer
 {
     /**
+     * @var array
+     */
+    protected $skipValidators = array(
+        'InArray',
+        'Explode',
+        'Upload'
+    );
+
+    /**
      * Excecuted before the ZF2 view helper renders the element
      *
      * @param string                          $formAlias
@@ -35,8 +44,7 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
         $inputFilter = $form->getInputFilter();
         /** @var $element \Zend\Form\Element */
         foreach ($form->getElements() as $element) {
-            if($element->getOption('strokerform-exclude'))
-            {
+            if($element->getOption('strokerform-exclude')) {
                 continue;
             }
             $input = null;
@@ -53,7 +61,11 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
             $chain = $input->getValidatorChain();
             $validators = $chain->getValidators();
             foreach ($validators as $validator) {
-                $this->addValidationAttributesForElement($formAlias, $element, $validator['instance']);
+                $validatorInstance = $validator['instance'];
+                if (in_array($this->getValidatorClassName($validatorInstance), $this->skipValidators)) {
+                    continue;
+                }
+                $this->addValidationAttributesForElement($formAlias, $element, $validatorInstance);
             }
         }
     }
@@ -90,5 +102,17 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
         }
 
         return $elementName;
+    }
+
+    /**
+     * Get the classname of the zend validator
+     *
+     * @param  \Zend\Validator\ValidatorInterface $validator
+     * @return mixed
+     */
+    protected function getValidatorClassName(ValidatorInterface $validator = null)
+    {
+        $namespaces = explode('\\', get_class($validator));
+        return end($namespaces);
     }
 }

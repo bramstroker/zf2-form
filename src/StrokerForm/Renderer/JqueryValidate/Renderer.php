@@ -10,6 +10,7 @@
 
 namespace StrokerForm\Renderer\JqueryValidate;
 
+use StrokerForm\Renderer\JqueryValidate\Rule\RulePluginManager;
 use Zend\View\Renderer\PhpRenderer as View;
 use Zend\Form\FormInterface;
 use StrokerForm\Renderer\AbstractValidateRenderer;
@@ -29,13 +30,25 @@ class Renderer extends AbstractValidateRenderer
     private $messages = array();
 
     /**
-     * @var array
+     * @var RulePluginManager
      */
-    protected $skipValidators = array(
-        'InArray',
-        'Explode',
-        'Upload'
-    );
+    protected $rulePluginManager;
+
+    /**
+     * @param RulePluginManager $rulePluginManager
+     */
+    public function setRulePluginManager(RulePluginManager $rulePluginManager)
+    {
+        $this->rulePluginManager = $rulePluginManager;
+    }
+
+    /**
+     * @return RulePluginManager
+     */
+    public function getRulePluginManager()
+    {
+        return $this->rulePluginManager;
+    }
 
     /**
      * Executed before the ZF2 view helper renders the element
@@ -98,9 +111,7 @@ class Renderer extends AbstractValidateRenderer
         if ($element instanceof \Zend\Form\Element\Email && $validator instanceof \Zend\Validator\Regex) {
             $validator = new \Zend\Validator\EmailAddress();
         }
-        if (in_array($this->getValidatorClassName($validator), $this->skipValidators)) {
-            return;
-        }
+
         $rule = $this->getRule($validator);
         if ($rule !== null) {
             $rules = $rule->getRules($validator);
@@ -130,35 +141,15 @@ class Renderer extends AbstractValidateRenderer
     }
 
     /**
-     * Get the classname of the zend validator
-     *
-     * @param  \Zend\Validator\ValidatorInterface $validator
-     * @return mixed
-     */
-    protected function getValidatorClassName(ValidatorInterface $validator = null)
-    {
-        $namespaces = explode('\\', get_class($validator));
-
-        return end($namespaces);
-    }
-
-    /**
      * @param  \Zend\Validator\ValidatorInterface $validator
      * @return null|Rule\AbstractRule
      */
-    protected function getRule(ValidatorInterface $validator = null)
+    public function getRule(ValidatorInterface $validator = null)
     {
-        $ruleClass = 'StrokerForm\\Renderer\\JqueryValidate\\Rule\\' . $this->getValidatorClassName($validator);
-        if (class_exists($ruleClass)) {
-            /** @var $rule Rule\AbstractRule */
-            $rule = new $ruleClass;
-            $rule->setTranslator($this->getTranslator());
-            $rule->setTranslatorEnabled($this->isTranslatorEnabled());
-            $rule->setTranslatorTextDomain($this->getTranslatorTextDomain());
-
-            return $rule;
+        $validatorName = lcfirst($this->getValidatorClassName($validator));
+        if ($this->getRulePluginManager()->has($validatorName)) {
+            return $this->getRulePluginManager()->get($validatorName);
         }
-
         return null;
     }
 }
