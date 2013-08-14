@@ -11,8 +11,9 @@
 namespace StrokerForm\Controller;
 
 use StrokerForm\FormManager;
+use Zend\Mvc\Controller\AbstractActionController;
 
-class AjaxController extends \Zend\Mvc\Controller\AbstractActionController
+class AjaxController extends AbstractActionController
 {
     /**
      * @var FormManager
