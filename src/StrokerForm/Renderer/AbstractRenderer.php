@@ -12,6 +12,7 @@ namespace StrokerForm\Renderer;
 
 use Zend\I18n\Translator\TranslatorAwareInterface;
 use Zend\I18n\Translator\Translator;
+use Zend\Mvc\Router\RouteInterface;
 use Zend\Stdlib\AbstractOptions;
 use StrokerForm\FormManager;
 
@@ -42,6 +43,11 @@ abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInt
      * @var bool
      */
     protected $translatorEnabled = true;
+
+    /**
+     * @var AbstractOptions
+     */
+    protected $defaultOptions = array();
 
     /**
      * @var AbstractOptions
@@ -144,7 +150,7 @@ abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInt
     }
 
     /**
-     * @return \Zend\Mvc\Router\RouteInterface
+     * @return RouteInterface
      */
     public function getHttpRouter()
     {
@@ -152,34 +158,36 @@ abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInt
     }
 
     /**
-     * @param \Zend\Mvc\Router\RouteInterface $assetRoute
+     * @param RouteInterface $assetRoute
      */
-    public function setHttpRouter(\Zend\Mvc\Router\RouteInterface $httpRouter)
+    public function setHttpRouter(RouteInterface $httpRouter)
     {
         $this->httpRouter = $httpRouter;
     }
 
     /**
-     * @param array $options
      * @return AbstractOptions
      */
-    public function getOptions(array $options = array())
+    public function getOptions()
     {
-        if (!count($options)) {
-            return $this->options;
-        }
+        return $this->options;
+    }
 
-        $newOptions = clone $this->options;
-        $newOptions->setFromArray($options);
-        return $newOptions;
+    /**
+     * @param array $options
+     */
+    public function setOptions(array $options = array())
+    {
+        $this->options = clone $this->defaultOptions;
+        $this->options->setFromArray($options);
     }
 
     /**
      * @param AbstractOptions $options
      */
-    public function setOptions(AbstractOptions $options = null)
+    public function setDefaultOptions(AbstractOptions $options = null)
     {
-        $this->options = $options;
+        $this->defaultOptions = $options;
     }
 
     /**

@@ -67,7 +67,7 @@ class Renderer extends AbstractValidateRenderer
         parent::preRenderForm($formAlias, $view, $form, $options);
 
         /** @var $options Options */
-        $options = $this->getOptions($options);
+        $options = $this->getOptions();
 
         $inlineScript = $view->plugin('inlineScript');
         $inlineScript->appendScript($this->getInlineJavascript($form, $options));

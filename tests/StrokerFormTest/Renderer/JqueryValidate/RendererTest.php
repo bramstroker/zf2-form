@@ -76,7 +76,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $this->rendererOptions = new \StrokerForm\Renderer\JqueryValidate\Options();
         $this->renderer->setHttpRouter($this->routerMock);
         $this->renderer->setTranslator($this->translatorMock);
-        $this->renderer->setOptions($this->rendererOptions);
+        $this->renderer->setDefaultOptions($this->rendererOptions);
     }
 
     /**
@@ -99,20 +99,15 @@ class RendererTest extends \PHPUnit_Framework_TestCase
                             'options' => array(
                                 'label' => 'Your name',
                             ),
-                            'attributes' => array(
-                                'type' => 'text'
-                            ),
                         )
                     ),
                     array(
                         'spec' => array(
                             'name' => 'email',
+                            'type' => 'Zend\Form\Element\Email',
                             'options' => array(
                                 'label' => 'Your email address',
                             ),
-                            'attributes' => array(
-                                'type' => 'text'
-                            )
                         ),
                     ),
                 )
@@ -134,7 +129,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
         $inputFilter = new InputFilter();
         $inputFilter->add(array(
-            'name'     => 'email',
+            'name' => 'email',
             'required' => true,
             'validators' => array(
                 array(
@@ -195,12 +190,14 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('POST', $rules['name']['remote']['type']);
     }
 
-    public function testNoRulesAddedWhenNoInputfilterIsSet()
+    public function testDefaultRendererOptionsCanBeOverwrittenAtRuntime()
     {
         $this->createForm('test');
-        $this->renderer->preRenderForm('test', $this->view);
-        $matches = $this->getMatchesFromInlineScript();
-        $this->assertEmpty($matches['rules']);
+        $this->rendererOptions->setIncludeAssets(false);
+
+        $this->renderer->preRenderForm('test', $this->view, null, array('include_assets' => true));
+
+        $this->assertTrue($this->renderer->getOptions()->isIncludeAssets());
     }
 
     public function testExtraValidateOptionsCouldBeSet()
@@ -231,6 +228,17 @@ class RendererTest extends \PHPUnit_Framework_TestCase
             }
         }
         $this->assertEquals(2, $jsTagsFound);
+    }
+
+    public function testEmailElementAlwaysUsesEmailAddressValidator()
+    {
+        $this->createForm('test');
+
+        $this->renderer->preRenderForm('test', $this->view);
+        $matches = $this->getMatchesFromInlineScript();
+
+        $rules = $matches['rules'];
+        $this->assertTrue($rules['email']['email']);
     }
 
     /**

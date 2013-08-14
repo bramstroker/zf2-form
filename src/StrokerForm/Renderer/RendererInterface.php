@@ -49,5 +49,5 @@ interface RendererInterface
      *
      * @param AbstractOptions $options
      */
-    public function setOptions(AbstractOptions $options = null);
+    public function setDefaultOptions(AbstractOptions $options = null);
 }

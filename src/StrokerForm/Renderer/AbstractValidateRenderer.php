@@ -10,6 +10,8 @@
 
 namespace StrokerForm\Renderer;
 
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\InputProviderInterface;
 use Zend\View\Renderer\PhpRenderer as View;
 use Zend\Form\FormInterface;
 use Zend\Validator\ValidatorInterface;
@@ -37,23 +39,24 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
      */
     public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = array())
     {
+        $this->setOptions($options);
+
         if ($form === null) {
             $form = $this->getFormManager()->get($formAlias);
         }
 
         $inputFilter = $form->getInputFilter();
+
         /** @var $element \Zend\Form\Element */
         foreach ($form->getElements() as $element) {
             if($element->getOption('strokerform-exclude')) {
                 continue;
             }
-            $input = null;
-            if ($inputFilter !== null && $inputFilter->has($element->getName())) {
-                $input = $inputFilter->get($element->getName());
-            }
-            if ($input === null) {
+
+            if (!$inputFilter->has($element->getName())) {
                 continue;
             }
+            $input = $inputFilter->get($element->getName());
 
             // Make sure NotEmpty validator is added when input is required
             $input->isValid();

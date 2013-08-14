@@ -10,26 +10,22 @@
 
 namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
+use Zend\Validator\ValidatorInterface;
+
 class CreditCard extends AbstractRule
 {
     /**
-     * Get the validation rules
-     *
-     * @param  \Zend\Validator\ValidatorInterface $validator
-     * @return array
+     * {@inheritDoc}
      */
-    public function getRules(\Zend\Validator\ValidatorInterface $validator)
+    public function getRules(ValidatorInterface $validator)
     {
         return array('creditcard' => true);
     }
 
     /**
-     * Get the validation message
-     *
-     * @param  \Zend\Validator\ValidatorInterface $validator
-     * @return string
+     * {@inheritDoc}
      */
-    public function getMessages(\Zend\Validator\ValidatorInterface $validator)
+    public function getMessages(ValidatorInterface $validator)
     {
         return array('creditcard' => $this->translateMessage('The creditcard number is invalid'));
     }
