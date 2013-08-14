@@ -10,8 +10,6 @@
 
 namespace StrokerForm\Renderer;
 
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\InputProviderInterface;
 use Zend\View\Renderer\PhpRenderer as View;
 use Zend\Form\FormInterface;
 use Zend\Validator\ValidatorInterface;
@@ -20,15 +18,6 @@ use Zend\Form\Form;
 
 abstract class AbstractValidateRenderer extends AbstractRenderer
 {
-    /**
-     * @var array
-     */
-    protected $skipValidators = array(
-        'InArray',
-        'Explode',
-        'Upload'
-    );
-
     /**
      * Excecuted before the ZF2 view helper renders the element
      *
@@ -49,7 +38,7 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
 
         /** @var $element \Zend\Form\Element */
         foreach ($form->getElements() as $element) {
-            if($element->getOption('strokerform-exclude')) {
+            if ($element->getOption('strokerform-exclude')) {
                 continue;
             }
 
@@ -65,9 +54,6 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
             $validators = $chain->getValidators();
             foreach ($validators as $validator) {
                 $validatorInstance = $validator['instance'];
-                if (in_array($this->getValidatorClassName($validatorInstance), $this->skipValidators)) {
-                    continue;
-                }
                 $this->addValidationAttributesForElement($formAlias, $element, $validatorInstance);
             }
         }

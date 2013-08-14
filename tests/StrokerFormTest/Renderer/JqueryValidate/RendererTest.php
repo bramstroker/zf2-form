@@ -241,6 +241,20 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($rules['email']['email']);
     }
 
+    public function testExcludeElement()
+    {
+        $form = $this->createForm('test');
+        $nameElement = $form->get('name');
+        $nameElement->setOptions(array('strokerform-exclude' => true));
+        $this->renderer->preRenderForm('test', $this->view);
+
+        $matches = $this->getMatchesFromInlineScript();
+
+        $rules = $matches['rules'];
+        $this->assertArrayNotHasKey('name', $rules);
+        $this->assertArrayHasKey('email', $rules);
+    }
+
     /**
      * Get rules and messages as matches from the inlineScript string
      *

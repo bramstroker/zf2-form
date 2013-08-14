@@ -22,6 +22,15 @@ class Renderer extends AbstractValidateRenderer
     /**
      * @var array
      */
+    protected $skipValidators = array(
+        'InArray',
+        'Explode',
+        'Upload'
+    );
+
+    /**
+     * @var array
+     */
     private $rules = array();
 
     /**
@@ -108,6 +117,9 @@ class Renderer extends AbstractValidateRenderer
      */
     protected function addValidationAttributesForElement($formAlias, ElementInterface $element, ValidatorInterface $validator = null)
     {
+        if (in_array($this->getValidatorClassName($validator), $this->skipValidators)) {
+            return;
+        }
         if ($element instanceof \Zend\Form\Element\Email && $validator instanceof \Zend\Validator\Regex) {
             $validator = new \Zend\Validator\EmailAddress();
         }
