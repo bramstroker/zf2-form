@@ -148,7 +148,11 @@ class Renderer extends AbstractValidateRenderer
     {
         $validatorName = lcfirst($this->getValidatorClassName($validator));
         if ($this->getRulePluginManager()->has($validatorName)) {
-            return $this->getRulePluginManager()->get($validatorName);
+            $rule = $this->getRulePluginManager()->get($validatorName);
+            if ($rule instanceof TranslatorAwareInterface) {
+                $rule->setTranslatorTextDomain($this->getTranslatorTextDomain());
+            }
+            return $rule;
         }
         return null;
     }
