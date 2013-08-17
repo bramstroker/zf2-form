@@ -1,11 +1,13 @@
 # StrokerForm
 
+[![Build Status](https://travis-ci.org/bramstroker/zf2-form.png?branch=master)](https://travis-ci.org/bramstroker/zf2-fullpage-cache)
+[![Coverage Status](https://coveralls.io/repos/bramstroker/zf2-form/badge.png)](https://coveralls.io/r/bramstroker/zf2-fullpage-cache)
+
+
 ZF2 module for extending forms with live clientside validation without need to write js validation code. 
 You only need to define your validation rules server side with ZF2 and this module automaticaly adds the same rules with [jQueryValidate](http://docs.jquery.com/Plugins/Validation). 
 In case a client side version of the validation rule doesn't exist a fallback is done using ajax.
 For basic usage examples see the sandbox project [StrokerFormSandbox](https://github.com/bramstroker/zf2-form-sandbox).
-
-[![Build Status](https://travis-ci.org/bramstroker/zf2-form.png?branch=master)](https://travis-ci.org/bramstroker/zf2-form)
 
 ## Installation
 
