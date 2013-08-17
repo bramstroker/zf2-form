@@ -20,7 +20,7 @@ class ModuleOptions extends AbstractOptions
     /**
      * @var array
      */
-    private $activeRenderers;
+    private $activeRenderers = array();
 
     /**
      * @var array

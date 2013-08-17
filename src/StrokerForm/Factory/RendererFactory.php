@@ -8,7 +8,7 @@
  * @version   SVN: $Id$
  */
 
-namespace StrokerForm\Service;
+namespace StrokerForm\Factory;
 
 use Zend\ServiceManager\FactoryInterface;
 use StrokerForm\Renderer\RendererCollection;
@@ -30,7 +30,7 @@ class RendererFactory implements FactoryInterface
         foreach ($options->getActiveRenderers() as $rendererAlias) {
             /** @var $renderer \StrokerForm\Renderer\RendererInterface */
             $renderer = $serviceLocator->get($rendererAlias);
-            $renderer->setOptions($options->getRendererOptions($rendererAlias));
+            $renderer->setDefaultOptions($options->getRendererOptions($rendererAlias));
             $renderer->setFormManager($serviceLocator->get('StrokerForm\FormManager'));
             if ($serviceLocator->has('translator')) {
                 $renderer->setTranslator($serviceLocator->get('translator'));

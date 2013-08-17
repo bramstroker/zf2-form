@@ -10,8 +10,13 @@
 
 namespace StrokerFormTest\Renderer\JqueryValidate;
 
+use Mockery\MockInterface;
+use StrokerForm\Renderer\JqueryValidate\Rule\RulePluginManager;
 use Zend\Form\Factory;
 use StrokerForm\Renderer\JqueryValidate\Renderer;
+use Zend\I18n\Translator\Translator;
+use Zend\InputFilter\InputFilter;
+use Zend\View\Renderer\PhpRenderer;
 
 class RendererTest extends \PHPUnit_Framework_TestCase
 {
@@ -31,17 +36,17 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     private $view;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Zend\Mvc\Router\RouteInterface
+     * @var MockInterface|\Zend\Mvc\Router\RouteInterface
      */
     private $routerMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Zend\I18n\Translator\Translator
+     * @var MockInterface|\Zend\I18n\Translator\Translator
      */
     private $translatorMock;
 
     /**
-     * @var \Mockery\MockInterface
+     * @var MockInterface
      */
     private $formManager;
 
@@ -52,11 +57,13 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     {
         $this->formManager = \Mockery::mock('StrokerForm\FormManager');
         $this->renderer = new Renderer();
+        $this->renderer->setRulePluginManager(new RulePluginManager());
         $this->renderer->setFormManager($this->formManager);
-        $this->view = new \Zend\View\Renderer\PhpRenderer();
+        $this->view = new PhpRenderer();
 
         $this->routerMock = \Mockery::mock('Zend\Mvc\Router\SimpleRouteStack')
             ->shouldReceive('assemble')
+            ->byDefault()
             ->getMock();
         $this->translatorMock = \Mockery::mock('Zend\I18n\Translator\Translator')
             ->shouldReceive('translate')
@@ -69,7 +76,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $this->rendererOptions = new \StrokerForm\Renderer\JqueryValidate\Options();
         $this->renderer->setHttpRouter($this->routerMock);
         $this->renderer->setTranslator($this->translatorMock);
-        $this->renderer->setOptions($this->rendererOptions);
+        $this->renderer->setDefaultOptions($this->rendererOptions);
     }
 
     /**
@@ -92,20 +99,15 @@ class RendererTest extends \PHPUnit_Framework_TestCase
                             'options' => array(
                                 'label' => 'Your name',
                             ),
-                            'attributes' => array(
-                                'type' => 'text'
-                            ),
                         )
                     ),
                     array(
                         'spec' => array(
                             'name' => 'email',
+                            'type' => 'Zend\Form\Element\Email',
                             'options' => array(
                                 'label' => 'Your email address',
                             ),
-                            'attributes' => array(
-                                'type' => 'text'
-                            )
                         ),
                     ),
                 )
@@ -121,16 +123,13 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         return $form;
     }
 
-    /**
-     * testCorrectRulesAreAdded
-     */
     public function testCorrectRulesAreAdded()
     {
         $form = $this->createForm('test');
 
-        $inputFilter = new \Zend\InputFilter\InputFilter();
+        $inputFilter = new InputFilter();
         $inputFilter->add(array(
-            'name'     => 'email',
+            'name' => 'email',
             'required' => true,
             'validators' => array(
                 array(
@@ -149,47 +148,70 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
         $matches = $this->getMatchesFromInlineScript();
 
-        $rules = json_decode($matches['rules']);
-        $messages = json_decode($matches['messages']);
+        $rules = $matches['rules'];
+        $messages = $matches['messages'];
 
         $this->assertEquals('test', $matches['form']);
-        $this->assertTrue($rules->name->required);
-        $this->assertTrue($rules->email->required);
-        $this->assertTrue($rules->email->email);
-        $this->assertNotEmpty($messages->name->required);
-        $this->assertNotEmpty($messages->email->required);
-        $this->assertNotEmpty($messages->email->email);
+        $this->assertTrue($rules['name']['required']);
+        $this->assertTrue($rules['email']['required']);
+        $this->assertTrue($rules['email']['email']);
+        $this->assertNotEmpty($messages['name']['required']);
+        $this->assertNotEmpty($messages['email']['required']);
+        $this->assertNotEmpty($messages['email']['email']);
     }
 
-    /**
-     * testNoRulesAddedWhenNoInputfilterIsSet
-     */
-    public function testNoRulesAddedWhenNoInputfilterIsSet()
+    public function testFallbackToAjaxWhenNoClientsideValidatorAvailable()
+    {
+        $form = $this->createForm('test');
+
+        $this->routerMock
+            ->shouldReceive('assemble')
+            ->andReturn('/the/uri/to/ajax');
+
+        $inputFilter = new InputFilter();
+        $inputFilter->add(array(
+            'name'     => 'name',
+            'validators' => array(
+                array(
+                    'name' => 'isbn'
+                )
+            )
+        ));
+
+        $form->setInputFilter($inputFilter);
+
+        $this->renderer->preRenderForm('test', $this->view);
+
+        $matches = $this->getMatchesFromInlineScript();
+
+        $rules = $matches['rules'];
+
+        $this->assertEquals('/the/uri/to/ajax', $rules['name']['remote']['url']);
+        $this->assertEquals('POST', $rules['name']['remote']['type']);
+    }
+
+    public function testDefaultRendererOptionsCanBeOverwrittenAtRuntime()
     {
         $this->createForm('test');
-        $this->renderer->preRenderForm('test', $this->view);
-        $matches = $this->getMatchesFromInlineScript();
-        $rules = json_decode($matches['rules']);
-        $this->assertEmpty($rules);
+        $this->rendererOptions->setIncludeAssets(false);
+
+        $this->renderer->preRenderForm('test', $this->view, null, array('include_assets' => true));
+
+        $this->assertTrue($this->renderer->getOptions()->isIncludeAssets());
     }
 
-    /**
-     * testExtraValidateOptionsCouldBeSet
-     */
     public function testExtraValidateOptionsCouldBeSet()
     {
         $this->createForm('test');
         $this->rendererOptions->setValidateOptions(array(
-            'onsubmit: false'
+            '"onsubmit": false'
         ));
         $this->renderer->preRenderForm('test', $this->view);
         $matches = $this->getMatchesFromInlineScript();
-        $this->assertContains('onsubmit: false', $matches['validate_options']);
+        $this->assertTrue(isset($matches['onsubmit']));
+        $this->assertFalse($matches['onsubmit']);
     }
 
-    /**
-     * testJavascriptAssetsAreIncludedToInlineScript
-     */
     public function testJavascriptAssetsAreIncludedToInlineScript()
     {
         $this->createForm('test');
@@ -208,6 +230,31 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, $jsTagsFound);
     }
 
+    public function testEmailElementAlwaysUsesEmailAddressValidator()
+    {
+        $this->createForm('test');
+
+        $this->renderer->preRenderForm('test', $this->view);
+        $matches = $this->getMatchesFromInlineScript();
+
+        $rules = $matches['rules'];
+        $this->assertTrue($rules['email']['email']);
+    }
+
+    public function testExcludeElement()
+    {
+        $form = $this->createForm('test');
+        $nameElement = $form->get('name');
+        $nameElement->setOptions(array('strokerform-exclude' => true));
+        $this->renderer->preRenderForm('test', $this->view);
+
+        $matches = $this->getMatchesFromInlineScript();
+
+        $rules = $matches['rules'];
+        $this->assertArrayNotHasKey('name', $rules);
+        $this->assertArrayHasKey('email', $rules);
+    }
+
     /**
      * Get rules and messages as matches from the inlineScript string
      *
@@ -218,9 +265,14 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         /** @var $inlineScript \Zend\View\Helper\InlineScript */
         $inlineScript = $this->view->plugin('inlineScript');
         $inlineString = preg_replace('/(\r\n|\r|\n|\t)+/', '', $inlineScript->toString());
-        preg_match('/\$\(\'\#(?P<form>.*)\'\)\.validate\((?P<validate_options>.*)rules:(?P<rules>.*), +messages:(?P<messages>.*),.*}\); +/', $inlineString, $matches);
+        if(preg_match('/\$\(\'form\[name=\"(?P<form>[a-z]*)"\]\'\)\.validate\((?P<options>.*)\);}\);/', $inlineString, $matches))
+        {
+            $data = json_decode($matches['options'], true);
+            $data['form'] = $matches['form'];
+            return $data;
+        }
 
-        return $matches;
+        return array();
     }
 
     /**

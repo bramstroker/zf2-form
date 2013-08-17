@@ -24,8 +24,10 @@ interface RendererInterface
      * @param string                   $formAlias
      * @param View                     $view
      * @param \Zend\Form\FormInterface $form
+     * @param array                    $options
+     * @return
      */
-    public function preRenderForm($formAlias, View $view, FormInterface $form = null);
+    public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = array());
 
     /**
      * Excecuted before the ZF2 view helper renders the element
@@ -47,5 +49,5 @@ interface RendererInterface
      *
      * @param AbstractOptions $options
      */
-    public function setOptions(AbstractOptions $options = null);
+    public function setDefaultOptions(AbstractOptions $options = null);
 }
