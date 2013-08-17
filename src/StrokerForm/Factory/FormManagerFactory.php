@@ -8,7 +8,7 @@
  * @version   SVN: $Id$
  */
 
-namespace StrokerForm\Service;
+namespace StrokerForm\Factory;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
 use StrokerForm\FormManager;

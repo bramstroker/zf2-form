@@ -1,6 +1,6 @@
 <?php
 /**
- * Factory for the formPrepare view helper
+ * Description
  *
  * @category  StrokerForm
  * @package   StrokerForm\Service
@@ -8,13 +8,13 @@
  * @version   SVN: $Id$
  */
 
-namespace StrokerForm\Service;
+namespace StrokerForm\Factory;
 
 use Zend\ServiceManager\FactoryInterface;
-use StrokerForm\View\Helper\FormPrepare;
+use StrokerForm\View\Helper\FormElement;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class FormPrepareFactory implements FactoryInterface
+class FormElementFactory implements FactoryInterface
 {
     /**
      * Create service
@@ -26,6 +26,6 @@ class FormPrepareFactory implements FactoryInterface
     {
         $renderer = $serviceLocator->getServiceLocator()->get('stroker_form.renderer');
 
-        return new FormPrepare($renderer);
+        return new FormElement($renderer);
     }
 }

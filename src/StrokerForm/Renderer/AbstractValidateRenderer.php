@@ -24,22 +24,28 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
      * @param string                          $formAlias
      * @param \Zend\View\Renderer\PhpRenderer $view
      * @param \Zend\Form\FormInterface        $form
+     * @param array                           $options
      */
-    public function preRenderForm($formAlias, View $view, FormInterface $form = null)
+    public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = array())
     {
+        $this->setOptions($options);
+
         if ($form === null) {
             $form = $this->getFormManager()->get($formAlias);
         }
 
         $inputFilter = $form->getInputFilter();
+
+        /** @var $element \Zend\Form\Element */
         foreach ($form->getElements() as $element) {
-            $input = null;
-            if ($inputFilter !== null && $inputFilter->has($element->getName())) {
-                $input = $inputFilter->get($element->getName());
-            }
-            if ($input === null) {
+            if ($element->getOption('strokerform-exclude')) {
                 continue;
             }
+
+            if (!$inputFilter->has($element->getName())) {
+                continue;
+            }
+            $input = $inputFilter->get($element->getName());
 
             // Make sure NotEmpty validator is added when input is required
             $input->isValid();
@@ -47,7 +53,8 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
             $chain = $input->getValidatorChain();
             $validators = $chain->getValidators();
             foreach ($validators as $validator) {
-                $this->addValidationAttributesForElement($formAlias, $element, $validator['instance']);
+                $validatorInstance = $validator['instance'];
+                $this->addValidationAttributesForElement($formAlias, $element, $validatorInstance);
             }
         }
     }
@@ -84,5 +91,17 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
         }
 
         return $elementName;
+    }
+
+    /**
+     * Get the classname of the zend validator
+     *
+     * @param  \Zend\Validator\ValidatorInterface $validator
+     * @return mixed
+     */
+    protected function getValidatorClassName(ValidatorInterface $validator = null)
+    {
+        $namespaces = explode('\\', get_class($validator));
+        return end($namespaces);
     }
 }

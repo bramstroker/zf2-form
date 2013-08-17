@@ -10,6 +10,7 @@
 
 namespace StrokerForm\Renderer\JqueryValidate;
 
+use StrokerForm\Renderer\JqueryValidate\Rule\RulePluginManager;
 use Zend\View\Renderer\PhpRenderer as View;
 use Zend\Form\FormInterface;
 use StrokerForm\Renderer\AbstractValidateRenderer;
@@ -21,6 +22,15 @@ class Renderer extends AbstractValidateRenderer
     /**
      * @var array
      */
+    protected $skipValidators = array(
+        'InArray',
+        'Explode',
+        'Upload'
+    );
+
+    /**
+     * @var array
+     */
     private $rules = array();
 
     /**
@@ -29,13 +39,25 @@ class Renderer extends AbstractValidateRenderer
     private $messages = array();
 
     /**
-     * @var array
+     * @var RulePluginManager
      */
-    protected $skipValidators = array(
-        'InArray',
-        'Explode',
-        'Upload'
-    );
+    protected $rulePluginManager;
+
+    /**
+     * @param RulePluginManager $rulePluginManager
+     */
+    public function setRulePluginManager(RulePluginManager $rulePluginManager)
+    {
+        $this->rulePluginManager = $rulePluginManager;
+    }
+
+    /**
+     * @return RulePluginManager
+     */
+    public function getRulePluginManager()
+    {
+        return $this->rulePluginManager;
+    }
 
     /**
      * Executed before the ZF2 view helper renders the element
@@ -43,22 +65,26 @@ class Renderer extends AbstractValidateRenderer
      * @param string                          $formAlias
      * @param \Zend\View\Renderer\PhpRenderer $view
      * @param \Zend\Form\FormInterface        $form
+     * @param array                           $options
      */
-    public function preRenderForm($formAlias, View $view, FormInterface $form = null)
+    public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = array())
     {
         if ($form === null) {
             $form = $this->getFormManager()->get($formAlias);
         }
 
-        parent::preRenderForm($formAlias, $view, $form);
+        parent::preRenderForm($formAlias, $view, $form, $options);
+
+        /** @var $options Options */
+        $options = $this->getOptions();
 
         $inlineScript = $view->plugin('inlineScript');
-        $inlineScript->appendScript($this->getInlineJavascript($form));
+        $inlineScript->appendScript($this->getInlineJavascript($form, $options));
 
-        if ($this->getOptions()->isIncludeAssets()) {
+        if ($options->isIncludeAssets()) {
             $assetBaseUri = $this->getHttpRouter()->assemble(array(), array('name' => 'strokerform-asset'));
             $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.js');
-            if ($this->getOptions()->isUseTwitterBootstrap() === true) {
+            if ($options->isUseTwitterBootstrap() === true) {
                 $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.bootstrap.js');
             }
         }
@@ -66,21 +92,21 @@ class Renderer extends AbstractValidateRenderer
 
     /**
      * @param  \Zend\Form\FormInterface $form
+     * @param Options $options
      * @return string
      */
-    protected function getInlineJavascript(FormInterface $form)
+    protected function getInlineJavascript(FormInterface $form, Options $options)
     {
-        $validateOptions = implode(',', $this->getOptions()->getValidateOptions());
+        $validateOptions = implode(',', $options->getValidateOptions());
         if (!empty($validateOptions)) {
             $validateOptions .= ',';
         }
 
-        return '$(document).ready(function(){
-        $(\'#' . $form->getName() . '\').validate({' . $validateOptions . '
-        rules: ' . \Zend\Json\Json::encode($this->rules) . ',
-        messages: ' . \Zend\Json\Json::encode($this->messages) . ',
-        });
-        });';
+        return sprintf($options->getInitializeTrigger(), '
+        $(\'form[name="' . $form->getName() . '"]\').validate({' . $validateOptions . '
+        "rules": ' . \Zend\Json\Json::encode($this->rules) . ',
+        "messages": ' . \Zend\Json\Json::encode($this->messages) . '
+        });');
     }
 
     /**
@@ -91,12 +117,13 @@ class Renderer extends AbstractValidateRenderer
      */
     protected function addValidationAttributesForElement($formAlias, ElementInterface $element, ValidatorInterface $validator = null)
     {
-        if ($element instanceof \Zend\Form\Element\Email && $validator instanceof \Zend\Validator\Regex) {
-            $validator = new \Zend\Validator\EmailAddress();
-        }
         if (in_array($this->getValidatorClassName($validator), $this->skipValidators)) {
             return;
         }
+        if ($element instanceof \Zend\Form\Element\Email && $validator instanceof \Zend\Validator\Regex) {
+            $validator = new \Zend\Validator\EmailAddress();
+        }
+
         $rule = $this->getRule($validator);
         if ($rule !== null) {
             $rules = $rule->getRules($validator);
@@ -126,32 +153,19 @@ class Renderer extends AbstractValidateRenderer
     }
 
     /**
-     * Get the classname of the zend validator
-     *
      * @param  \Zend\Validator\ValidatorInterface $validator
-     * @return mixed
+     * @return null|Rule\AbstractRule
      */
-    protected function getValidatorClassName(ValidatorInterface $validator = null)
+    public function getRule(ValidatorInterface $validator = null)
     {
-        $namespaces = explode('\\', get_class($validator));
-
-        return end($namespaces);
-    }
-
-    /**
-     * @param  \Zend\Validator\ValidatorInterface $validator
-     * @return null|RuleInterface
-     */
-    protected function getRule(ValidatorInterface $validator = null)
-    {
-        $ruleClass = 'StrokerForm\\Renderer\\JqueryValidate\\Rule\\' . $this->getValidatorClassName($validator);
-        if (class_exists($ruleClass)) {
-            $rule = new $ruleClass;
-            $rule->setTranslator($this->getTranslator());
-
+        $validatorName = lcfirst($this->getValidatorClassName($validator));
+        if ($this->getRulePluginManager()->has($validatorName)) {
+            $rule = $this->getRulePluginManager()->get($validatorName);
+            if ($rule instanceof TranslatorAwareInterface) {
+                $rule->setTranslatorTextDomain($this->getTranslatorTextDomain());
+            }
             return $rule;
         }
-
         return null;
     }
 }

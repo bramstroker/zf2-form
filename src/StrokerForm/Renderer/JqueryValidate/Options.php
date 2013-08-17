@@ -24,6 +24,11 @@ class Options extends \StrokerForm\Renderer\Options
     private $useTwitterBootstrap = true;
 
     /**
+     * @var string
+     */
+    private $initializeTrigger = '$(document).ready(function(){%s});';
+
+    /**
      * @return array
      */
     public function getValidateOptions()
@@ -64,5 +69,23 @@ class Options extends \StrokerForm\Renderer\Options
     public function setUseTwitterBootstrap($useTwitterBootstrap)
     {
         $this->useTwitterBootstrap = $useTwitterBootstrap;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInitializeTrigger()
+    {
+        return $this->initializeTrigger;
+    }
+
+    /**
+     * @param string $initializeTrigger
+     * @return Options
+     */
+    public function setInitializeTrigger($initializeTrigger)
+    {
+        $this->initializeTrigger = $initializeTrigger;
+        return $this;
     }
 }
