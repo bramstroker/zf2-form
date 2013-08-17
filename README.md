@@ -1,7 +1,7 @@
 # StrokerForm
 
-[![Build Status](https://travis-ci.org/bramstroker/zf2-form.png?branch=master)](https://travis-ci.org/bramstroker/zf2-fullpage-cache)
-[![Coverage Status](https://coveralls.io/repos/bramstroker/zf2-form/badge.png)](https://coveralls.io/r/bramstroker/zf2-fullpage-cache)
+[![Build Status](https://travis-ci.org/bramstroker/zf2-form.png?branch=master)](https://travis-ci.org/bramstroker/zf2-form)
+[![Coverage Status](https://coveralls.io/repos/bramstroker/zf2-form/badge.png)](https://coveralls.io/r/bramstroker/zf2-form)
 
 
 ZF2 module for extending forms with live clientside validation without need to write js validation code. 
