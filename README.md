@@ -36,7 +36,7 @@ Installation of StrokerForm uses composer. For composer documentation, please re
      ```php
      'StrokerForm',
      ```
-  6. copy the file `config/strokerform.global.php.dist` to your projects `config/autoload` directory.
+  6. copy the file `config/strokerform.global.php.dist` from `vendor\stroker\zf2-form` to your projects `config/autoload` directory and rename it to `strokerform.global.php`.
   5. copy the assets to your public folder (my/project/directory/public).
 
 ## Usage
