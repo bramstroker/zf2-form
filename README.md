@@ -9,6 +9,10 @@ You only need to define your validation rules server side with ZF2 and this modu
 In case a client side version of the validation rule doesn't exist a fallback is done using ajax.
 For basic usage examples see the sandbox project [StrokerFormSandbox](https://github.com/bramstroker/zf2-form-sandbox).
 
+## BC Breaks since 0.1.0
+
+For the new version you need to copy `config/strokerform.global.php.dist` to your projects `config/autoload` dir.
+
 ## Installation
 
 Installation of StrokerForm uses composer. For composer documentation, please refer to
@@ -32,6 +36,7 @@ Installation of StrokerForm uses composer. For composer documentation, please re
      ```php
      'StrokerForm',
      ```
+  6. copy the file `config/strokerform.global.php.dist` to your projects `config/autoload` directory.
   5. copy the assets to your public folder (my/project/directory/public).
 
 ## Usage
@@ -115,3 +120,13 @@ Currently only the jqueryValidate renderer is available. Support for other valid
 
 If you are using twitter bootstrap and the recommended form structure the styling works out of the box. 
 When you are using the ZF2 view helpers for your form you could style the input fields `error` and `valid` classes which are added on the fly by the jquery plugin.
+
+## Excluding elements from clientside validation
+
+You can set the option `strokerform_exclude` on a form element
+
+```php
+$name = new Element('name');
+$name->setLabel('Your name');
+$name->setOption('strokerform_exclude', true);
+```
