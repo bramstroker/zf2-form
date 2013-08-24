@@ -11,6 +11,9 @@
 namespace StrokerFormTest\Renderer\JqueryValidate;
 
 use Mockery\MockInterface;
+use Zend\Form\Element;
+use Zend\InputFilter\Input;
+use Zend\Form\Fieldset;
 use StrokerForm\Renderer\JqueryValidate\Rule\RulePluginManager;
 use Zend\Form\Factory;
 use StrokerForm\Renderer\JqueryValidate\Renderer;
@@ -253,6 +256,36 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $rules = $matches['rules'];
         $this->assertArrayNotHasKey('name', $rules);
         $this->assertArrayHasKey('email', $rules);
+    }
+
+    public function testFormWithFieldset()
+    {
+        $form = $this->createForm('test');
+
+        $foobarElement = new Element('foobar');
+        $foobarInput = new Input('foobar');
+        $foobarInput->setRequired(true);
+
+        $fieldset = new Fieldset('myfieldset');
+        $fieldset->add($foobarElement);
+
+        $fieldsetInputfilter = new InputFilter();
+        $fieldsetInputfilter->add($foobarInput);
+
+        $form->getInputFilter()->add($fieldsetInputfilter, 'myfieldset');
+
+        $form->add($fieldset);
+
+        $form->prepare();
+
+        $this->renderer->preRenderForm('test', $this->view);
+
+        $matches = $this->getMatchesFromInlineScript();
+
+        $rules = $matches['rules'];
+        $messages = $matches['messages'];
+        $this->assertArrayHasKey('myfieldset[foobar]', $rules);
+        $this->assertArrayHasKey('myfieldset[foobar]', $messages);
     }
 
     /**

@@ -34,6 +34,7 @@ class AjaxController extends AbstractActionController
      * Validate a field and return validation messages on failure
      *
      * @throws \InvalidArgumentException
+     * @return \Zend\Stdlib\ResponseInterface
      */
     public function validateAction()
     {
@@ -52,20 +53,23 @@ class AjaxController extends AbstractActionController
 
         $formAlias = $this->getEvent()->getRouteMatch()->getParam('form');
 
-        /** @var $form \Zend\Form\Form */
+        /** @var $form \Zend\Form\FormInterface */
         $form = $this->getFormManager()->get($formAlias);
-
-        $fieldName = key($data);
 
         $filter = $form->getInputFilter();
         $filter->setData($data);
-        $filter->setValidationGroup($fieldName);
+        $filter->setValidationGroup($this->convertDataArrayToValidationGroup($data));
         $valid = $filter->isValid();
 
         if (!$valid) {
             $messages = $filter->getMessages();
-            $messages = $messages[$fieldName];
-            $result = (count($messages) > 0) ? current($messages) : false;
+
+            $result = false;
+            array_walk_recursive($messages, function($item) use (&$result) {
+                if (is_string($item)) {
+                    $result = $item;
+                }
+            });
         } else {
             $result = true;
         }
@@ -73,6 +77,29 @@ class AjaxController extends AbstractActionController
         $response->setContent(\Zend\Json\Json::encode($result));
 
         return $response;
+    }
+
+    /**
+     * Convert post data to a format for the validation group
+     *
+     * i.e. from:
+     *   array('fieldset' => array('field1' => 'field value'))
+     * to:
+     *   array('fieldset' => array('field1'))
+     *
+     * @param $data
+     * @return array
+     */
+    protected function convertDataArrayToValidationGroup($data) {
+        $ret = array();
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $ret[$key] = $this->convertDataArrayToValidationGroup($value);
+            } else {
+                $ret[] = $key;
+            }
+        }
+        return $ret;
     }
 
     /**

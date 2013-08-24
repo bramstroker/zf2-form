@@ -37,26 +37,60 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
         $inputFilter = $form->getInputFilter();
 
         /** @var $element \Zend\Form\Element */
-        foreach ($form->getElements() as $element) {
-            if ($element->getOption('strokerform-exclude')) {
-                continue;
-            }
+        $validators = $this->extractValidatorsForForm($form, $inputFilter);
+        foreach ($validators as $validator) {
+            $element = $validator['element'];
+            foreach ($validator['validators'] as $val) {
+                $this->addValidationAttributesForElement($formAlias, $element, $val['instance']);
+            };
+        }
+    }
 
-            if (!$inputFilter->has($element->getName())) {
-                continue;
-            }
-            $input = $inputFilter->get($element->getName());
-
-            // Make sure NotEmpty validator is added when input is required
-            $input->isValid();
-
-            $chain = $input->getValidatorChain();
-            $validators = $chain->getValidators();
-            foreach ($validators as $validator) {
-                $validatorInstance = $validator['instance'];
-                $this->addValidationAttributesForElement($formAlias, $element, $validatorInstance);
+    public function extractValidatorsForForm($formOrFieldset, $inputFilter)
+    {
+        $foundValidators = array();
+        foreach ($formOrFieldset->getElements() as $element) {
+            $validators = $this->getValidatorsForElement($inputFilter, $element);
+            if (count($validators) > 0) {
+                $foundValidators[] = array(
+                    'element' => $element,
+                    'validators' => $validators
+                );
             }
         }
+
+        /** @var $fieldset \Zend\Form\FieldSetInterface */
+        foreach ($formOrFieldset->getFieldsets() as $fieldset) {
+            $inputFilter = $inputFilter->get($fieldset->getName());
+            $foundValidators = array_merge($foundValidators, $this->extractValidatorsForForm($fieldset, $inputFilter));
+        }
+
+        return $foundValidators;
+    }
+
+    public function getValidatorsForElement($inputFilter, $element)
+    {
+        if ($element->getOption('strokerform-exclude')) {
+            return;
+        }
+
+        // Check if we are dealing with a fieldset element
+        if (preg_match('/^.*\[(.*)\]$/', $element->getName(), $matches)) {
+            $elementName = $matches[1];
+        } else {
+            $elementName = $element->getName();
+        }
+
+        if (!$inputFilter->has($elementName)) {
+            return;
+        }
+        $input = $inputFilter->get($elementName);
+
+        // Make sure NotEmpty validator is added when input is required
+        $input->isValid();
+
+        $chain = $input->getValidatorChain();
+        return $chain->getValidators();
     }
 
     /**
