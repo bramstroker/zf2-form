@@ -11,6 +11,7 @@
 namespace StrokerForm\Renderer\JqueryValidate;
 
 use StrokerForm\Renderer\JqueryValidate\Rule\RulePluginManager;
+use Zend\Json\Json;
 use Zend\View\Renderer\PhpRenderer as View;
 use Zend\Form\FormInterface;
 use StrokerForm\Renderer\AbstractValidateRenderer;
@@ -97,16 +98,18 @@ class Renderer extends AbstractValidateRenderer
      */
     protected function getInlineJavascript(FormInterface $form, Options $options)
     {
-        $validateOptions = implode(',', $options->getValidateOptions());
-        if (!empty($validateOptions)) {
-            $validateOptions .= ',';
-        }
+        $validateOptions = $options->getValidateOptions();
+        $validateOptions['rules'] = $this->rules;
+        $validateOptions['messages'] = $this->messages;
 
-        return sprintf($options->getInitializeTrigger(), '
-        $(\'form[name="' . $form->getName() . '"]\').validate({' . $validateOptions . '
-        "rules": ' . \Zend\Json\Json::encode($this->rules) . ',
-        "messages": ' . \Zend\Json\Json::encode($this->messages) . '
-        });');
+        return sprintf(
+            $options->getInitializeTrigger(),
+            sprintf(
+                '$(\'form[name="%s"]\').validate(%s);',
+                $form->getName(),
+                Json::encode($validateOptions)
+            )
+        );
     }
 
     /**

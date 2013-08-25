@@ -207,7 +207,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     {
         $this->createForm('test');
         $this->rendererOptions->setValidateOptions(array(
-            '"onsubmit": false'
+            'onsubmit' => false
         ));
         $this->renderer->preRenderForm('test', $this->view);
         $matches = $this->getMatchesFromInlineScript();
