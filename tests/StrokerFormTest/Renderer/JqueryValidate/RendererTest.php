@@ -300,6 +300,9 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $inlineString = preg_replace('/(\r\n|\r|\n|\t)+/', '', $inlineScript->toString());
         if(preg_match('/\$\(\'form\[name=\"(?P<form>[a-z]*)"\]\'\)\.validate\((?P<options>.*)\);}\);/', $inlineString, $matches))
         {
+            $options = json_decode($matches['options'], true);
+            $matches['rules'] = $options['rules'];
+            $matches['messages'] = $options['messages'];
             return $matches;
         }
 
