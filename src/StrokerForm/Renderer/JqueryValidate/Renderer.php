@@ -98,16 +98,20 @@ class Renderer extends AbstractValidateRenderer
      */
     protected function getInlineJavascript(FormInterface $form, Options $options)
     {
-        $validateOptions = $options->getValidateOptions();
-        $validateOptions['rules'] = $this->rules;
-        $validateOptions['messages'] = $this->messages;
+        $validateOptions = array();
+        foreach ($options->getValidateOptions() as $key => $value) {
+            $value = (is_string($value)) ? $value : var_export($value, true);
+            $validateOptions[] = '"' . $key . '": ' . $value;
+        }
 
         return sprintf(
             $options->getInitializeTrigger(),
             sprintf(
-                '$(\'form[name="%s"]\').validate(%s);',
+                '$(\'form[name="%s"]\').validate({%s"rules":%s,"messages":%s});',
                 $form->getName(),
-                Json::encode($validateOptions)
+                count($validateOptions) > 0 ? implode(',', $validateOptions) . ',' : '',
+                Json::encode($this->rules),
+                Json::encode($this->messages)
             )
         );
     }

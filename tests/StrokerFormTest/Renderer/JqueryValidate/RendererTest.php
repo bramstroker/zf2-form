@@ -207,12 +207,12 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     {
         $this->createForm('test');
         $this->rendererOptions->setValidateOptions(array(
-            'onsubmit' => false
+            'onsubmit' => false,
+            'submitHandler' => 'myHandler'
         ));
         $this->renderer->preRenderForm('test', $this->view);
         $matches = $this->getMatchesFromInlineScript();
-        $this->assertTrue(isset($matches['onsubmit']));
-        $this->assertFalse($matches['onsubmit']);
+        $this->assertStringStartsWith('{"onsubmit": false,"submitHandler": myHandler', $matches['options']);
     }
 
     public function testJavascriptAssetsAreIncludedToInlineScript()
@@ -300,9 +300,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $inlineString = preg_replace('/(\r\n|\r|\n|\t)+/', '', $inlineScript->toString());
         if(preg_match('/\$\(\'form\[name=\"(?P<form>[a-z]*)"\]\'\)\.validate\((?P<options>.*)\);}\);/', $inlineString, $matches))
         {
-            $data = json_decode($matches['options'], true);
-            $data['form'] = $matches['form'];
-            return $data;
+            return $matches;
         }
 
         return array();
