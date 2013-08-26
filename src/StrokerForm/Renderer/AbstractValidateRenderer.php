@@ -15,6 +15,7 @@ use Zend\Form\FormInterface;
 use Zend\Validator\ValidatorInterface;
 use Zend\Form\ElementInterface;
 use Zend\Form\Form;
+use Zend\Form\Element\Collection;
 
 abstract class AbstractValidateRenderer extends AbstractRenderer
 {
@@ -60,9 +61,12 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
         }
 
         /** @var $fieldset \Zend\Form\FieldSetInterface */
-        foreach ($formOrFieldset->getFieldsets() as $fieldset) {
-            $inputFilter = $inputFilter->get($fieldset->getName());
-            $foundValidators = array_merge($foundValidators, $this->extractValidatorsForForm($fieldset, $inputFilter));
+        foreach ($formOrFieldset->getFieldsets() as $key => $fieldset) {
+            if ($formOrFieldset instanceof Collection) {
+                $foundValidators = array_merge($foundValidators, $this->extractValidatorsForForm($fieldset, $inputFilter->get($key)));
+            } else {
+                $foundValidators = array_merge($foundValidators, $this->extractValidatorsForForm($fieldset, $inputFilter->get($fieldset->getName())));
+            }
         }
 
         return $foundValidators;
