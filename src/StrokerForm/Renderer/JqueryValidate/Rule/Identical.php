@@ -22,8 +22,8 @@ class Identical extends AbstractRule
     {
         $token = $validator->getToken();
 
-        if (strpos($element->getName(), "[")) {
-            $token = preg_replace('#\[.+?\]$#', "[" . $token ."]", $element->getName());
+        if (strpos($element->getName(), "[") !== false) {
+            $token = preg_replace('#\[[^\]]+\]$#i', "[" . $token ."]", $element->getName());
         }
 
         return array('equalTo' => '[name="' . $token . '"]');
