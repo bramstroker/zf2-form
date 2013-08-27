@@ -10,6 +10,7 @@
 
 namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
+use Zend\Form\Element;
 use Zend\Validator\ValidatorInterface;
 
 class CreditCard extends AbstractRule
@@ -17,7 +18,7 @@ class CreditCard extends AbstractRule
     /**
      * {@inheritDoc}
      */
-    public function getRules(ValidatorInterface $validator)
+    public function getRules(ValidatorInterface $validator, Element $element = null)
     {
         return array('creditcard' => true);
     }

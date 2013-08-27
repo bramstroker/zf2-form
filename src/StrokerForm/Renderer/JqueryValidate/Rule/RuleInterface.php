@@ -10,6 +10,7 @@
 
 namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
+use Zend\Form\Element;
 use Zend\Validator\ValidatorInterface;
 
 interface RuleInterface
@@ -20,7 +21,7 @@ interface RuleInterface
      * @param  \Zend\Validator\ValidatorInterface $validator
      * @return array
      */
-    public function getRules(ValidatorInterface $validator);
+    public function getRules(ValidatorInterface $validator, Element $element = null);
 
     /**
      * Get the validation message

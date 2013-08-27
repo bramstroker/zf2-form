@@ -129,7 +129,7 @@ class Renderer extends AbstractValidateRenderer
 
         $rule = $this->getRule($validator);
         if ($rule !== null) {
-            $rules = $rule->getRules($validator);
+            $rules = $rule->getRules($validator, $element);
             $messages = $rule->getMessages($validator);
         } else {
             //fallback ajax
