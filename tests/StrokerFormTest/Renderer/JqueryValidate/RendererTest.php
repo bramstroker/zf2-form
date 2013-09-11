@@ -230,7 +230,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
                 $jsTagsFound++;
             }
         }
-        $this->assertEquals(2, $jsTagsFound);
+        $this->assertEquals(3, $jsTagsFound);
     }
 
     public function testEmailElementAlwaysUsesEmailAddressValidator()

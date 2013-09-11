@@ -29,6 +29,11 @@ class Options extends \StrokerForm\Renderer\Options
     private $initializeTrigger = '$(document).ready(function(){%s});';
 
     /**
+     * @var array
+     */
+    private $customValidationRules = array();
+
+    /**
      * @return array
      */
     public function getValidateOptions()
@@ -86,6 +91,25 @@ class Options extends \StrokerForm\Renderer\Options
     public function setInitializeTrigger($initializeTrigger)
     {
         $this->initializeTrigger = $initializeTrigger;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCustomValidationRules()
+    {
+        return $this->customValidationRules;
+    }
+
+    /**
+     * @param array $customValidationRules
+     * @return Options $this
+     */
+    public function setCustomValidationRules(array $customValidationRules)
+    {
+        $this->customValidationRules = $customValidationRules;
+
         return $this;
     }
 }
