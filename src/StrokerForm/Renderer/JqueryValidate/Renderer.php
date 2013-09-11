@@ -24,7 +24,6 @@ class Renderer extends AbstractValidateRenderer
      * @var array
      */
     protected $skipValidators = array(
-        'InArray',
         'Explode',
         'Upload'
     );
@@ -85,6 +84,7 @@ class Renderer extends AbstractValidateRenderer
         if ($options->isIncludeAssets()) {
             $assetBaseUri = $this->getHttpRouter()->assemble(array(), array('name' => 'strokerform-asset'));
             $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.js');
+            $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/custom_rules.js');
             if ($options->isUseTwitterBootstrap() === true) {
                 $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.bootstrap.js');
             }
@@ -98,6 +98,7 @@ class Renderer extends AbstractValidateRenderer
      */
     protected function getInlineJavascript(FormInterface $form, Options $options)
     {
+
         $validateOptions = array();
         foreach ($options->getValidateOptions() as $key => $value) {
             $value = (is_string($value)) ? $value : var_export($value, true);
