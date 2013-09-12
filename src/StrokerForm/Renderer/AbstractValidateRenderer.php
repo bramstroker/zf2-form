@@ -64,7 +64,7 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
             $foundValidators = array_merge($foundValidators, $this->extractValidatorsForForm($fieldset, $inputFilter->get($key)));
         }
 
-         return $foundValidators;
+        return $foundValidators;
     }
 
     public function getValidatorsForElement($inputFilter, $element)
