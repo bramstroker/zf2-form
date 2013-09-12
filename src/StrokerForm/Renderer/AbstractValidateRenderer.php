@@ -60,10 +60,8 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
         }
 
         /** @var $fieldset \Zend\Form\FieldSetInterface */
-        foreach ($formOrFieldset->getFieldsets() as $fieldset) {
-            /** @var \Zend\InputFilter\InputFilter $inputFilter */
-            $inputFilterFieldset = $inputFilter->get($fieldset->getName());
-            $foundValidators = array_merge($foundValidators, $this->extractValidatorsForForm($fieldset, $inputFilterFieldset));
+        foreach ($formOrFieldset->getFieldsets() as $key => $fieldset) {
+            $foundValidators = array_merge($foundValidators, $this->extractValidatorsForForm($fieldset, $inputFilter->get($key)));
         }
 
          return $foundValidators;
