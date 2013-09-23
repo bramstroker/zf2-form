@@ -230,7 +230,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
                 $jsTagsFound++;
             }
         }
-        $this->assertEquals(2, $jsTagsFound);
+        $this->assertEquals(3, $jsTagsFound);
     }
 
     public function testEmailElementAlwaysUsesEmailAddressValidator()
@@ -286,6 +286,103 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $messages = $matches['messages'];
         $this->assertArrayHasKey('myfieldset[foobar]', $rules);
         $this->assertArrayHasKey('myfieldset[foobar]', $messages);
+    }
+
+    public function testFormWithMultipleFieldsets()
+    {
+        $form = $this->createForm('test');
+
+        // First fieldset
+        $foobarElement = new Element('foobar');
+        $foobarInput = new Input('foobar');
+        $foobarInput->setRequired(true);
+
+        $fieldset = new Fieldset('myfieldset');
+        $fieldset->add($foobarElement);
+
+        $fieldsetInputfilter = new InputFilter();
+        $fieldsetInputfilter->add($foobarInput);
+
+        $form->getInputFilter()->add($fieldsetInputfilter, 'myfieldset');
+
+        $form->add($fieldset);
+
+        // Second fieldset
+        $foobarElement2 = new Element('foobar2');
+        $foobarInput2 = new Input('foobar2');
+        $foobarInput2->setRequired(true);
+
+        $fieldset2 = new Fieldset('myfieldset2');
+        $fieldset2->add($foobarElement2);
+
+        $fieldsetInputfilter2 = new InputFilter();
+        $fieldsetInputfilter2->add($foobarInput2);
+
+        $form->getInputFilter()->add($fieldsetInputfilter2, 'myfieldset2');
+
+        $form->add($fieldset2);
+
+        $form->prepare();
+
+        $this->renderer->preRenderForm('test', $this->view);
+
+        $matches = $this->getMatchesFromInlineScript();
+
+        $rules = $matches['rules'];
+        $messages = $matches['messages'];
+        $this->assertArrayHasKey('myfieldset[foobar]', $rules);
+        $this->assertArrayHasKey('myfieldset[foobar]', $messages);
+        $this->assertArrayHasKey('myfieldset2[foobar2]', $rules);
+        $this->assertArrayHasKey('myfieldset2[foobar2]', $messages);
+    }
+
+    public function testFormWithNestedFieldsets()
+    {
+        $this->markTestIncomplete('Support needs to be built for nested fieldsets');
+        $form = $this->createForm('test');
+
+        // First fieldset
+        $foobarElement = new Element('foobar');
+        $foobarInput = new Input('foobar');
+        $foobarInput->setRequired(true);
+
+        $fieldset = new Fieldset('myfieldset');
+        $fieldset->add($foobarElement);
+
+        $fieldsetInputfilter = new InputFilter();
+        $fieldsetInputfilter->add($foobarInput);
+
+        $form->getInputFilter()->add($fieldsetInputfilter, 'myfieldset');
+
+        $form->add($fieldset);
+
+        // Second fieldset
+        $foobarElement2 = new Element('foobar2');
+        $foobarInput2 = new Input('foobar2');
+        $foobarInput2->setRequired(true);
+
+        $fieldset2 = new Fieldset('myfieldset2');
+        $fieldset2->add($foobarElement2);
+
+        $fieldsetInputfilter2 = new InputFilter();
+        $fieldsetInputfilter2->add($foobarInput2);
+
+        $fieldsetInputfilter->add($fieldsetInputfilter2, 'myfieldset2');
+
+        $fieldset->add($fieldset2);
+
+        $form->prepare();
+
+        $this->renderer->preRenderForm('test', $this->view);
+
+        $matches = $this->getMatchesFromInlineScript();
+
+        $rules = $matches['rules'];
+        $messages = $matches['messages'];
+        $this->assertArrayHasKey('myfieldset[foobar]', $rules);
+        $this->assertArrayHasKey('myfieldset[foobar]', $messages);
+        $this->assertArrayHasKey('myfieldset2[foobar2]', $rules);
+        $this->assertArrayHasKey('myfieldset2[foobar2]', $messages);
     }
 
     /**

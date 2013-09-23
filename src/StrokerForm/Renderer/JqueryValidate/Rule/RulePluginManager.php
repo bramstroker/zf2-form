@@ -32,6 +32,7 @@ class RulePluginManager extends AbstractPluginManager
         'notempty' => 'StrokerForm\Renderer\JqueryValidate\Rule\NotEmpty',
         'stringlength' => 'StrokerForm\Renderer\JqueryValidate\Rule\StringLength',
         'uri' => 'StrokerForm\Renderer\JqueryValidate\Rule\Uri',
+        'inarray' => 'StrokerForm\Renderer\JqueryValidate\Rule\InArray',
     );
 
     /**
