@@ -338,7 +338,6 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
     public function testFormWithNestedFieldsets()
     {
-        $this->markTestIncomplete('Support needs to be built for nested fieldsets');
         $form = $this->createForm('test');
 
         // First fieldset
@@ -381,8 +380,8 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $messages = $matches['messages'];
         $this->assertArrayHasKey('myfieldset[foobar]', $rules);
         $this->assertArrayHasKey('myfieldset[foobar]', $messages);
-        $this->assertArrayHasKey('myfieldset2[foobar2]', $rules);
-        $this->assertArrayHasKey('myfieldset2[foobar2]', $messages);
+        $this->assertArrayHasKey('myfieldset[myfieldset2][foobar2]', $rules);
+        $this->assertArrayHasKey('myfieldset[myfieldset2][foobar2]', $messages);
     }
 
     /**

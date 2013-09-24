@@ -10,7 +10,7 @@
 
 namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
-use Zend\Form\Element;
+use Zend\Form\ElementInterface;
 use Zend\Validator\ValidatorInterface;
 
 class Identical extends AbstractRule
@@ -18,7 +18,7 @@ class Identical extends AbstractRule
     /**
      * {@inheritDoc}
      */
-    public function getRules(ValidatorInterface $validator, Element $element = null)
+    public function getRules(ValidatorInterface $validator, ElementInterface $element = null)
     {
         $token = $validator->getToken();
 

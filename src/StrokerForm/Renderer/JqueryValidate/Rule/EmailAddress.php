@@ -10,7 +10,7 @@
 
 namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
-use Zend\Form\Element;
+use Zend\Form\ElementInterface;
 use Zend\Validator\ValidatorInterface;
 
 class EmailAddress extends AbstractRule
@@ -18,7 +18,7 @@ class EmailAddress extends AbstractRule
     /**
      * {@inheritDoc}
      */
-    public function getRules(ValidatorInterface $validator, Element $element = null)
+    public function getRules(ValidatorInterface $validator, ElementInterface $element = null)
     {
         return array('email' => true);
     }
