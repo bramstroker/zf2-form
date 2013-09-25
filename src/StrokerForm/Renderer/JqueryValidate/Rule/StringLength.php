@@ -10,6 +10,7 @@
 
 namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
+use Zend\Form\ElementInterface;
 use Zend\Validator\ValidatorInterface;
 
 class StringLength extends AbstractRule
@@ -17,7 +18,7 @@ class StringLength extends AbstractRule
     /**
      * {@inheritDoc}
      */
-    public function getRules(ValidatorInterface $validator)
+    public function getRules(ValidatorInterface $validator, ElementInterface $element = null)
     {
         $rules = array();
         if ($validator->getMin() > 0) {

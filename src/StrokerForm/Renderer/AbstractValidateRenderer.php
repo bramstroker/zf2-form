@@ -15,6 +15,7 @@ use Zend\Form\FormInterface;
 use Zend\Validator\ValidatorInterface;
 use Zend\Form\ElementInterface;
 use Zend\Form\Form;
+use Zend\Form\Element\Collection;
 
 abstract class AbstractValidateRenderer extends AbstractRenderer
 {

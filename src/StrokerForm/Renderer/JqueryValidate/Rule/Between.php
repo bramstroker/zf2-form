@@ -10,6 +10,7 @@
 
 namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
+use Zend\Form\ElementInterface;
 use Zend\Validator\ValidatorInterface;
 
 class Between extends AbstractRule
@@ -17,7 +18,7 @@ class Between extends AbstractRule
     /**
      * {@inheritDoc}
      */
-    public function getRules(ValidatorInterface $validator)
+    public function getRules(ValidatorInterface $validator, ElementInterface $element = null)
     {
         return array('range' => array($this->getMin($validator), $this->getMax($validator)));
     }
