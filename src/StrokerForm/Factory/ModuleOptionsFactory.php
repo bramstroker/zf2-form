@@ -13,6 +13,7 @@ namespace StrokerForm\Factory;
 use Zend\ServiceManager\FactoryInterface;
 use StrokerForm\Options\ModuleOptions;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use RuntimeException;
 
 class ModuleOptionsFactory implements FactoryInterface
 {
