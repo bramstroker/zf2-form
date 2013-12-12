@@ -123,10 +123,10 @@ When you are using the ZF2 view helpers for your form you could style the input 
 
 ## Excluding elements from clientside validation
 
-You can set the option `strokerform_exclude` on a form element
+You can set the option `strokerform-exclude` on a form element
 
 ```php
 $name = new Element('name');
 $name->setLabel('Your name');
-$name->setOption('strokerform_exclude', true);
+$name->setOption('strokerform-exclude', true);
 ```
