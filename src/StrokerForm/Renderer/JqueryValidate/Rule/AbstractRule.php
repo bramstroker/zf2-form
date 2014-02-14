@@ -12,7 +12,6 @@ namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
 use Zend\I18n\Translator\Translator;
 use Zend\I18n\Translator\TranslatorAwareInterface;
-use Zend\I18n\Translator\TranslatorInterface;
 use Zend\Validator\AbstractValidator;
 
 abstract class AbstractRule implements
@@ -53,11 +52,11 @@ abstract class AbstractRule implements
     /**
      * Sets translator to use in helper
      *
-     * @param  TranslatorInterface $translator
+     * @param  Translator $translator
      * @param  string     $textDomain
      * @return mixed
      */
-    public function setTranslator(TranslatorInterface $translator = null, $textDomain = null)
+    public function setTranslator(Translator $translator = null, $textDomain = null)
     {
         $this->translator = $translator;
 
