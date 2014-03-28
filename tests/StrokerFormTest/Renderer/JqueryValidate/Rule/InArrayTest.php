@@ -49,4 +49,14 @@ class InArrayTest extends AbstractRuleTest
     {
         $this->assertArrayHasKey('in_array', $this->getMessages());
     }
+
+    public function testIfAssociativeArrayTransformed()
+    {
+        $validator = new InArray();
+        $validator->setHaystack(array('foo' => 'bar', 'fuu' => 'buz'));
+
+        $this->validator = $validator;
+
+        $this->assertEquals(array('in_array' => array(0 => 'bar', 1 => 'buz')), $this->getRules());
+    }
 }
