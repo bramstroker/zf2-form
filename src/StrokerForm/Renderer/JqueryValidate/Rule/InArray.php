@@ -26,7 +26,13 @@ class InArray extends AbstractRule
      */
     public function getRules(ValidatorInterface $validator, ElementInterface $element = null)
     {
-        return array('in_array' => $validator->getHaystack());
+        // Javascript doesn't support associative arrays. Therefore, check if the array is associative,
+        // and if so, transform it to a non-associative one.
+        if (array_keys($validator->getHaystack()) !== range(0, count($validator->getHaystack()) - 1)) {
+            return array('in_array' => array_values($validator->getHaystack()));
+        }
+
+        return array('in_array' => (array)$validator->getHaystack());
     }
 
     /**

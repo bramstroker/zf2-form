@@ -39,4 +39,19 @@ class FormManager extends AbstractPluginManager
             )
         );
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function get($name, $options = array(), $usePeeringServiceManagers = true)
+    {
+        $formElementManager = $this->getServiceLocator()->get('FormElementManager');
+        if ($formElementManager->has($name)) {
+            $form = $formElementManager->get($name);
+            if ($form instanceof FormInterface) {
+                return $form;
+            }
+        }
+        return parent::get($name, $options, $usePeeringServiceManagers);
+    }
 }
