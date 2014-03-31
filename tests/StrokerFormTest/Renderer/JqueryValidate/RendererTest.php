@@ -200,7 +200,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
         $this->renderer->preRenderForm('test', $this->view, null, array('include_assets' => true));
 
-        $this->assertTrue($this->renderer->getOptions()->isIncludeAssets());
+        $this->assertTrue($this->renderer->getOptions()->getIncludeAssets());
     }
 
     public function testExtraValidateOptionsCouldBeSet()
@@ -382,6 +382,90 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('myfieldset[foobar]', $messages);
         $this->assertArrayHasKey('myfieldset[myfieldset2][foobar2]', $rules);
         $this->assertArrayHasKey('myfieldset[myfieldset2][foobar2]', $messages);
+    }
+
+    public function testIfSetOptionsAddsOptions()
+    {
+        $options = array(
+            'include_assets' => true
+        );
+
+        $this->renderer->setOptions($options);
+
+        $expectedOptions = array(
+            'validate_options' => array(
+                'foo' => 'bar',
+                'bar' => 'baz'
+            )
+        );
+
+        $this->renderer->setOptions($expectedOptions);
+
+        $this->assertEquals($expectedOptions['validate_options'], $this->renderer->getOptions()->getValidateOptions());
+    }
+
+    public function testIfSetOptionsReplacesRecursively()
+    {
+        $options = array(
+            'include_assets' => true,
+            'validate_options' => array(
+                'foo' => 'bar',
+                'bar' => 'baz'
+            )
+        );
+
+        $this->renderer->setOptions($options);
+
+        $expectedOptions = array(
+            'validate_options' => array(
+                'foo' => 'fuu',
+                'bar' => 'baz',
+                'baz' => 'bar'
+            )
+        );
+
+        $this->renderer->setOptions($expectedOptions);
+
+        $this->assertEquals($expectedOptions['validate_options'], $this->renderer->getOptions()->getValidateOptions());
+    }
+
+    public function testIfSetOptionsAddsRecursively()
+    {
+        $options = array(
+            'include_assets' => true,
+            'validate_options' => array(
+                'foo' => array(
+                    'foo' => 'bar'
+                ),
+                'bar' => 'baz'
+            )
+        );
+
+        $this->renderer->setOptions($options);
+
+        $extraOptions = array(
+            'validate_options' => array(
+                'foo' => array(
+                    'bar' => 'baz'
+                ),
+                'baz' => 'bar'
+            )
+        );
+
+        $this->renderer->setOptions($extraOptions);
+
+        $expectedOptions = array(
+            'validate_options' => array(
+                'foo' => array(
+                    'foo' => 'bar',
+                    'bar' => 'baz'
+                ),
+                'bar' => 'baz',
+                'baz' => 'bar'
+            )
+        );
+
+        $this->assertEquals($expectedOptions['validate_options'], $this->renderer->getOptions()->getValidateOptions());
     }
 
     /**
