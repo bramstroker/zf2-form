@@ -81,7 +81,7 @@ class Renderer extends AbstractValidateRenderer
         $inlineScript = $view->plugin('inlineScript');
         $inlineScript->appendScript($this->getInlineJavascript($form, $options));
 
-        if ($options->isIncludeAssets()) {
+        if ($options->getIncludeAssets()) {
             $assetBaseUri = $this->getHttpRouter()->assemble(array(), array('name' => 'strokerform-asset'));
             $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.js');
             $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/custom_rules.js');

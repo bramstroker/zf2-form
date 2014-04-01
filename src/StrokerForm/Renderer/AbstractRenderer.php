@@ -16,6 +16,7 @@ use Zend\I18n\Translator\TranslatorInterface;
 use Zend\Mvc\Router\RouteInterface;
 use Zend\Stdlib\AbstractOptions;
 use StrokerForm\FormManager;
+use Zend\Stdlib\ArrayUtils;
 
 abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInterface
 {
@@ -51,7 +52,7 @@ abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInt
     protected $defaultOptions = array();
 
     /**
-     * @var AbstractOptions
+     * @var Options
      */
     protected $options = array();
 
@@ -179,7 +180,16 @@ abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInt
      */
     public function setOptions(array $options = array())
     {
-        $this->options = clone $this->defaultOptions;
+        if ($this->options == null) {
+            $this->options = clone $this->defaultOptions;
+        }
+
+        foreach ($options as $key => $value) {
+            if (isset($this->options->{$key}) && is_array($this->options->{$key})) {
+                $options[$key] = $this->options->mergeRecursive($this->options->{$key}, $value);
+            }
+        }
+
         $this->options->setFromArray($options);
     }
 
