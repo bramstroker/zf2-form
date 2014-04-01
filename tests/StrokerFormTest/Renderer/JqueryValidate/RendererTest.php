@@ -407,7 +407,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     public function testIfSetOptionsReplacesRecursively()
     {
         $options = array(
-            'include_assets' => true,
+            'include_assets' => false,
             'validate_options' => array(
                 'foo' => 'bar',
                 'bar' => 'baz'
@@ -417,6 +417,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $this->renderer->setOptions($options);
 
         $expectedOptions = array(
+            'include_assets' => true,
             'validate_options' => array(
                 'foo' => 'fuu',
                 'bar' => 'baz',
@@ -426,6 +427,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
         $this->renderer->setOptions($expectedOptions);
 
+        $this->assertEquals($expectedOptions['include_assets'], $this->renderer->getOptions()->getIncludeAssets());
         $this->assertEquals($expectedOptions['validate_options'], $this->renderer->getOptions()->getValidateOptions());
     }
 
