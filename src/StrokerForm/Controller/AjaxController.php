@@ -103,7 +103,7 @@ class AjaxController extends AbstractActionController
     }
 
     /**
-     * @return \StrokerForm\FormManager
+     * @return FormManager
      */
     public function getFormManager()
     {
@@ -111,9 +111,9 @@ class AjaxController extends AbstractActionController
     }
 
     /**
-     * @param \StrokerForm\FormManager $formManager
+     * @param FormManager $formManager
      */
-    public function setFormManager($formManager)
+    public function setFormManager(FormManager $formManager)
     {
         $this->formManager = $formManager;
     }

@@ -33,16 +33,6 @@ class RendererCollection extends AbstractRenderer
     }
 
     /**
-     * Set inner renderer
-     *
-     * @param RendererInterface[] $renderers
-     */
-    public function setRenderers($renderers)
-    {
-        $this->renderers = $renderers;
-    }
-
-    /**
      * Add a renderer
      *
      * @param RendererInterface $renderer

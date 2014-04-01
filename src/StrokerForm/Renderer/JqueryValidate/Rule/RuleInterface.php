@@ -10,10 +10,11 @@
 
 namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
+use Zend\I18n\Translator\TranslatorAwareInterface;
 use Zend\Form\ElementInterface;
 use Zend\Validator\ValidatorInterface;
 
-interface RuleInterface
+interface RuleInterface extends TranslatorAwareInterface
 {
     /**
      * Get the validation rules

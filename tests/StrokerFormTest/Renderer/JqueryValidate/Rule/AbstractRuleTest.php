@@ -126,4 +126,23 @@ abstract class AbstractRuleTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue(is_array($this->getRule()->getRules($this->getValidator(), $this->getElement())));
     }
+
+    public function testGetSetTranslatorTextDomain()
+    {
+        $this->getRule()->setTranslatorTextDomain('foo');
+        $this->assertEquals('foo', $this->getRule()->getTranslatorTextDomain());
+    }
+
+    public function testGetSetTranslatorEnabled()
+    {
+        $this->getRule()->setTranslatorEnabled(false);
+        $this->assertFalse($this->getRule()->isTranslatorEnabled());
+    }
+
+    public function testHasTranslator()
+    {
+        $this->assertTrue($this->getRule()->hasTranslator());
+        $this->getRule()->setTranslator(null);
+        $this->assertFalse($this->getRule()->hasTranslator());
+    }
 }

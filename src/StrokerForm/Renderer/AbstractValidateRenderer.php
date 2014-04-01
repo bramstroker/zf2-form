@@ -10,12 +10,14 @@
 
 namespace StrokerForm\Renderer;
 
+use Zend\Form\Element\MultiCheckbox;
+use Zend\Form\Element\Radio;
+use Zend\Form\FieldsetInterface;
+use Zend\InputFilter\InputFilterInterface;
 use Zend\View\Renderer\PhpRenderer as View;
 use Zend\Form\FormInterface;
 use Zend\Validator\ValidatorInterface;
 use Zend\Form\ElementInterface;
-use Zend\Form\Form;
-use Zend\Form\Element\Collection;
 
 abstract class AbstractValidateRenderer extends AbstractRenderer
 {
@@ -47,7 +49,14 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
         }
     }
 
-    public function extractValidatorsForForm($formOrFieldset, $inputFilter)
+    /**
+     * Iterate through all the elements and retrieve their validators
+     *
+     * @param FieldsetInterface $formOrFieldset
+     * @param InputFilterInterface $inputFilter
+     * @return array
+     */
+    public function extractValidatorsForForm(FieldsetInterface $formOrFieldset, InputFilterInterface $inputFilter)
     {
         $foundValidators = array();
         foreach ($formOrFieldset->getElements() as $element) {
@@ -60,7 +69,6 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
             }
         }
 
-        /** @var $fieldset \Zend\Form\FieldSetInterface */
         foreach ($formOrFieldset->getFieldsets() as $key => $fieldset) {
             $foundValidators = array_merge($foundValidators, $this->extractValidatorsForForm($fieldset, $inputFilter->get($key)));
         }
@@ -68,7 +76,14 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
         return $foundValidators;
     }
 
-    public function getValidatorsForElement($inputFilter, $element)
+    /**
+     * Get all validators for a given element
+     *
+     * @param InputFilterInterface $inputFilter
+     * @param ElementInterface     $element
+     * @return mixed
+     */
+    public function getValidatorsForElement(InputFilterInterface $inputFilter, ElementInterface $element)
     {
         if ($element->getOption('strokerform-exclude')) {
             return;
@@ -104,9 +119,9 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
     }
 
     /**
-     * @param  string                             $formAlias
-     * @param  \Zend\Form\ElementInterface        $element
-     * @param  \Zend\Validator\ValidatorInterface $validator
+     * @param  string             $formAlias
+     * @param  ElementInterface   $element
+     * @param  ValidatorInterface $validator
      * @return mixed
      */
     abstract protected function addValidationAttributesForElement($formAlias, ElementInterface $element, ValidatorInterface $validator = null);
@@ -114,13 +129,13 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
     /**
      * Get the name of the form element
      *
-     * @param  \Zend\Form\ElementInterface $element
+     * @param  ElementInterface $element
      * @return string
      */
     protected function getElementName(ElementInterface $element)
     {
         $elementName = $element->getName();
-        if ($element instanceof \Zend\Form\Element\MultiCheckbox && !$element instanceof \Zend\Form\Element\Radio) {
+        if ($element instanceof MultiCheckbox && !$element instanceof Radio) {
             $elementName .= '[]';
         }
 
@@ -130,7 +145,7 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
     /**
      * Get the classname of the zend validator
      *
-     * @param  \Zend\Validator\ValidatorInterface $validator
+     * @param  ValidatorInterface $validator
      * @return mixed
      */
     protected function getValidatorClassName(ValidatorInterface $validator = null)

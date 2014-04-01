@@ -11,13 +11,10 @@
 namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
 use Zend\I18n\Translator\Translator;
-use Zend\I18n\Translator\TranslatorAwareInterface;
 use Zend\I18n\Translator\TranslatorInterface;
 use Zend\Validator\AbstractValidator;
 
-abstract class AbstractRule implements
-    RuleInterface,
-    TranslatorAwareInterface
+abstract class AbstractRule implements RuleInterface
 {
     /**
      * @var TranslatorInterface
