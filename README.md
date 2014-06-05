@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/bramstroker/zf2-form.png?branch=master)](https://travis-ci.org/bramstroker/zf2-form)
 [![Coverage Status](https://coveralls.io/repos/bramstroker/zf2-form/badge.png)](https://coveralls.io/r/bramstroker/zf2-form)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/bramstroker/zf2-form/badges/quality-score.png?s=bee62dce9b727e4cd660b0470ac228aaf4b6353c)](https://scrutinizer-ci.com/g/bramstroker/zf2-form/)
+[![HHVM Status](http://hhvm.h4cc.de/badge/stroker/form.png)](http://hhvm.h4cc.de/package/stroker/form)
 
 ZF2 module for extending forms with live clientside validation without need to write js validation code. 
 You only need to define your validation rules server side with ZF2 and this module automaticaly adds the same rules with [jQueryValidate](http://docs.jquery.com/Plugins/Validation). 
