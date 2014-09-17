@@ -485,10 +485,10 @@ class RendererTest extends \PHPUnit_Framework_TestCase
                 )
             )
         ));
-        $inputFilter1->add([
+        $inputFilter1->add(array(
             'name'     => 'name',
             'required' => true
-        ]);
+        ));
 
         $form1->setInputFilter($inputFilter1);
 
@@ -507,10 +507,10 @@ class RendererTest extends \PHPUnit_Framework_TestCase
                 )
             )
         ));
-        $inputFilter2->add([
+        $inputFilter2->add(array(
             'name'     => 'name',
             'required' => true
-        ]);
+        ));
 
         $form2->setInputFilter($inputFilter2);
 
