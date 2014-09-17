@@ -49,8 +49,7 @@ class Bootstrap
         $vendorPath = static::findParentPath('vendor');
 
         if (is_readable($vendorPath . '/autoload.php')) {
-            $loader = include $vendorPath . '/autoload.php';
-
+            include $vendorPath . '/autoload.php';
             return;
         }
 
@@ -58,27 +57,6 @@ class Bootstrap
 
         if (!$zf2Path) {
             throw new RuntimeException('Unable to load ZF2. Run `php composer.phar install` or define a ZF2_PATH environment variable.');
-        }
-
-        if (isset($loader)) {
-            $loader->add('Zend', $zf2Path . '/Zend');
-        } else {
-            include $zf2Path . '/Zend/Loader/AutoloaderFactory.php';
-            include $zf2Path . '/Zend/Loader/ClassMapAutoloader.php';
-            AutoloaderFactory::factory(
-                array(
-                    'Zend\Loader\ClassMapAutoloader' => array(array(
-                        'StrokerForm\Module' => __DIR__ . '/../Module.php',
-                    )),
-                    'Zend\Loader\StandardAutoloader' => array(
-                        'autoregister_zf' => true,
-                        'namespaces' => array(
-                            'StrokerForm' => __DIR__ . '/../src/StrokerForm',
-                            __NAMESPACE__ => __DIR__ . '/' . __NAMESPACE__,
-                        ),
-                    ),
-                )
-            );
         }
     }
 

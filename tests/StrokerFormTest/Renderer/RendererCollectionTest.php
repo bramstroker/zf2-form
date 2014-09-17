@@ -10,6 +10,8 @@
 
 namespace StrokerForm\Renderer;
 
+use Mockery;
+
 class RendererCollectionTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -43,7 +45,7 @@ class RendererCollectionTest extends \PHPUnit_Framework_TestCase
     public function testPreRenderFormIsCalledOnInnerRenderers()
     {
         $formAlias = 'testAlias';
-        $viewMock = $this->getMock('Zend\View\Renderer\PhpRenderer');
+        $viewMock = Mockery::mock('Zend\View\Renderer\PhpRenderer');
 
         /** @var $renderer \PHPUnit_Framework_MockObject_MockObject */
         foreach ($this->rendererCollection->getRenderers() as $renderer) {
