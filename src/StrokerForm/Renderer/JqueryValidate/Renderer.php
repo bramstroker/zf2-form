@@ -89,6 +89,17 @@ class Renderer extends AbstractValidateRenderer
                 $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.bootstrap.js');
             }
         }
+        
+        $this->reset();
+    }
+
+    /**
+     * Resets previously set rules and messages, if you have multiple forms on one request
+     */
+    protected function reset()
+    {
+        $this->rules = array();
+        $this->messages = array();
     }
 
     /**

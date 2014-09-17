@@ -86,15 +86,16 @@ class RendererTest extends \PHPUnit_Framework_TestCase
      * Get a test form with fields setup
      *
      * @param string $alias
+     * @param string $emailFieldName
      * @return \Zend\Form\FormInterface
      */
-    protected function createForm($alias)
+    protected function createForm($alias, $emailFieldName = 'email')
     {
         $factory = new Factory();
         $form = $factory->createForm(
             array(
                 'hydrator' => 'Zend\Stdlib\Hydrator\ArraySerializable',
-                'name' => 'test',
+                'name' => $alias,
                 'elements' => array(
                     array(
                         'spec' => array(
@@ -468,6 +469,59 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals($expectedOptions['validate_options'], $this->renderer->getOptions()->getValidateOptions());
+    }
+    
+    public function testIfRulesAreResetWithMultipleForms()
+    {
+        $form1 = $this->createForm('test', 'customEmailName');
+
+        $inputFilter1 = new InputFilter();
+        $inputFilter1->add(array(
+            'name' => 'email',
+            'required' => true,
+            'validators' => array(
+                array(
+                    'name' => 'emailAddress'
+                )
+            )
+        ));
+        $inputFilter1->add(array(
+            'name'     => 'name',
+            'required' => true
+        ));
+
+        $form1->setInputFilter($inputFilter1);
+
+        $this->renderer->preRenderForm('test', $this->view);
+
+
+        $form2 = $this->createForm('test2', 'email');
+
+        $inputFilter2 = new InputFilter();
+        $inputFilter2->add(array(
+            'name' => 'otherfieldname',
+            'required' => true,
+            'validators' => array(
+                array(
+                    'name' => 'emailAddress'
+                )
+            )
+        ));
+        $inputFilter2->add(array(
+            'name'     => 'name',
+            'required' => true
+        ));
+
+        $form2->setInputFilter($inputFilter2);
+
+        $this->renderer->preRenderForm('test2', $this->view);
+
+        $inlineScript = $this->view->plugin('inlineScript');
+        $inlineString = preg_replace('/(\r\n|\r|\n|\t)+/', '', $inlineScript->toString());
+        $explodedString = explode('form[name="test2"]', $inlineString);
+        $lastPart = end($explodedString);
+
+        $this->assertNotContains('customEmailName', $lastPart);
     }
 
     /**
