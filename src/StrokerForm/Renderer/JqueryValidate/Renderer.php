@@ -98,8 +98,8 @@ class Renderer extends AbstractValidateRenderer
      */
     protected function reset()
     {
-        $this->rules = [];
-        $this->messages = [];
+        $this->rules = array();
+        $this->messages = array();
     }
 
     /**
