@@ -16,7 +16,6 @@
             "email": "bgerritsen@gmail.com"
         }
     ],
-    "version": "dev-master",
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
