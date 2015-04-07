@@ -100,7 +100,7 @@ This view helper add all the needed javascripts to the headScript view helper
 
 ```php
 <?php
-echo $this->strokerFormPrepare('my_form_alias');
+$this->strokerFormPrepare('my_form_alias');
 
 // Do your normal form rendering here
 ```
