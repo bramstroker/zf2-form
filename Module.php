@@ -46,7 +46,6 @@ class Module implements
                 'StrokerForm\Options\ModuleOptions' => 'StrokerForm\Factory\ModuleOptionsFactory',
                 'StrokerForm\FormManager' => 'StrokerForm\Factory\FormManagerFactory',
                 'stroker_form.renderer' => 'StrokerForm\Factory\RendererFactory',
-                'forminput' => 'StrokerForm\Factory\FormInputFactory',
                 'stroker_form.renderer.jqueryvalidate' => 'StrokerForm\Factory\Renderer\JqueryValidate\RendererFactory',
             ),
         );
