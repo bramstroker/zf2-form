@@ -112,7 +112,7 @@ class Renderer extends AbstractValidateRenderer
         return sprintf(
             $options->getInitializeTrigger(),
             sprintf(
-                '$(\'form[name="%s"]\').each(function() { $(this).validate({%s"rules":%s,"messages":%s}); };',
+                '$(\'form[name="%s"]\').each(function() { $(this).validate({%s"rules":%s,"messages":%s}); });',
                 $form->getName(),
                 count($validateOptions) > 0 ? implode(',', $validateOptions) . ',' : '',
                 Json::encode($this->rules),
