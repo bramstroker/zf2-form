@@ -25,7 +25,7 @@ class BetweenTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        return new \Zend\Validator\Between();
+        return new \Zend\Validator\Between(0, 100);
     }
 
     /**
