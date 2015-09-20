@@ -11,7 +11,10 @@
 namespace StrokerForm\Renderer\JqueryValidate;
 
 use StrokerForm\Renderer\JqueryValidate\Rule\RulePluginManager;
+use Zend\Form\Element\Email;
 use Zend\Json\Json;
+use Zend\Validator\EmailAddress;
+use Zend\Validator\Regex;
 use Zend\View\Renderer\PhpRenderer as View;
 use Zend\Form\FormInterface;
 use StrokerForm\Renderer\AbstractValidateRenderer;
@@ -31,12 +34,12 @@ class Renderer extends AbstractValidateRenderer
     /**
      * @var array
      */
-    private $rules = array();
+    protected $rules = array();
 
     /**
      * @var array
      */
-    private $messages = array();
+    protected $messages = array();
 
     /**
      * @var RulePluginManager
@@ -78,26 +81,19 @@ class Renderer extends AbstractValidateRenderer
         /** @var $options Options */
         $options = $this->getOptions();
 
-        /**
-         * If we are showing the form in a modal then we need to eco only the javascript since the assets should
-         * already be loaded
-         */
-        $sm = $view->getHelperPluginManager()->getServiceLocator();
-        if ($sm->get('Request')->isXmlHttpRequest()) {
-            echo sprintf('<script type="text/javascript">%s</script>', $this->getInlineJavascript($form, $options));
-        } else {
-            $inlineScript = $view->plugin('inlineScript');
-            $inlineScript->appendScript($this->getInlineJavascript($form, $options));
+        $inlineScript = $view->plugin('inlineScript');
+        $inlineScript->appendScript($this->buildInlineJavascript($form, $options));
 
-            if ($options->getIncludeAssets()) {
-                $assetBaseUri = $this->getHttpRouter()->assemble(array(), array('name' => 'strokerform-asset'));
-                $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.js');
-                $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/custom_rules.js');
-                if ($options->isUseTwitterBootstrap() === true) {
-                    $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.bootstrap.js');
-                }
+        if ($options->getIncludeAssets()) {
+            $assetBaseUri = $this->getHttpRouter()->assemble(array(), array('name' => 'strokerform-asset'));
+            $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.js');
+            $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/custom_rules.js');
+            if ($options->isUseTwitterBootstrap() === true) {
+                $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.bootstrap.js');
             }
         }
+        
+        $this->reset();
     }
 
     /**
@@ -105,9 +101,8 @@ class Renderer extends AbstractValidateRenderer
      * @param Options $options
      * @return string
      */
-    protected function getInlineJavascript(FormInterface $form, Options $options)
+    protected function buildInlineJavascript(FormInterface $form, Options $options)
     {
-
         $validateOptions = array();
         foreach ($options->getValidateOptions() as $key => $value) {
             $value = (is_string($value)) ? $value : var_export($value, true);
@@ -137,8 +132,8 @@ class Renderer extends AbstractValidateRenderer
         if (in_array($this->getValidatorClassName($validator), $this->skipValidators)) {
             return;
         }
-        if ($element instanceof \Zend\Form\Element\Email && $validator instanceof \Zend\Validator\Regex) {
-            $validator = new \Zend\Validator\EmailAddress();
+        if ($element instanceof Email && $validator instanceof Regex) {
+            $validator = new EmailAddress();
         }
 
         $rule = $this->getRule($validator);
@@ -158,15 +153,8 @@ class Renderer extends AbstractValidateRenderer
         }
 
         $elementName = $this->getElementName($element);
-
-        if (!isset($this->rules[$elementName])) {
-            $this->rules[$elementName] = array();
-        }
-        $this->rules[$elementName] = array_merge($this->rules[$elementName], $rules);
-        if (!isset($this->messages[$elementName])) {
-            $this->messages[$elementName] = array();
-        }
-        $this->messages[$elementName] = array_merge($this->messages[$elementName], $messages);
+        $this->addRules($elementName, $rules);
+        $this->addMessages($elementName, $messages);
     }
 
     /**
@@ -184,5 +172,38 @@ class Renderer extends AbstractValidateRenderer
             return $rule;
         }
         return null;
+    }
+
+    /**
+     * @param string $elementName
+     * @param array $rules
+     */
+    protected function addRules($elementName, array $rules = array())
+    {
+        if (!isset($this->rules[$elementName])) {
+            $this->rules[$elementName] = array();
+        }
+        $this->rules[$elementName] = array_merge($this->rules[$elementName], $rules);
+    }
+
+    /**
+     * @param string $elementName
+     * @param array $messages
+     */
+    protected function addMessages($elementName, array $messages = array())
+    {
+        if (!isset($this->messages[$elementName])) {
+            $this->messages[$elementName] = array();
+        }
+        $this->messages[$elementName] = array_merge($this->messages[$elementName], $messages);
+    }
+
+    /**
+     * Resets previously set rules and messages, if you have multiple forms on one request
+     */
+    protected function reset()
+    {
+        $this->rules = array();
+        $this->messages = array();
     }
 }
