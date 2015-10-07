@@ -14,6 +14,7 @@ use Zend\Form\Element\MultiCheckbox;
 use Zend\Form\Element\Radio;
 use Zend\Form\FieldsetInterface;
 use Zend\InputFilter\InputFilterInterface;
+use Zend\Validator\Csrf;
 use Zend\View\Renderer\PhpRenderer as View;
 use Zend\Form\FormInterface;
 use Zend\Validator\ValidatorInterface;
@@ -44,6 +45,9 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
         foreach ($validators as $validator) {
             $element = $validator['element'];
             foreach ($validator['validators'] as $val) {
+                if ($val['instance'] instanceof Csrf) {
+                    continue;
+                }
                 $this->addValidationAttributesForElement($formAlias, $element, $val['instance']);
             };
         }

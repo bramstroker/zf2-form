@@ -194,6 +194,30 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('POST', $rules['name']['remote']['type']);
     }
 
+    public function testCsrfValidatorIsSkipped()
+    {
+        $form = $this->createForm('test');
+
+        $inputFilter = new InputFilter();
+        $inputFilter->add(array(
+            'name'     => 'fieldName',
+            'required' => false,
+            'validators' => array(
+                array(
+                    'name' => 'csrf'
+                )
+            )
+        ));
+
+        $form->setInputFilter($inputFilter);
+
+        $this->renderer->preRenderForm('test', $this->view);
+
+        $matches = $this->getMatchesFromInlineScript();
+        
+        $this->assertArrayNotHasKey('fieldName', $matches['rules']);
+    }
+
     public function testDefaultRendererOptionsCanBeOverwrittenAtRuntime()
     {
         $this->createForm('test');
