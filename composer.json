@@ -16,10 +16,17 @@
             "email": "bgerritsen@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3.3",
-        "zendframework/zendframework": "~2.3"
+        "php": ">=5.4",
+        "zendframework/zend-form": "~2.3",
+        "zendframework/zend-http": "~2.3",
+        "zendframework/zend-json": "~2.3",
+        "zendframework/zend-mvc": "~2.3",
+        "zendframework/zend-i18n": "~2.3",
+        "zendframework/zend-inputfilter": "~2.3",
+        "zendframework/zend-servicemanager": "~2.3",
+        "zendframework/zend-validator": "~2.3",
+        "zendframework/zend-view": "~2.3"
     },
     "require-dev": {
         "mockery/mockery": "dev-master",
