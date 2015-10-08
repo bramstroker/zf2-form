@@ -14,7 +14,10 @@ use Zend\Form\Element\MultiCheckbox;
 use Zend\Form\Element\Radio;
 use Zend\Form\FieldsetInterface;
 use Zend\InputFilter\InputFilterInterface;
+use Zend\InputFilter\InputInterface;
 use Zend\Validator\Csrf;
+use Zend\Validator\NotEmpty;
+use Zend\Validator\ValidatorChain;
 use Zend\View\Renderer\PhpRenderer as View;
 use Zend\Form\FormInterface;
 use Zend\Validator\ValidatorInterface;
@@ -107,11 +110,34 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
         }
         $input = $inputFilter->get($elementName);
 
-        // Make sure NotEmpty validator is added when input is required
-        $input->isValid();
+        $this->injectNotEmptyValidator($input);
+
+        return $input->getValidatorChain()->getValidators();
+    }
+
+    /**
+     * When the input is required we need to inject the NotEmpty validator
+     *
+     * @param InputInterface $input
+     */
+    protected function injectNotEmptyValidator(InputInterface $input)
+    {
+        if (!$input->isRequired()) {
+            return;
+        }
 
         $chain = $input->getValidatorChain();
-        return $chain->getValidators();
+
+        // Check if NotEmpty validator is already in chain
+        $validators = $chain->getValidators();
+        foreach ($validators as $validator) {
+            if ($validator['instance'] instanceof NotEmpty) {
+                return;
+            }
+        }
+
+        // Make sure NotEmpty validator is added when input is required
+        $chain->prependValidator(new NotEmpty());
     }
 
     /**
