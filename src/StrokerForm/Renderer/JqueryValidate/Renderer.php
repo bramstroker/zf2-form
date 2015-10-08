@@ -81,15 +81,24 @@ class Renderer extends AbstractValidateRenderer
         /** @var $options Options */
         $options = $this->getOptions();
 
-        $inlineScript = $view->plugin('inlineScript');
-        $inlineScript->appendScript($this->buildInlineJavascript($form, $options));
+        /**
+         * If we are showing the form in a modal then we need to eco only the javascript since the assets should
+         * already be loaded
+         */
+        $sm = $view->getHelperPluginManager()->getServiceLocator();
+        if ($sm->get('Request')->isXmlHttpRequest()) {
+            echo sprintf('<script type="text/javascript">%s</script>', $this->buildInlineJavascript($form, $options));
+        } else {
+            $inlineScript = $view->plugin('inlineScript');
+            $inlineScript->appendScript($this->buildInlineJavascript($form, $options));
 
-        if ($options->getIncludeAssets()) {
-            $assetBaseUri = $this->getHttpRouter()->assemble(array(), array('name' => 'strokerform-asset'));
-            $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.js');
-            $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/custom_rules.js');
-            if ($options->isUseTwitterBootstrap() === true) {
-                $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.bootstrap.js');
+            if ($options->getIncludeAssets()) {
+                $assetBaseUri = $this->getHttpRouter()->assemble(array(), array('name' => 'strokerform-asset'));
+                $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.js');
+                $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/custom_rules.js');
+                if ($options->isUseTwitterBootstrap() === true) {
+                    $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.bootstrap.js');
+                }
             }
         }
         

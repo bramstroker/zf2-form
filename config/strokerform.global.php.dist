@@ -11,7 +11,7 @@ return array(
                 'use_twitter_bootstrap' => true,
                 /*'validateOptions' => array(
                     'onsubmit' => false,
-                    'onkeyup' => false,
+                    'onkeyup' => function(element) {$(element).valid()},
                 )*/
             )
         ),
