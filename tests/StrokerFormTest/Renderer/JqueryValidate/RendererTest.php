@@ -558,7 +558,9 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         /** @var $inlineScript \Zend\View\Helper\InlineScript */
         $inlineScript = $this->view->plugin('inlineScript');
         $inlineString = preg_replace('/(\r\n|\r|\n|\t)+/', '', $inlineScript->toString());
-        if(preg_match('/\$\(\'form\[name=\"(?P<form>[a-z]*)"\]\'\)\.validate\((?P<options>.*)\);}\);/', $inlineString, $matches))
+        
+        $pattern = '/\$\(\'form\[name\="(?P<form>[a-z]*)"\]\'\).*\.validate\((?P<options>.*)\); \}\);/';
+        if(preg_match($pattern, $inlineString, $matches))
         {
             $options = json_decode($matches['options'], true);
             $matches['rules'] = $options['rules'];
