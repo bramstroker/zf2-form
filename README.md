@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/bramstroker/zf2-form.png?branch=master)](https://travis-ci.org/bramstroker/zf2-form)
 [![Coverage Status](https://coveralls.io/repos/bramstroker/zf2-form/badge.png)](https://coveralls.io/r/bramstroker/zf2-form)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/bramstroker/zf2-form/badges/quality-score.png?s=bee62dce9b727e4cd660b0470ac228aaf4b6353c)](https://scrutinizer-ci.com/g/bramstroker/zf2-form/)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/ee332161-bb3b-401b-bbce-f8572558e998/mini.png)](https://insight.sensiolabs.com/projects/ee332161-bb3b-401b-bbce-f8572558e998)
 [![Total Downloads](https://poser.pugx.org/stroker/form/downloads.svg)](https://packagist.org/packages/stroker/form)
 [![HHVM Status](http://hhvm.h4cc.de/badge/stroker/form.png)](http://hhvm.h4cc.de/package/stroker/form)
 
