@@ -13,7 +13,6 @@ namespace StrokerForm\View\Helper;
 use Zend\Form\View\Helper\AbstractHelper;
 use Zend\Form\FormInterface;
 use StrokerForm\Renderer\RendererInterface;
-use Zend\Form\Form;
 
 class FormPrepare extends AbstractHelper
 {

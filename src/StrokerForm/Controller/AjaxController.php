@@ -11,6 +11,7 @@
 namespace StrokerForm\Controller;
 
 use StrokerForm\FormManager;
+use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
 
 class AjaxController extends AbstractActionController
@@ -74,7 +75,7 @@ class AjaxController extends AbstractActionController
             $result = true;
         }
 
-        $response->setContent(\Zend\Json\Json::encode($result));
+        $response->setContent(Json::encode($result));
 
         return $response;
     }

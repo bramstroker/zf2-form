@@ -27,10 +27,11 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
     /**
      * Executed before the ZF2 view helper renders the element
      *
-     * @param string                          $formAlias
+     * @param string $formAlias
      * @param \Zend\View\Renderer\PhpRenderer $view
-     * @param \Zend\Form\FormInterface        $form
-     * @param array                           $options
+     * @param \Zend\Form\FormInterface $form
+     * @param array $options
+     * @return FormInterface
      */
     public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = array())
     {
@@ -53,6 +54,8 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
                 $this->addValidationAttributesForElement($formAlias, $element, $val['instance']);
             };
         }
+
+        return $form;
     }
 
     /**

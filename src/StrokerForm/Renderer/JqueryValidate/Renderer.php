@@ -66,18 +66,15 @@ class Renderer extends AbstractValidateRenderer
     /**
      * Executed before the ZF2 view helper renders the element
      *
-     * @param string                          $formAlias
+     * @param string $formAlias
      * @param \Zend\View\Renderer\PhpRenderer $view
-     * @param \Zend\Form\FormInterface        $form
-     * @param array                           $options
+     * @param \Zend\Form\FormInterface $form
+     * @param array $options
+     * @return FormInterface
      */
     public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = array())
     {
-        if ($form === null) {
-            $form = $this->getFormManager()->get($formAlias);
-        }
-
-        parent::preRenderForm($formAlias, $view, $form, $options);
+        $form = parent::preRenderForm($formAlias, $view, $form, $options);
 
         /** @var $options Options */
         $options = $this->getOptions();
@@ -95,6 +92,7 @@ class Renderer extends AbstractValidateRenderer
         }
         
         $this->reset();
+        return $form;
     }
 
     /**

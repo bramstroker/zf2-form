@@ -11,13 +11,13 @@
 namespace StrokerFormTest\Renderer\JqueryValidate;
 
 use Mockery\MockInterface;
+use Mockery as M;
 use Zend\Form\Element;
 use Zend\InputFilter\Input;
 use Zend\Form\Fieldset;
 use StrokerForm\Renderer\JqueryValidate\Rule\RulePluginManager;
 use Zend\Form\Factory;
 use StrokerForm\Renderer\JqueryValidate\Renderer;
-use Zend\I18n\Translator\Translator;
 use Zend\InputFilter\InputFilter;
 use Zend\View\Renderer\PhpRenderer;
 
@@ -138,6 +138,9 @@ class RendererTest extends \PHPUnit_Framework_TestCase
             'validators' => array(
                 array(
                     'name' => 'emailAddress'
+                ),
+                array(
+                    'name' => 'Csrf'
                 )
             )
         ));
@@ -546,6 +549,37 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $lastPart = end($explodedString);
 
         $this->assertNotContains('customEmailName', $lastPart);
+    }
+
+    public function testElementIsSkippedWhenNotFoundInInputFilter()
+    {
+        $inputFilterMock = M::mock('Zend\InputFilter\InputFilterInterface');
+        $inputFilterMock
+            ->shouldReceive('has')
+            ->with('foo')
+            ->andReturn(false);
+
+        $elementMock = M::mock('Zend\Form\ElementInterface')->shouldDeferMissing();
+        $elementMock
+            ->shouldReceive('getOption')
+            ->with('strokerform-exclude')
+            ->andReturnNull();
+        $elementMock
+            ->shouldReceive('getName')
+            ->andReturn('foo');
+
+        $this->assertEmpty($this->renderer->getValidatorsForElement($inputFilterMock, $elementMock));
+    }
+
+    public function testFormCanBeRetrievedFromFormManager()
+    {
+        $this->formManager
+            ->shouldReceive('get')
+            ->with('my-form')
+            ->once()
+            ->andReturn($this->createForm('my-form'));
+
+        $this->renderer->preRenderForm('my-form', $this->view, null);
     }
 
     /**
