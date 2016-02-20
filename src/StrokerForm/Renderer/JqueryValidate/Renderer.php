@@ -12,6 +12,7 @@ namespace StrokerForm\Renderer\JqueryValidate;
 
 use StrokerForm\Renderer\JqueryValidate\Rule\RulePluginManager;
 use Zend\Form\Element\Email;
+use Zend\I18n\Translator\TranslatorAwareInterface;
 use Zend\Json\Json;
 use Zend\Validator\EmailAddress;
 use Zend\Validator\Regex;
