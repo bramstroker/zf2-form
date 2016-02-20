@@ -20,7 +20,7 @@ class FormPrepareFactory implements FactoryInterface
      * Create service
      *
      * @param  ServiceLocatorInterface $serviceLocator
-     * @return mixed
+     * @return FormPrepare
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

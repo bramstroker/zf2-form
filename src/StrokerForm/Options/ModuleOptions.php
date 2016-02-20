@@ -107,7 +107,7 @@ class ModuleOptions extends AbstractOptions
 
     /**
      * @param string $renderer
-     * @return mixed
+     * @return null|AbstractOptions
      * @throws \InvalidArgumentException
      */
     public function getRendererOptions($renderer)

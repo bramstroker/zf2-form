@@ -11,9 +11,7 @@
 namespace StrokerForm\Renderer;
 
 use Zend\I18n\Translator\TranslatorAwareInterface;
-use Zend\I18n\Translator\Translator;
 use Zend\I18n\Translator\TranslatorAwareTrait;
-use Zend\I18n\Translator\TranslatorInterface;
 use Zend\Mvc\Router\RouteInterface;
 use Zend\Stdlib\AbstractOptions;
 use StrokerForm\FormManager;

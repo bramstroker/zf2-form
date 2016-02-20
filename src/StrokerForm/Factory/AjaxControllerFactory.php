@@ -20,7 +20,7 @@ class AjaxControllerFactory implements FactoryInterface
      * Create service
      *
      * @param  ServiceLocatorInterface $serviceLocator
-     * @return mixed
+     * @return AjaxController
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
