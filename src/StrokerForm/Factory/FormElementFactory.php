@@ -20,7 +20,7 @@ class FormElementFactory implements FactoryInterface
      * Create service
      *
      * @param  ServiceLocatorInterface $serviceLocator
-     * @return mixed
+     * @return FormElement
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

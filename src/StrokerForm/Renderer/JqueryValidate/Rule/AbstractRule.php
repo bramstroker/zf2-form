@@ -52,7 +52,7 @@ abstract class AbstractRule implements RuleInterface
      *
      * @param  TranslatorInterface $translator
      * @param  string     $textDomain
-     * @return mixed
+     * @return AbstractRule
      */
     public function setTranslator(TranslatorInterface $translator = null, $textDomain = null)
     {
@@ -93,7 +93,7 @@ abstract class AbstractRule implements RuleInterface
      * Sets whether translator is enabled and should be used
      *
      * @param  bool  $enabled
-     * @return mixed
+     * @return AbstractRule
      */
     public function setTranslatorEnabled($enabled = true)
     {
@@ -117,7 +117,7 @@ abstract class AbstractRule implements RuleInterface
      * Set translation text domain
      *
      * @param  string $textDomain
-     * @return mixed
+     * @return AbstractRule
      */
     public function setTranslatorTextDomain($textDomain = 'default')
     {
