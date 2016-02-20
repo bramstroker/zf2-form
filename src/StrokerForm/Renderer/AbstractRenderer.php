@@ -53,7 +53,7 @@ abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInt
     /**
      * @var Options
      */
-    protected $options = array();
+    protected $options = null;
 
     /**
      * @var FormManager
