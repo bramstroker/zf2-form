@@ -17,7 +17,6 @@ use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\InputInterface;
 use Zend\Validator\Csrf;
 use Zend\Validator\NotEmpty;
-use Zend\Validator\ValidatorChain;
 use Zend\View\Renderer\PhpRenderer as View;
 use Zend\Form\FormInterface;
 use Zend\Validator\ValidatorInterface;
@@ -26,7 +25,7 @@ use Zend\Form\ElementInterface;
 abstract class AbstractValidateRenderer extends AbstractRenderer
 {
     /**
-     * Excecuted before the ZF2 view helper renders the element
+     * Executed before the ZF2 view helper renders the element
      *
      * @param string                          $formAlias
      * @param \Zend\View\Renderer\PhpRenderer $view

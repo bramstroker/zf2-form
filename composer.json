@@ -29,8 +29,8 @@
         "zendframework/zend-view": "~2.3"
     },
     "require-dev": {
-        "mockery/mockery": "dev-master",
-        "satooshi/php-coveralls": "dev-master"
+        "mockery/mockery": "~0.9",
+        "satooshi/php-coveralls": "~1.0"
     },
     "autoload": {
         "psr-0": {

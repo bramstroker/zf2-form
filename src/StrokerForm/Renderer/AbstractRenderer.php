@@ -16,7 +16,6 @@ use Zend\I18n\Translator\TranslatorInterface;
 use Zend\Mvc\Router\RouteInterface;
 use Zend\Stdlib\AbstractOptions;
 use StrokerForm\FormManager;
-use Zend\Stdlib\ArrayUtils;
 
 abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInterface
 {
@@ -160,7 +159,8 @@ abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInt
     }
 
     /**
-     * @param RouteInterface $assetRoute
+     * @param RouteInterface $httpRouter
+     * @return void
      */
     public function setHttpRouter(RouteInterface $httpRouter)
     {
@@ -180,7 +180,7 @@ abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInt
      */
     public function setOptions(array $options = array())
     {
-        if ($this->options == null) {
+        if ($this->options === null) {
             $this->options = clone $this->defaultOptions;
         }
 

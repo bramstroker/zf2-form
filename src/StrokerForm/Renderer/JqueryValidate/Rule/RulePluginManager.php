@@ -12,7 +12,6 @@ namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
 use Zend\I18n\Translator\TranslatorAwareInterface;
 use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\Exception;
 
 class RulePluginManager extends AbstractPluginManager
 {
