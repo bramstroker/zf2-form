@@ -19,8 +19,8 @@ interface RuleInterface extends TranslatorAwareInterface
     /**
      * Get the validation rules
      *
-     * @param  \Zend\Validator\ValidatorInterface $validator
-     * @param \Zend\Form\ElementInterface $element
+     * @param ValidatorInterface $validator
+     * @param ElementInterface $element
      * @return array
      */
     public function getRules(ValidatorInterface $validator, ElementInterface $element = null);
@@ -28,8 +28,8 @@ interface RuleInterface extends TranslatorAwareInterface
     /**
      * Get the validation message
      *
-     * @param  \Zend\Validator\ValidatorInterface $validator
-     * @return string
+     * @param  ValidatorInterface $validator
+     * @return array
      */
     public function getMessages(ValidatorInterface $validator);
 }
