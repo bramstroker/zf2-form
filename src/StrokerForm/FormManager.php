@@ -41,7 +41,10 @@ class FormManager extends AbstractPluginManager
     }
 
     /**
-     * {@inheritDoc}
+     * @param string $name
+     * @param array $options
+     * @param bool $usePeeringServiceManagers
+     * @return FormInterface
      */
     public function get($name, $options = array(), $usePeeringServiceManagers = true)
     {

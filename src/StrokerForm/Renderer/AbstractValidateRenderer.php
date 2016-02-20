@@ -13,6 +13,7 @@ namespace StrokerForm\Renderer;
 use Zend\Form\Element\MultiCheckbox;
 use Zend\Form\Element\Radio;
 use Zend\Form\FieldsetInterface;
+use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\InputInterface;
 use Zend\Validator\Csrf;
@@ -110,10 +111,13 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
         if (!$inputFilter->has($elementName)) {
             return;
         }
+
         $input = $inputFilter->get($elementName);
+        if (!$input instanceof InputInterface) {
+            return [];
+        }
 
         $this->injectNotEmptyValidator($input);
-
         return $input->getValidatorChain()->getValidators();
     }
 
