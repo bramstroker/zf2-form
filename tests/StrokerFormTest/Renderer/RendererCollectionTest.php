@@ -24,9 +24,9 @@ class RendererCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->rendererCollection = new RendererCollection($this->getMock('StrokerForm\FormManager'));
+        $this->rendererCollection = new RendererCollection($this->createMock('StrokerForm\FormManager'));
         for ($i = 0; $i < 3; $i++) {
-            $renderer = $this->getMock('StrokerForm\Renderer\RendererInterface');
+            $renderer = $this->createMock('StrokerForm\Renderer\RendererInterface');
             $this->rendererCollection->addRenderer($renderer);
         }
     }
@@ -62,7 +62,7 @@ class RendererCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreRenderInputFieldIsCalledOnInnerRenderers()
     {
-        $elemMock = $this->getMock('Zend\Form\ElementInterface');
+        $elemMock = $this->createMock('Zend\Form\ElementInterface');
 
         /** @var $renderer \PHPUnit_Framework_MockObject_MockObject */
         foreach ($this->rendererCollection->getRenderers() as $renderer) {

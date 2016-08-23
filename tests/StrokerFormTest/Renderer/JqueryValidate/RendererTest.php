@@ -94,7 +94,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $factory = new Factory();
         $form = $factory->createForm(
             array(
-                'hydrator' => 'Zend\Stdlib\Hydrator\ArraySerializable',
+                'hydrator' => \Zend\Hydrator\ArraySerializable::class,
                 'name' => $alias,
                 'elements' => array(
                     array(

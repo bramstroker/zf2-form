@@ -26,7 +26,8 @@
         "zendframework/zend-inputfilter": "~2.3",
         "zendframework/zend-servicemanager": "~2.3",
         "zendframework/zend-validator": "~2.3",
-        "zendframework/zend-view": "~2.3"
+        "zendframework/zend-view": "~2.3",
+        "zendframework/zend-hydrator": "~2.2"
     },
     "require-dev": {
         "mockery/mockery": "~0.9",

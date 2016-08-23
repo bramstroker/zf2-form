@@ -65,7 +65,7 @@ abstract class AbstractRuleTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->rule = $this->createRule();
-        $this->translatorMock = $this->getMock('Zend\I18n\Translator\Translator', array('translate'));
+        $this->translatorMock = $this->createMock('Zend\I18n\Translator\Translator');
         $this->rule->setTranslator($this->translatorMock);
         $this->validator = $this->createValidator();
         $this->element = $this->createElement();
