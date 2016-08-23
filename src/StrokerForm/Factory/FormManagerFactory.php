@@ -19,13 +19,17 @@ class FormManagerFactory implements \Zend\ServiceManager\FactoryInterface
      * Create service
      *
      * @param  ServiceLocatorInterface $serviceLocator
-     * @return mixed
+     * @return FormManager
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         /** @var $moduleOptions \StrokerForm\Options\ModuleOptions  */
         $moduleOptions = $serviceLocator->get('StrokerForm\Options\ModuleOptions');
-
-        return new FormManager($moduleOptions->getForms());
+        // init FormManager
+        $fromManager = new FormManager($moduleOptions->getForms());
+        // set serviceLocator to FormManager
+        $formManager->setServiceLocator($serviceLocator);
+        
+        return $formManager;
     }
 }
