@@ -18,16 +18,7 @@
     ],
     "require": {
         "php": ">=5.6",
-        "zendframework/zend-form": "2.*",
-        "zendframework/zend-http": "2.*",
-        "zendframework/zend-json": "2.*",
-        "zendframework/zend-mvc": "2.*",
-        "zendframework/zend-i18n": "2.*",
-        "zendframework/zend-inputfilter": "2.*",
-        "zendframework/zend-servicemanager": "2.*",
-        "zendframework/zend-validator": "2.*",
-        "zendframework/zend-view": "2.*",
-        "zendframework/zend-hydrator": "2.*"
+        "zendframework/zendframework": "2.*"
     },
     "require-dev": {
         "mockery/mockery": "~0.9",
