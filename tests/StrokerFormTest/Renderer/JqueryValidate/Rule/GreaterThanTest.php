@@ -10,6 +10,11 @@
 
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
 
+use StrokerForm\Renderer\JqueryValidate\Rule\GreaterThan;
+use StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface;
+use Zend\Validator\GreaterThan as ZendGreaterThan;
+use Zend\Validator\ValidatorInterface;
+
 class GreaterThanTest extends AbstractRuleTest
 {
     /**
@@ -17,7 +22,7 @@ class GreaterThanTest extends AbstractRuleTest
      */
     protected function createRule()
     {
-        return new \StrokerForm\Renderer\JqueryValidate\Rule\GreaterThan();
+        return new GreaterThan();
     }
 
     /**
@@ -25,7 +30,7 @@ class GreaterThanTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        return new \Zend\Validator\GreaterThan();
+        return new ZendGreaterThan();
     }
 
     /**

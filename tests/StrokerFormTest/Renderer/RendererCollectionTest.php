@@ -11,6 +11,10 @@
 namespace StrokerForm\Renderer;
 
 use Mockery;
+use StrokerForm\FormManager;
+use StrokerForm\Renderer\RendererInterface;
+use Zend\Form\ElementInterface;
+use Zend\View\Renderer\PhpRenderer;
 
 class RendererCollectionTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,9 +28,13 @@ class RendererCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->rendererCollection = new RendererCollection($this->createMock('StrokerForm\FormManager'));
+        $this->rendererCollection = new RendererCollection(
+            $this->createMock(FormManager::class)
+        );
         for ($i = 0; $i < 3; $i++) {
-            $renderer = $this->createMock('StrokerForm\Renderer\RendererInterface');
+            $renderer = $this->createMock(
+                RendererInterface::class
+            );
             $this->rendererCollection->addRenderer($renderer);
         }
     }
@@ -45,13 +53,13 @@ class RendererCollectionTest extends \PHPUnit_Framework_TestCase
     public function testPreRenderFormIsCalledOnInnerRenderers()
     {
         $formAlias = 'testAlias';
-        $viewMock = Mockery::mock('Zend\View\Renderer\PhpRenderer');
+        $viewMock = Mockery::mock(PhpRenderer::class);
 
         /** @var $renderer \PHPUnit_Framework_MockObject_MockObject */
         foreach ($this->rendererCollection->getRenderers() as $renderer) {
             $renderer->expects($this->once())
-                     ->method('preRenderForm')
-                     ->with($formAlias, $this->equalTo($viewMock));
+                ->method('preRenderForm')
+                ->with($formAlias, $this->equalTo($viewMock));
         }
 
         $this->rendererCollection->preRenderForm($formAlias, $viewMock);
@@ -62,13 +70,13 @@ class RendererCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreRenderInputFieldIsCalledOnInnerRenderers()
     {
-        $elemMock = $this->createMock('Zend\Form\ElementInterface');
+        $elemMock = $this->createMock(ElementInterface::class);
 
         /** @var $renderer \PHPUnit_Framework_MockObject_MockObject */
         foreach ($this->rendererCollection->getRenderers() as $renderer) {
             $renderer->expects($this->once())
-                     ->method('preRenderInputField')
-                     ->with($this->equalTo($elemMock));
+                ->method('preRenderInputField')
+                ->with($this->equalTo($elemMock));
         }
 
         $this->rendererCollection->preRenderInputField($elemMock);

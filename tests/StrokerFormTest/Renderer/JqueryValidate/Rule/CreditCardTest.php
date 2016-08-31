@@ -11,11 +11,13 @@
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
 
 use StrokerForm\Renderer\JqueryValidate\Rule\CreditCard;
+use Zend\Validator\CreditCard as ZendCreditCard;
+use Zend\Validator\ValidatorInterface;
 
 class CreditCardTest extends AbstractRuleTest
 {
     /**
-     * @return RuleInterface
+     * @return CreditCard
      */
     protected function createRule()
     {
@@ -27,7 +29,7 @@ class CreditCardTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        return new \Zend\Validator\CreditCard();
+        return new ZendCreditCard();
     }
 
     /**

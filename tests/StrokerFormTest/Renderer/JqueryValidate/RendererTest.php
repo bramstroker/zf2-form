@@ -10,15 +10,21 @@
 
 namespace StrokerFormTest\Renderer\JqueryValidate;
 
-use Mockery\MockInterface;
 use Mockery as M;
-use Zend\Form\Element;
-use Zend\InputFilter\Input;
-use Zend\Form\Fieldset;
-use StrokerForm\Renderer\JqueryValidate\Rule\RulePluginManager;
-use Zend\Form\Factory;
+use Mockery\MockInterface;
+use StrokerForm\FormManager;
+use StrokerForm\Renderer\JqueryValidate\Options;
 use StrokerForm\Renderer\JqueryValidate\Renderer;
+use StrokerForm\Renderer\JqueryValidate\Rule\RulePluginManager;
+use Zend\Form\Element;
+use Zend\Form\Element\Email;
+use Zend\Form\Factory;
+use Zend\Form\Fieldset;
+use Zend\Hydrator\ArraySerializable;
+use Zend\I18n\Translator\Translator;
+use Zend\InputFilter\Input;
 use Zend\InputFilter\InputFilter;
+use Zend\Mvc\Router\SimpleRouteStack;
 use Zend\View\Renderer\PhpRenderer;
 
 class RendererTest extends \PHPUnit_Framework_TestCase
@@ -29,7 +35,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     private $renderer;
 
     /**
-     * @var \StrokerForm\Renderer\JqueryValidate\Options
+     * @var Options
      */
     private $rendererOptions;
 
@@ -44,7 +50,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     private $routerMock;
 
     /**
-     * @var MockInterface|\Zend\I18n\Translator\Translator
+     * @var MockInterface|Translator
      */
     private $translatorMock;
 
@@ -58,17 +64,17 @@ class RendererTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->formManager = \Mockery::mock('StrokerForm\FormManager');
+        $this->formManager = \Mockery::mock(FormManager::class);
         $this->renderer = new Renderer();
         $this->renderer->setRulePluginManager(new RulePluginManager());
         $this->renderer->setFormManager($this->formManager);
         $this->view = new PhpRenderer();
 
-        $this->routerMock = \Mockery::mock('Zend\Mvc\Router\SimpleRouteStack')
+        $this->routerMock = \Mockery::mock(SimpleRouteStack::class)
             ->shouldReceive('assemble')
             ->byDefault()
             ->getMock();
-        $this->translatorMock = \Mockery::mock('Zend\I18n\Translator\Translator')
+        $this->translatorMock = \Mockery::mock(Translator::class)
             ->shouldReceive('translate')
             ->andReturnUsing(
                 function ($string) {
@@ -76,7 +82,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
                 }
             )
             ->getMock();
-        $this->rendererOptions = new \StrokerForm\Renderer\JqueryValidate\Options();
+        $this->rendererOptions = new Options();
         $this->renderer->setHttpRouter($this->routerMock);
         $this->renderer->setTranslator($this->translatorMock);
         $this->renderer->setDefaultOptions($this->rendererOptions);
@@ -87,19 +93,21 @@ class RendererTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $alias
      * @param string $emailFieldName
+     *
      * @return \Zend\Form\FormInterface
      */
     protected function createForm($alias, $emailFieldName = 'email')
     {
         $factory = new Factory();
+        /** @var \Zend\Form\FormInterface $form */
         $form = $factory->createForm(
             array(
-                'hydrator' => \Zend\Hydrator\ArraySerializable::class,
-                'name' => $alias,
+                'hydrator' => ArraySerializable::class,
+                'name'     => $alias,
                 'elements' => array(
                     array(
                         'spec' => array(
-                            'name' => 'name',
+                            'name'    => 'name',
                             'options' => array(
                                 'label' => 'Your name',
                             ),
@@ -107,8 +115,8 @@ class RendererTest extends \PHPUnit_Framework_TestCase
                     ),
                     array(
                         'spec' => array(
-                            'name' => 'email',
-                            'type' => 'Zend\Form\Element\Email',
+                            'name'    => 'email',
+                            'type'    => Email::class,
                             'options' => array(
                                 'label' => 'Your email address',
                             ),
@@ -132,22 +140,26 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $form = $this->createForm('test');
 
         $inputFilter = new InputFilter();
-        $inputFilter->add(array(
-            'name' => 'email',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'emailAddress'
-                ),
-                array(
-                    'name' => 'Csrf'
+        $inputFilter->add(
+            array(
+                'name'       => 'email',
+                'required'   => true,
+                'validators' => array(
+                    array(
+                        'name' => 'emailAddress'
+                    ),
+                    array(
+                        'name' => 'Csrf'
+                    )
                 )
             )
-        ));
-        $inputFilter->add(array(
-            'name'     => 'name',
-            'required' => true
-        ));
+        );
+        $inputFilter->add(
+            array(
+                'name'     => 'name',
+                'required' => true
+            )
+        );
 
         $form->setInputFilter($inputFilter);
 
@@ -176,14 +188,16 @@ class RendererTest extends \PHPUnit_Framework_TestCase
             ->andReturn('/the/uri/to/ajax');
 
         $inputFilter = new InputFilter();
-        $inputFilter->add(array(
-            'name'     => 'name',
-            'validators' => array(
-                array(
-                    'name' => 'isbn'
+        $inputFilter->add(
+            array(
+                'name'       => 'name',
+                'validators' => array(
+                    array(
+                        'name' => 'isbn'
+                    )
                 )
             )
-        ));
+        );
 
         $form->setInputFilter($inputFilter);
 
@@ -193,7 +207,9 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
         $rules = $matches['rules'];
 
-        $this->assertEquals('/the/uri/to/ajax', $rules['name']['remote']['url']);
+        $this->assertEquals(
+            '/the/uri/to/ajax', $rules['name']['remote']['url']
+        );
         $this->assertEquals('POST', $rules['name']['remote']['type']);
     }
 
@@ -202,22 +218,24 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $form = $this->createForm('test');
 
         $inputFilter = new InputFilter();
-        $inputFilter->add(array(
-            'name'     => 'fieldName',
-            'required' => false,
-            'validators' => array(
-                array(
-                    'name' => 'csrf'
+        $inputFilter->add(
+            array(
+                'name'       => 'fieldName',
+                'required'   => false,
+                'validators' => array(
+                    array(
+                        'name' => 'csrf'
+                    )
                 )
             )
-        ));
+        );
 
         $form->setInputFilter($inputFilter);
 
         $this->renderer->preRenderForm('test', $this->view);
 
         $matches = $this->getMatchesFromInlineScript();
-        
+
         $this->assertArrayNotHasKey('fieldName', $matches['rules']);
     }
 
@@ -226,7 +244,9 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $this->createForm('test');
         $this->rendererOptions->setIncludeAssets(false);
 
-        $this->renderer->preRenderForm('test', $this->view, null, array('include_assets' => true));
+        $this->renderer->preRenderForm(
+            'test', $this->view, null, array('include_assets' => true)
+        );
 
         $this->assertTrue($this->renderer->getOptions()->getIncludeAssets());
     }
@@ -234,13 +254,17 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     public function testExtraValidateOptionsCouldBeSet()
     {
         $this->createForm('test');
-        $this->rendererOptions->setValidateOptions(array(
-            'onsubmit' => false,
-            'submitHandler' => 'myHandler'
-        ));
+        $this->rendererOptions->setValidateOptions(
+            array(
+                'onsubmit'      => false,
+                'submitHandler' => 'myHandler'
+            )
+        );
         $this->renderer->preRenderForm('test', $this->view);
         $matches = $this->getMatchesFromInlineScript();
-        $this->assertStringStartsWith('{"onsubmit": false,"submitHandler": myHandler', $matches['options']);
+        $this->assertStringStartsWith(
+            '{"onsubmit": false,"submitHandler": myHandler', $matches['options']
+        );
     }
 
     public function testJavascriptAssetsAreIncludedToInlineScript()
@@ -252,9 +276,12 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $inlineScript = $this->view->plugin('inlineScript');
         $jsTagsFound = 0;
         foreach ($inlineScript->getContainer() as $item) {
-            if ($item->type == 'text/javascript' &&
-                !empty($item->attributes) &&
-                strpos($item->attributes['src'], '/js/jqueryvalidate/jquery.validate') >= 0) {
+            if ($item->type == 'text/javascript' && !empty($item->attributes)
+                && strpos(
+                    $item->attributes['src'],
+                    '/js/jqueryvalidate/jquery.validate'
+                ) >= 0
+            ) {
                 $jsTagsFound++;
             }
         }
@@ -429,13 +456,16 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
         $this->renderer->setOptions($expectedOptions);
 
-        $this->assertEquals($expectedOptions['validate_options'], $this->renderer->getOptions()->getValidateOptions());
+        $this->assertEquals(
+            $expectedOptions['validate_options'],
+            $this->renderer->getOptions()->getValidateOptions()
+        );
     }
 
     public function testIfSetOptionsReplacesRecursively()
     {
         $options = array(
-            'include_assets' => false,
+            'include_assets'   => false,
             'validate_options' => array(
                 'foo' => 'bar',
                 'bar' => 'baz'
@@ -445,7 +475,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $this->renderer->setOptions($options);
 
         $expectedOptions = array(
-            'include_assets' => true,
+            'include_assets'   => true,
             'validate_options' => array(
                 'foo' => 'fuu',
                 'bar' => 'baz',
@@ -455,14 +485,20 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
         $this->renderer->setOptions($expectedOptions);
 
-        $this->assertEquals($expectedOptions['include_assets'], $this->renderer->getOptions()->getIncludeAssets());
-        $this->assertEquals($expectedOptions['validate_options'], $this->renderer->getOptions()->getValidateOptions());
+        $this->assertEquals(
+            $expectedOptions['include_assets'],
+            $this->renderer->getOptions()->getIncludeAssets()
+        );
+        $this->assertEquals(
+            $expectedOptions['validate_options'],
+            $this->renderer->getOptions()->getValidateOptions()
+        );
     }
 
     public function testIfSetOptionsAddsRecursively()
     {
         $options = array(
-            'include_assets' => true,
+            'include_assets'   => true,
             'validate_options' => array(
                 'foo' => array(
                     'foo' => 'bar'
@@ -495,27 +531,34 @@ class RendererTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertEquals($expectedOptions['validate_options'], $this->renderer->getOptions()->getValidateOptions());
+        $this->assertEquals(
+            $expectedOptions['validate_options'],
+            $this->renderer->getOptions()->getValidateOptions()
+        );
     }
-    
+
     public function testIfRulesAreResetWithMultipleForms()
     {
         $form1 = $this->createForm('test', 'customEmailName');
 
         $inputFilter1 = new InputFilter();
-        $inputFilter1->add(array(
-            'name' => 'email',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'emailAddress'
+        $inputFilter1->add(
+            array(
+                'name'       => 'email',
+                'required'   => true,
+                'validators' => array(
+                    array(
+                        'name' => 'emailAddress'
+                    )
                 )
             )
-        ));
-        $inputFilter1->add(array(
-            'name'     => 'name',
-            'required' => true
-        ));
+        );
+        $inputFilter1->add(
+            array(
+                'name'     => 'name',
+                'required' => true
+            )
+        );
 
         $form1->setInputFilter($inputFilter1);
 
@@ -525,26 +568,32 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $form2 = $this->createForm('test2', 'email');
 
         $inputFilter2 = new InputFilter();
-        $inputFilter2->add(array(
-            'name' => 'otherfieldname',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'emailAddress'
+        $inputFilter2->add(
+            array(
+                'name'       => 'otherfieldname',
+                'required'   => true,
+                'validators' => array(
+                    array(
+                        'name' => 'emailAddress'
+                    )
                 )
             )
-        ));
-        $inputFilter2->add(array(
-            'name'     => 'name',
-            'required' => true
-        ));
+        );
+        $inputFilter2->add(
+            array(
+                'name'     => 'name',
+                'required' => true
+            )
+        );
 
         $form2->setInputFilter($inputFilter2);
 
         $this->renderer->preRenderForm('test2', $this->view);
 
         $inlineScript = $this->view->plugin('inlineScript');
-        $inlineString = preg_replace('/(\r\n|\r|\n|\t)+/', '', $inlineScript->toString());
+        $inlineString = preg_replace(
+            '/(\r\n|\r|\n|\t)+/', '', $inlineScript->toString()
+        );
         $explodedString = explode('form[name="test2"]', $inlineString);
         $lastPart = end($explodedString);
 
@@ -559,7 +608,8 @@ class RendererTest extends \PHPUnit_Framework_TestCase
             ->with('foo')
             ->andReturn(false);
 
-        $elementMock = M::mock('Zend\Form\ElementInterface')->shouldDeferMissing();
+        $elementMock = M::mock('Zend\Form\ElementInterface')
+            ->shouldDeferMissing();
         $elementMock
             ->shouldReceive('getOption')
             ->with('strokerform-exclude')
@@ -568,7 +618,11 @@ class RendererTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('getName')
             ->andReturn('foo');
 
-        $this->assertEmpty($this->renderer->getValidatorsForElement($inputFilterMock, $elementMock));
+        $this->assertEmpty(
+            $this->renderer->getValidatorsForElement(
+                $inputFilterMock, $elementMock
+            )
+        );
     }
 
     public function testFormCanBeRetrievedFromFormManager()
@@ -591,11 +645,13 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $inlineScript \Zend\View\Helper\InlineScript */
         $inlineScript = $this->view->plugin('inlineScript');
-        $inlineString = preg_replace('/(\r\n|\r|\n|\t)+/', '', $inlineScript->toString());
-        
-        $pattern = '/\$\(\'form\[name\="(?P<form>[a-z]*)"\]\'\).*\.validate\((?P<options>.*)\); \}\);/';
-        if(preg_match($pattern, $inlineString, $matches))
-        {
+        $inlineString = preg_replace(
+            '/(\r\n|\r|\n|\t)+/', '', $inlineScript->toString()
+        );
+
+        $pattern
+            = '/\$\(\'form\[name\="(?P<form>[a-z]*)"\]\'\).*\.validate\((?P<options>.*)\); \}\);/';
+        if (preg_match($pattern, $inlineString, $matches)) {
             $options = json_decode($matches['options'], true);
             $matches['rules'] = $options['rules'];
             $matches['messages'] = $options['messages'];

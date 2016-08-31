@@ -1,5 +1,5 @@
 <?php
- /**
+/**
  * InArrayTest
  *
  * @category  StrokerFormTest\Renderer\JqueryValidate\Rule
@@ -11,7 +11,10 @@
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
 
 
-use Zend\Validator\InArray;
+use StrokerForm\Renderer\JqueryValidate\Rule\InArray;
+use StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface;
+use Zend\Validator\InArray as ZendInArray;
+use Zend\Validator\ValidatorInterface;
 
 class InArrayTest extends AbstractRuleTest
 {
@@ -20,7 +23,7 @@ class InArrayTest extends AbstractRuleTest
      */
     protected function createRule()
     {
-        return new \StrokerForm\Renderer\JqueryValidate\Rule\InArray();
+        return new InArray();
     }
 
     /**
@@ -28,7 +31,7 @@ class InArrayTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        $validator = new InArray();
+        $validator = new ZendInArray();
         $validator->setHaystack(array(1, 2, 3, 4, 5));
 
         return $validator;
@@ -39,7 +42,9 @@ class InArrayTest extends AbstractRuleTest
      */
     public function testCorrectRulesAreReturned()
     {
-        $this->assertEquals(array('in_array' => array(1, 2, 3, 4, 5)), $this->getRules());
+        $this->assertEquals(
+            array('in_array' => array(1, 2, 3, 4, 5)), $this->getRules()
+        );
     }
 
     /**
@@ -52,11 +57,14 @@ class InArrayTest extends AbstractRuleTest
 
     public function testIfAssociativeArrayTransformed()
     {
-        $validator = new InArray();
+        $validator = new ZendInArray();
         $validator->setHaystack(array('foo' => 'bar', 'fuu' => 'buz'));
 
         $this->validator = $validator;
 
-        $this->assertEquals(array('in_array' => array(0 => 'bar', 1 => 'buz')), $this->getRules());
+        $this->assertEquals(
+            array('in_array' => array(0 => 'bar', 1 => 'buz')),
+            $this->getRules()
+        );
     }
 }

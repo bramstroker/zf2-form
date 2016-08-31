@@ -10,6 +10,11 @@
 
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
 
+use StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface;
+use StrokerForm\Renderer\JqueryValidate\Rule\StringLength;
+use Zend\Validator\StringLength as ZendStringLength;
+use Zend\Validator\ValidatorInterface;
+
 class StringLengthTest extends AbstractRuleTest
 {
     /**
@@ -17,7 +22,7 @@ class StringLengthTest extends AbstractRuleTest
      */
     protected function createRule()
     {
-        return new \StrokerForm\Renderer\JqueryValidate\Rule\StringLength();
+        return new StringLength();
     }
 
     /**
@@ -25,7 +30,7 @@ class StringLengthTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        return new \Zend\Validator\StringLength();
+        return new ZendStringLength();
     }
 
     /**
@@ -63,7 +68,9 @@ class StringLengthTest extends AbstractRuleTest
         $max = 20;
         $this->getValidator()->setMin($min);
         $this->getValidator()->setMax($max);
-        $this->assertEquals(array('minlength' => $min, 'maxlength' => $max), $this->getRules());
+        $this->assertEquals(
+            array('minlength' => $min, 'maxlength' => $max), $this->getRules()
+        );
         $this->assertArrayHasKey('maxlength', $this->getMessages());
         $this->assertArrayHasKey('minlength', $this->getMessages());
     }

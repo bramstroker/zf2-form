@@ -10,7 +10,10 @@
 
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
 
+use StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface;
 use StrokerForm\Renderer\JqueryValidate\Rule\Uri;
+use Zend\Validator\Uri as ZendUri;
+use Zend\Validator\ValidatorInterface;
 
 class UriTest extends AbstractRuleTest
 {
@@ -27,7 +30,7 @@ class UriTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        return new \Zend\Validator\Uri();
+        return new ZendUri();
     }
 
     /**

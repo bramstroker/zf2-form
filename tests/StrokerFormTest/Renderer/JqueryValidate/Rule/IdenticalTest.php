@@ -36,8 +36,7 @@ class IdenticalTest extends AbstractRuleTest
      */
     protected function createRule()
     {
-        if($this->rule === null)
-        {
+        if ($this->rule === null) {
             $this->rule = new IdenticalRule();
         }
         return $this->rule;
@@ -48,8 +47,7 @@ class IdenticalTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        if($this->validator === null)
-        {
+        if ($this->validator === null) {
             $this->validator = new IdenticalValidator($this->token);
         }
         return $this->validator;
@@ -60,8 +58,7 @@ class IdenticalTest extends AbstractRuleTest
      */
     protected function createElement()
     {
-        if($this->element === null)
-        {
+        if ($this->element === null) {
             $this->element = new Text("fieldset[element]");
         }
         return $this->element;
@@ -72,7 +69,10 @@ class IdenticalTest extends AbstractRuleTest
      */
     public function testToken()
     {
-        $this->assertEquals(array('equalTo' => '[name="fieldset[' . $this->token . ']"]'), $this->getRules());
+        $this->assertEquals(
+            array('equalTo' => '[name="fieldset[' . $this->token . ']"]'),
+            $this->getRules()
+        );
         $this->assertArrayHasKey('equalTo', $this->getMessages());
     }
 }

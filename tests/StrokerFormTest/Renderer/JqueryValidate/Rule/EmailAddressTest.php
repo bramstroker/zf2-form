@@ -10,6 +10,11 @@
 
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
 
+use StrokerForm\Renderer\JqueryValidate\Rule\EmailAddress;
+use StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface;
+use Zend\Validator\EmailAddress as ZendEmailAddress;
+use Zend\Validator\ValidatorInterface;
+
 class EmailAddressTest extends AbstractRuleTest
 {
     /**
@@ -17,7 +22,7 @@ class EmailAddressTest extends AbstractRuleTest
      */
     protected function createRule()
     {
-        return new \StrokerForm\Renderer\JqueryValidate\Rule\EmailAddress();
+        return new EmailAddress();
     }
 
     /**
@@ -25,7 +30,7 @@ class EmailAddressTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        return new \Zend\Validator\EmailAddress();
+        return new ZendEmailAddress();
     }
 
     /**

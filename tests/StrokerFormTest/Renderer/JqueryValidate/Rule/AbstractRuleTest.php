@@ -13,6 +13,7 @@ namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
 use StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface;
 use Zend\Form\Element\Text;
 use Zend\Form\ElementInterface;
+use Zend\I18n\Translator\Translator;
 use Zend\Validator\ValidatorInterface;
 
 abstract class AbstractRuleTest extends \PHPUnit_Framework_TestCase
@@ -52,8 +53,7 @@ abstract class AbstractRuleTest extends \PHPUnit_Framework_TestCase
      */
     protected function createElement()
     {
-        if($this->element === null)
-        {
+        if ($this->element === null) {
             $this->element = new Text("element");
         }
         return $this->element;
@@ -65,7 +65,7 @@ abstract class AbstractRuleTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->rule = $this->createRule();
-        $this->translatorMock = $this->createMock('Zend\I18n\Translator\Translator');
+        $this->translatorMock = $this->createMock(Translator::class);
         $this->rule->setTranslator($this->translatorMock);
         $this->validator = $this->createValidator();
         $this->element = $this->createElement();
@@ -76,7 +76,9 @@ abstract class AbstractRuleTest extends \PHPUnit_Framework_TestCase
      */
     protected function getRules()
     {
-        return $this->getRule()->getRules($this->getValidator(), $this->getElement());
+        return $this->getRule()->getRules(
+            $this->getValidator(), $this->getElement()
+        );
     }
 
     /**
@@ -124,7 +126,13 @@ abstract class AbstractRuleTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetRulesReturnsArray()
     {
-        $this->assertTrue(is_array($this->getRule()->getRules($this->getValidator(), $this->getElement())));
+        $this->assertTrue(
+            is_array(
+                $this->getRule()->getRules(
+                    $this->getValidator(), $this->getElement()
+                )
+            )
+        );
     }
 
     public function testGetSetTranslatorTextDomain()

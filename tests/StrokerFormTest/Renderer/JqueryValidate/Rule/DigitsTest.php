@@ -10,6 +10,11 @@
 
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
 
+use StrokerForm\Renderer\JqueryValidate\Rule\Digits;
+use StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface;
+use Zend\Validator\Digits as ZendDigits;
+use Zend\Validator\ValidatorInterface;
+
 class DigitsTest extends AbstractRuleTest
 {
     /**
@@ -17,7 +22,7 @@ class DigitsTest extends AbstractRuleTest
      */
     protected function createRule()
     {
-        return new \StrokerForm\Renderer\JqueryValidate\Rule\Digits();
+        return new Digits();
     }
 
     /**
@@ -25,7 +30,7 @@ class DigitsTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        return new \Zend\Validator\Digits();
+        return new ZendDigits();
     }
 
     /**

@@ -10,6 +10,11 @@
 
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
 
+use StrokerForm\Renderer\JqueryValidate\Rule\LessThan;
+use StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface;
+use Zend\Validator\LessThan as ZendLessThan;
+use Zend\Validator\ValidatorInterface;
+
 class LessThanTest extends AbstractRuleTest
 {
     /**
@@ -17,7 +22,7 @@ class LessThanTest extends AbstractRuleTest
      */
     protected function createRule()
     {
-        return new \StrokerForm\Renderer\JqueryValidate\Rule\LessThan();
+        return new LessThan();
     }
 
     /**
@@ -25,7 +30,7 @@ class LessThanTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        return new \Zend\Validator\LessThan();
+        return new ZendLessThan();
     }
 
     /**

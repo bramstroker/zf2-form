@@ -10,7 +10,10 @@
 
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
 
-use Zend\Validator\NotEmpty;
+use StrokerForm\Renderer\JqueryValidate\Rule\NotEmpty;
+use StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface;
+use Zend\Validator\NotEmpty as ZendEmpty;
+use Zend\Validator\ValidatorInterface;
 
 class NotEmptyTest extends AbstractRuleTest
 {
@@ -19,7 +22,7 @@ class NotEmptyTest extends AbstractRuleTest
      */
     protected function createRule()
     {
-        return new \StrokerForm\Renderer\JqueryValidate\Rule\NotEmpty();
+        return new NotEmpty();
     }
 
     /**
@@ -27,7 +30,7 @@ class NotEmptyTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        return new NotEmpty();
+        return new ZendEmpty();
     }
 
     /**

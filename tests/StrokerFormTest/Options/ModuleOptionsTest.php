@@ -10,8 +10,8 @@
 
 namespace StrokerFormTest\Controller;
 
-use PHPUnit_Framework_TestCase;
 use Mockery as M;
+use PHPUnit_Framework_TestCase;
 use StrokerForm\Options\ModuleOptions;
 
 class ModuleOptionsTest extends PHPUnit_Framework_TestCase
@@ -20,6 +20,8 @@ class ModuleOptionsTest extends PHPUnit_Framework_TestCase
     {
         $options = new ModuleOptions();
         $options->setActiveRenderers(array('foo', 'bar'));
-        $this->assertEquals(array('foo', 'bar'), $options->getActiveRenderers());
+        $this->assertEquals(
+            array('foo', 'bar'), $options->getActiveRenderers()
+        );
     }
 }

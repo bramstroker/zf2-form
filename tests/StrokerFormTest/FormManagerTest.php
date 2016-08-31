@@ -13,6 +13,9 @@ namespace StrokerFormTest;
 
 
 use StrokerForm\FormManager;
+use Zend\Form\FormElementManagerFactory;
+use Zend\Form\FormInterface;
+use Zend\ServiceManager\ServiceManager;
 
 class FormManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,7 +31,7 @@ class FormManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testIfValidatePluginValidatesCorrect()
     {
-        $plugin = \Mockery::mock('Zend\Form\FormInterface');
+        $plugin = \Mockery::mock(FormInterface::class);
         $this->assertNull($this->manager->validatePlugin($plugin));
     }
 
@@ -44,15 +47,23 @@ class FormManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testIfFormElementManagerUsed()
     {
-        $formMock = \Mockery::mock('Zend\Form\FormInterface');
+        $formMock = \Mockery::mock(FormInterface::class);
 
-        $formElementManagerMock = \Mockery::mock('\Zend\Form\FormElementManager');
-        $formElementManagerMock->shouldReceive('has')->with('Foobar')->andReturn(true);
-        $formElementManagerMock->shouldReceive('get')->with('Foobar')->andReturn($formMock);
+        $formElementManagerMock = \Mockery::mock(
+            FormElementManagerFactory::class
+        );
+        $formElementManagerMock->shouldReceive('has')->with('Foobar')
+            ->andReturn(true);
+        $formElementManagerMock->shouldReceive('get')->with('Foobar')
+            ->andReturn($formMock);
 
-        $serviceManagerMock = \Mockery::mock('Zend\ServiceManager\ServiceManager');
-        $serviceManagerMock->shouldReceive('has')->with('FormElementManager')->andReturn(true);
-        $serviceManagerMock->shouldReceive('get')->with('FormElementManager')->andReturn($formElementManagerMock);
+        $serviceManagerMock = \Mockery::mock(
+            ServiceManager::class
+        );
+        $serviceManagerMock->shouldReceive('has')->with('FormElementManager')
+            ->andReturn(true);
+        $serviceManagerMock->shouldReceive('get')->with('FormElementManager')
+            ->andReturn($formElementManagerMock);
         $this->manager->setServiceLocator($serviceManagerMock);
 
         $this->manager->get('Foobar');
@@ -60,14 +71,21 @@ class FormManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testIfFormElementManagerNotUsed()
     {
-        $formMock = \Mockery::mock('Zend\Form\FormInterface');
+        $formMock = \Mockery::mock(FormInterface::class);
 
-        $formElementManagerMock = \Mockery::mock('\Zend\Form\FormElementManager');
-        $formElementManagerMock->shouldReceive('has')->with('Foobar')->andReturn(false);
+        $formElementManagerMock = \Mockery::mock(
+            FormElementManagerFactory::class
+        );
+        $formElementManagerMock->shouldReceive('has')->with('Foobar')
+            ->andReturn(false);
 
-        $serviceManagerMock = \Mockery::mock('Zend\ServiceManager\ServiceManager');
-        $serviceManagerMock->shouldReceive('has')->with('FormElementManager')->andReturn(true);
-        $serviceManagerMock->shouldReceive('get')->with('FormElementManager')->andReturn($formElementManagerMock);
+        $serviceManagerMock = \Mockery::mock(
+            ServiceManager::class
+        );
+        $serviceManagerMock->shouldReceive('has')->with('FormElementManager')
+            ->andReturn(true);
+        $serviceManagerMock->shouldReceive('get')->with('FormElementManager')
+            ->andReturn($formElementManagerMock);
         $this->manager->setServiceLocator($serviceManagerMock);
 
         $this->manager->setService('Foobar', $formMock);
