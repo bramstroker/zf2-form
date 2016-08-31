@@ -10,11 +10,11 @@
 
 namespace StrokerForm\Renderer;
 
+use StrokerForm\FormManager;
 use Zend\I18n\Translator\TranslatorAwareInterface;
 use Zend\I18n\Translator\TranslatorAwareTrait;
 use Zend\Mvc\Router\RouteInterface;
 use Zend\Stdlib\AbstractOptions;
-use StrokerForm\FormManager;
 
 abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInterface
 {
@@ -50,6 +50,7 @@ abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInt
 
     /**
      * @param RouteInterface $httpRouter
+     *
      * @return void
      */
     public function setHttpRouter(RouteInterface $httpRouter)

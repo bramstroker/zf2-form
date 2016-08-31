@@ -10,7 +10,6 @@
 
 namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
-use Zend\I18n\Translator\Translator;
 use Zend\I18n\Translator\TranslatorInterface;
 use Zend\Validator\AbstractValidator;
 
@@ -35,6 +34,7 @@ abstract class AbstractRule implements RuleInterface
      * Translate a validation message
      *
      * @param  string $message
+     *
      * @return string
      */
     protected function translateMessage($message)
@@ -51,7 +51,8 @@ abstract class AbstractRule implements RuleInterface
      * Sets translator to use in helper
      *
      * @param  TranslatorInterface $translator
-     * @param  string     $textDomain
+     * @param  string              $textDomain
+     *
      * @return AbstractRule
      */
     public function setTranslator(TranslatorInterface $translator = null, $textDomain = null)
@@ -68,12 +69,11 @@ abstract class AbstractRule implements RuleInterface
     /**
      * Returns translator used in object
      *
-     * @return Translator
+     * @return TranslatorInterface|\Zend\Validator\Translator\TranslatorInterface
      */
     public function getTranslator()
     {
-        if($this->translator === null)
-        {
+        if ($this->translator === null) {
             $this->translator = AbstractValidator::getDefaultTranslator();
         }
         return $this->translator;
@@ -92,7 +92,8 @@ abstract class AbstractRule implements RuleInterface
     /**
      * Sets whether translator is enabled and should be used
      *
-     * @param  bool  $enabled
+     * @param  bool $enabled
+     *
      * @return AbstractRule
      */
     public function setTranslatorEnabled($enabled = true)
@@ -117,6 +118,7 @@ abstract class AbstractRule implements RuleInterface
      * Set translation text domain
      *
      * @param  string $textDomain
+     *
      * @return AbstractRule
      */
     public function setTranslatorTextDomain($textDomain = 'default')
@@ -133,8 +135,7 @@ abstract class AbstractRule implements RuleInterface
      */
     public function getTranslatorTextDomain()
     {
-        if($this->translatorTextDomain === null)
-        {
+        if ($this->translatorTextDomain === null) {
             $this->translatorTextDomain = AbstractValidator::getDefaultTranslatorTextDomain();
         }
         return $this->translatorTextDomain;

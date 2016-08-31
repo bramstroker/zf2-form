@@ -86,6 +86,7 @@ class Options extends \StrokerForm\Renderer\Options
 
     /**
      * @param string $initializeTrigger
+     *
      * @return Options
      */
     public function setInitializeTrigger($initializeTrigger)
@@ -104,6 +105,7 @@ class Options extends \StrokerForm\Renderer\Options
 
     /**
      * @param array $customValidationRules
+     *
      * @return Options $this
      */
     public function setCustomValidationRules(array $customValidationRules)

@@ -13,7 +13,6 @@ namespace StrokerForm\Renderer;
 use Zend\Form\ElementInterface;
 use Zend\Form\FormInterface;
 use Zend\View\Renderer\PhpRenderer as View;
-use Zend\Form\Form;
 
 class RendererCollection extends AbstractRenderer
 {
@@ -49,6 +48,7 @@ class RendererCollection extends AbstractRenderer
      * @param  \Zend\View\Renderer\PhpRenderer $view
      * @param  \Zend\Form\FormInterface        $form
      * @param array                            $options
+     *
      * @return mixed
      */
     public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = array())
@@ -62,6 +62,7 @@ class RendererCollection extends AbstractRenderer
      * Excecuted before the ZF2 view helper renders the element
      *
      * @param  ElementInterface $element
+     *
      * @return mixed
      */
     public function preRenderInputField(ElementInterface $element)

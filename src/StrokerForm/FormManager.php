@@ -10,8 +10,8 @@
 
 namespace StrokerForm;
 
-use Zend\ServiceManager\AbstractPluginManager;
 use Zend\Form\FormInterface;
+use Zend\ServiceManager\AbstractPluginManager;
 
 class FormManager extends AbstractPluginManager
 {
@@ -21,7 +21,8 @@ class FormManager extends AbstractPluginManager
      * Checks that the filter loaded is either a valid callback or an instance
      * of FilterInterface.
      *
-     * @param  mixed             $plugin
+     * @param  mixed $plugin
+     *
      * @return void
      * @throws \RuntimeException if invalid
      */
@@ -42,8 +43,9 @@ class FormManager extends AbstractPluginManager
 
     /**
      * @param string $name
-     * @param array $options
-     * @param bool $usePeeringServiceManagers
+     * @param array  $options
+     * @param bool   $usePeeringServiceManagers
+     *
      * @return FormInterface
      */
     public function get($name, $options = array(), $usePeeringServiceManagers = true)

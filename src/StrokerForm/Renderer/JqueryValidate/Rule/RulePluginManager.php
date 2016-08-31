@@ -21,19 +21,20 @@ class RulePluginManager extends AbstractPluginManager
      *
      * @var array
      */
-    protected $invokableClasses = array(
-        'between' => 'StrokerForm\Renderer\JqueryValidate\Rule\Between',
-        'creditcard' => 'StrokerForm\Renderer\JqueryValidate\Rule\CreditCard',
-        'digits' => 'StrokerForm\Renderer\JqueryValidate\Rule\Digits',
-        'emailaddress' => 'StrokerForm\Renderer\JqueryValidate\Rule\EmailAddress',
-        'greaterthan' => 'StrokerForm\Renderer\JqueryValidate\Rule\GreaterThan',
-        'identical' => 'StrokerForm\Renderer\JqueryValidate\Rule\Identical',
-        'lessthan' => 'StrokerForm\Renderer\JqueryValidate\Rule\LessThan',
-        'notempty' => 'StrokerForm\Renderer\JqueryValidate\Rule\NotEmpty',
-        'stringlength' => 'StrokerForm\Renderer\JqueryValidate\Rule\StringLength',
-        'uri' => 'StrokerForm\Renderer\JqueryValidate\Rule\Uri',
-        'inarray' => 'StrokerForm\Renderer\JqueryValidate\Rule\InArray',
-    );
+    protected $invokableClasses
+        = array(
+            'between'      => 'StrokerForm\Renderer\JqueryValidate\Rule\Between',
+            'creditcard'   => 'StrokerForm\Renderer\JqueryValidate\Rule\CreditCard',
+            'digits'       => 'StrokerForm\Renderer\JqueryValidate\Rule\Digits',
+            'emailaddress' => 'StrokerForm\Renderer\JqueryValidate\Rule\EmailAddress',
+            'greaterthan'  => 'StrokerForm\Renderer\JqueryValidate\Rule\GreaterThan',
+            'identical'    => 'StrokerForm\Renderer\JqueryValidate\Rule\Identical',
+            'lessthan'     => 'StrokerForm\Renderer\JqueryValidate\Rule\LessThan',
+            'notempty'     => 'StrokerForm\Renderer\JqueryValidate\Rule\NotEmpty',
+            'stringlength' => 'StrokerForm\Renderer\JqueryValidate\Rule\StringLength',
+            'uri'          => 'StrokerForm\Renderer\JqueryValidate\Rule\Uri',
+            'inarray'      => 'StrokerForm\Renderer\JqueryValidate\Rule\InArray',
+        );
 
     /**
      * Constructor
@@ -60,17 +61,20 @@ class RulePluginManager extends AbstractPluginManager
             return;
         }
 
-        throw new \InvalidArgumentException(sprintf(
-            'Plugin of type %s is invalid; must implement %s\RuleInterface',
-            (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
-            __NAMESPACE__
-        ));
+        throw new \InvalidArgumentException(
+            sprintf(
+                'Plugin of type %s is invalid; must implement %s\RuleInterface',
+                (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
+                __NAMESPACE__
+            )
+        );
     }
 
     /**
      * Inject a helper instance with the registered translator
      *
      * @param  RuleInterface $rule
+     *
      * @return void
      */
     public function injectTranslator($rule)

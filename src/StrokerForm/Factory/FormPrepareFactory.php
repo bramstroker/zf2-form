@@ -10,8 +10,8 @@
 
 namespace StrokerForm\Factory;
 
-use Zend\ServiceManager\FactoryInterface;
 use StrokerForm\View\Helper\FormPrepare;
+use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 class FormPrepareFactory implements FactoryInterface
@@ -20,6 +20,7 @@ class FormPrepareFactory implements FactoryInterface
      * Create service
      *
      * @param  ServiceLocatorInterface $serviceLocator
+     *
      * @return FormPrepare
      */
     public function createService(ServiceLocatorInterface $serviceLocator)

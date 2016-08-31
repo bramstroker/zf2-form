@@ -10,8 +10,11 @@
 
 namespace StrokerForm\Factory;
 
-use Zend\ServiceManager\FactoryInterface;
+use StrokerForm\FormManager;
+use StrokerForm\Options\ModuleOptions;
 use StrokerForm\Renderer\RendererCollection;
+use StrokerForm\Renderer\RendererInterface;
+use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 class RendererFactory implements FactoryInterface
@@ -19,19 +22,20 @@ class RendererFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param  ServiceLocatorInterface                 $serviceLocator
-     * @return \StrokerForm\Renderer\RendererInterface
+     * @param  ServiceLocatorInterface $serviceLocator
+     *
+     * @return RendererInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /** @var $options \StrokerForm\Options\ModuleOptions */
-        $options = $serviceLocator->get('StrokerForm\Options\ModuleOptions');
+        /** @var $options ModuleOptions */
+        $options = $serviceLocator->get(ModuleOptions::class);
         $rendererCollection = new RendererCollection();
         foreach ($options->getActiveRenderers() as $rendererAlias) {
-            /** @var $renderer \StrokerForm\Renderer\RendererInterface */
+            /** @var $renderer RendererInterface */
             $renderer = $serviceLocator->get($rendererAlias);
             $renderer->setDefaultOptions($options->getRendererOptions($rendererAlias));
-            $renderer->setFormManager($serviceLocator->get('StrokerForm\FormManager'));
+            $renderer->setFormManager($serviceLocator->get(FormManager::class));
             if ($serviceLocator->has('translator')) {
                 $renderer->setTranslator($serviceLocator->get('translator'));
             }

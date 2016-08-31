@@ -9,11 +9,20 @@
  */
 namespace StrokerForm;
 
-use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use StrokerForm\Controller\AjaxController;
+use StrokerForm\Factory\AjaxControllerFactory;
+use StrokerForm\Factory\FormElementFactory;
+use StrokerForm\Factory\FormManagerFactory;
+use StrokerForm\Factory\FormPrepareFactory;
+use StrokerForm\Factory\ModuleOptionsFactory;
+use StrokerForm\Factory\Renderer\JqueryValidate\RendererFactory as jQueryRendererFactory;
+use StrokerForm\Factory\RendererFactory;
+use StrokerForm\Options\ModuleOptions;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 
 class Module implements
     AutoloaderProviderInterface,
@@ -43,10 +52,10 @@ class Module implements
     {
         return array(
             'factories' => array(
-                'StrokerForm\Options\ModuleOptions' => 'StrokerForm\Factory\ModuleOptionsFactory',
-                'StrokerForm\FormManager' => 'StrokerForm\Factory\FormManagerFactory',
-                'stroker_form.renderer' => 'StrokerForm\Factory\RendererFactory',
-                'stroker_form.renderer.jqueryvalidate' => 'StrokerForm\Factory\Renderer\JqueryValidate\RendererFactory',
+                ModuleOptions::class                   => ModuleOptionsFactory::class,
+                FormManager::class                     => FormManagerFactory::class,
+                'stroker_form.renderer'                => RendererFactory::class,
+                'stroker_form.renderer.jqueryvalidate' => jQueryRendererFactory::class,
             ),
         );
     }
@@ -66,7 +75,7 @@ class Module implements
     {
         return array(
             'factories' => array(
-                'StrokerForm\Controller\Ajax' => 'StrokerForm\Factory\AjaxControllerFactory'
+                AjaxController::class => AjaxControllerFactory::class
             ),
         );
     }
@@ -78,8 +87,8 @@ class Module implements
     {
         return array(
             'factories' => array(
-                'form_element' => 'StrokerForm\Factory\FormElementFactory',
-                'strokerFormPrepare' => 'StrokerForm\Factory\FormPrepareFactory'
+                'form_element'       => FormElementFactory::class,
+                'strokerFormPrepare' => FormPrepareFactory::class
             )
         );
     }
