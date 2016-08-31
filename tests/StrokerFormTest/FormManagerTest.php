@@ -1,16 +1,16 @@
 <?php
+
 /**
- * FormManagerTest
+ * FormManagerTest.
  *
  * @category  StrokerFormTest
- * @package   StrokerFormTest
+ *
  * @copyright 2014 ACSI Holding bv (http://www.acsi.eu)
+ *
  * @version   SVN: $Id$
  */
 
-
 namespace StrokerFormTest;
-
 
 use StrokerForm\FormManager;
 use Zend\Form\FormElementManagerFactory;
@@ -93,4 +93,3 @@ class FormManagerTest extends \PHPUnit_Framework_TestCase
         $this->manager->get('Foobar');
     }
 }
- 

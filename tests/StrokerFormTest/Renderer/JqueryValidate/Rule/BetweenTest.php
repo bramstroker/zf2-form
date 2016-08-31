@@ -1,10 +1,12 @@
 <?php
+
 /**
- * BetweenTest
+ * BetweenTest.
  *
  * @category  StrokerForm
- * @package   StrokerForm\Renderer
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
@@ -32,7 +34,7 @@ class BetweenTest extends AbstractRuleTest
     }
 
     /**
-     * Assert that the currect rules are returned
+     * Assert that the currect rules are returned.
      */
     public function testBoundariesAreCorrectUsingInclusiveMode()
     {
@@ -47,7 +49,7 @@ class BetweenTest extends AbstractRuleTest
     }
 
     /**
-     * Assert that the currect rules are returned
+     * Assert that the currect rules are returned.
      */
     public function testBoundariesAreCorrectUsingNonInclusiveMode()
     {
@@ -60,7 +62,7 @@ class BetweenTest extends AbstractRuleTest
     }
 
     /**
-     * Assert that the correct messages are returned
+     * Assert that the correct messages are returned.
      */
     public function testCorrectMessagesAreReturned()
     {

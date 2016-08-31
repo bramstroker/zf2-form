@@ -1,10 +1,12 @@
 <?php
+
 /**
- * GreaterThanTest
+ * GreaterThanTest.
  *
  * @category  StrokerForm
- * @package   StrokerForm\Renderer
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
@@ -34,7 +36,7 @@ class GreaterThanTest extends AbstractRuleTest
     }
 
     /**
-     * Assert that the currect rules are returned
+     * Assert that the currect rules are returned.
      */
     public function testCorrectRulesAreReturned()
     {
@@ -44,7 +46,7 @@ class GreaterThanTest extends AbstractRuleTest
     }
 
     /**
-     * Assert that the correct messages are returned
+     * Assert that the correct messages are returned.
      */
     public function testCorrectMessagesAreReturned()
     {

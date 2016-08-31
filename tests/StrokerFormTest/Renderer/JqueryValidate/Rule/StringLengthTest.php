@@ -1,10 +1,12 @@
 <?php
+
 /**
- * StringLengthTest
+ * StringLengthTest.
  *
  * @category  StrokerForm
- * @package   StrokerForm\Renderer
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
@@ -34,7 +36,7 @@ class StringLengthTest extends AbstractRuleTest
     }
 
     /**
-     * Test only minlegth attribute when no max length is set on the validator
+     * Test only minlegth attribute when no max length is set on the validator.
      */
     public function testMinLength()
     {
@@ -47,7 +49,7 @@ class StringLengthTest extends AbstractRuleTest
     }
 
     /**
-     * Test only maxlength attribute when no min length is set on the validator
+     * Test only maxlength attribute when no min length is set on the validator.
      */
     public function testMaxLength()
     {
@@ -60,7 +62,7 @@ class StringLengthTest extends AbstractRuleTest
     }
 
     /**
-     * Test minlength and maxlength are both set
+     * Test minlength and maxlength are both set.
      */
     public function testMinAndMaxLength()
     {

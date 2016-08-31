@@ -1,10 +1,12 @@
 <?php
+
 /**
- * EmailAddressTest
+ * EmailAddressTest.
  *
  * @category  StrokerForm
- * @package   StrokerForm\Renderer
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
@@ -33,7 +35,7 @@ class CreditCardTest extends AbstractRuleTest
     }
 
     /**
-     * Assert that the currect rules are returned
+     * Assert that the currect rules are returned.
      */
     public function testCorrectRulesAreReturned()
     {
@@ -41,7 +43,7 @@ class CreditCardTest extends AbstractRuleTest
     }
 
     /**
-     * Assert that the correct messages are returned
+     * Assert that the correct messages are returned.
      */
     public function testCorrectMessagesAreReturned()
     {

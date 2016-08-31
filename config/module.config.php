@@ -1,4 +1,7 @@
 <?php
+
+use StrokerForm\Controller\AjaxController;
+
 return array(
     'router' => array(
         'routes' => array(
@@ -7,7 +10,7 @@ return array(
                 'options' => array(
                     'route'    => '/form/validate-ajax/:form',
                     'defaults' => array(
-                        'controller' => \StrokerForm\Controller\AjaxController::class,
+                        'controller' => AjaxController::class,
                         'action'     => 'validate',
                     ),
                 )

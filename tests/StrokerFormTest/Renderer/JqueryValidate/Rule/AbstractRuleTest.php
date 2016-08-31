@@ -1,10 +1,12 @@
 <?php
+
 /**
- * Description
+ * Description.
  *
  * @category  StrokerFormTest
- * @package   StrokerFormTest\Renderer
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
@@ -49,18 +51,19 @@ abstract class AbstractRuleTest extends \PHPUnit_Framework_TestCase
     abstract protected function createValidator();
 
     /**
-     * Create Form element
+     * Create Form element.
      */
     protected function createElement()
     {
         if ($this->element === null) {
-            $this->element = new Text("element");
+            $this->element = new Text('element');
         }
+
         return $this->element;
     }
 
     /**
-     * Setup test
+     * Setup test.
      */
     public function setUp()
     {
@@ -122,7 +125,7 @@ abstract class AbstractRuleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * testGetRulesReturnsArray
+     * testGetRulesReturnsArray.
      */
     public function testGetRulesReturnsArray()
     {

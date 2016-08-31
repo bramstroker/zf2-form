@@ -1,10 +1,12 @@
 <?php
+
 /**
- * Description
+ * Description.
  *
  * @category  Acsi
- * @package   Acsi\
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
@@ -53,7 +55,7 @@ class AjaxControllerTest extends \PHPUnit_Framework_TestCase
     protected $formManager;
 
     /**
-     * Setup
+     * Setup.
      */
     public function setUp()
     {
@@ -74,7 +76,7 @@ class AjaxControllerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * testExceptionWhenNoPostDataIsProvided
+     * testExceptionWhenNoPostDataIsProvided.
      *
      * @expectedException \InvalidArgumentException
      */
@@ -84,7 +86,7 @@ class AjaxControllerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param  string $actionName
+     * @param string $actionName
      *
      * @return mixed|\Zend\Stdlib\ResponseInterface
      */
@@ -98,7 +100,7 @@ class AjaxControllerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Assert response code matches given responseCode
+     * Assert response code matches given responseCode.
      *
      * @param int $responseCode
      */
@@ -110,7 +112,7 @@ class AjaxControllerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Assert certain header is found
+     * Assert certain header is found.
      *
      * @param string $expectedValue
      * @param string $headerType
@@ -119,7 +121,7 @@ class AjaxControllerTest extends \PHPUnit_Framework_TestCase
     {
         $header = $this->getResponse()->getHeaders()->get($headerType);
         if ($header === false) {
-            $this->fail('No ' . $headerType . ' header found');
+            $this->fail('No '.$headerType.' header found');
         }
         $this->assertEquals($expectedValue, $header->getFieldValue());
     }

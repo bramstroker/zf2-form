@@ -1,10 +1,12 @@
 <?php
+
 /**
- * Description
+ * Description.
  *
  * @category  StrokerFormTest
- * @package   StrokerFormTest\Renderer
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 

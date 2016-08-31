@@ -1,15 +1,16 @@
 <?php
+
 /**
- * InArrayTest
+ * InArrayTest.
  *
  * @category  StrokerFormTest\Renderer\JqueryValidate\Rule
- * @package   StrokerFormTest\Renderer\JqueryValidate\Rule
+ *
  * @copyright 2013 ACSI Holding bv (http://www.acsi.eu)
+ *
  * @version   SVN: $Id$
  */
 
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
-
 
 use StrokerForm\Renderer\JqueryValidate\Rule\InArray;
 use StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface;
@@ -38,7 +39,7 @@ class InArrayTest extends AbstractRuleTest
     }
 
     /**
-     * Assert that the currect rules are returned
+     * Assert that the currect rules are returned.
      */
     public function testCorrectRulesAreReturned()
     {
@@ -48,7 +49,7 @@ class InArrayTest extends AbstractRuleTest
     }
 
     /**
-     * Assert that the correct messages are returned
+     * Assert that the correct messages are returned.
      */
     public function testCorrectMessagesAreReturned()
     {

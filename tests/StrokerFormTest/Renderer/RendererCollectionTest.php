@@ -1,10 +1,12 @@
 <?php
+
 /**
- * Description
+ * Description.
  *
  * @category  Acsi
- * @package   Acsi\
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
@@ -12,7 +14,6 @@ namespace StrokerForm\Renderer;
 
 use Mockery;
 use StrokerForm\FormManager;
-use StrokerForm\Renderer\RendererInterface;
 use Zend\Form\ElementInterface;
 use Zend\View\Renderer\PhpRenderer;
 
@@ -24,14 +25,14 @@ class RendererCollectionTest extends \PHPUnit_Framework_TestCase
     private $rendererCollection = null;
 
     /**
-     * Setup
+     * Setup.
      */
     public function setUp()
     {
         $this->rendererCollection = new RendererCollection(
             $this->createMock(FormManager::class)
         );
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < 3; ++$i) {
             $renderer = $this->createMock(
                 RendererInterface::class
             );
@@ -40,7 +41,7 @@ class RendererCollectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * testGetRenderers
+     * testGetRenderers.
      */
     public function testGetRenderers()
     {
@@ -48,7 +49,7 @@ class RendererCollectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * testPreRenderFormIsCalledOnInnerRenderers
+     * testPreRenderFormIsCalledOnInnerRenderers.
      */
     public function testPreRenderFormIsCalledOnInnerRenderers()
     {
@@ -66,7 +67,7 @@ class RendererCollectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * testPreRenderInputFieldIsCalledOnInnerRenderers
+     * testPreRenderInputFieldIsCalledOnInnerRenderers.
      */
     public function testPreRenderInputFieldIsCalledOnInnerRenderers()
     {

@@ -1,10 +1,12 @@
 <?php
+
 /**
- * FormElementTest
+ * FormElementTest.
  *
  * @category  StrokerFormTest
- * @package   StrokerFormTest\View
+ *
  * @copyright 2016 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 

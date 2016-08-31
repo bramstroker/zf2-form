@@ -10,13 +10,11 @@
 
 namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
-
 use Zend\Form\ElementInterface;
 use Zend\Validator\ValidatorInterface;
 
 class InArray extends AbstractRule
 {
-
     /**
      * Get the validation rules
      *
