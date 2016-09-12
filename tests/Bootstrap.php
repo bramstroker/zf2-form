@@ -1,4 +1,5 @@
 <?php
+
 /**
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -18,7 +19,6 @@
 
 namespace StrokerFormTest;
 
-use Zend\Loader\AutoloaderFactory;
 use RuntimeException;
 
 error_reporting(E_ALL | E_STRICT);
@@ -32,7 +32,7 @@ class Bootstrap
     protected static $serviceManager;
 
     /**
-     * Init
+     * Init.
      */
     public static function init()
     {
@@ -40,7 +40,7 @@ class Bootstrap
     }
 
     /**
-     * Initialize the autoloader
+     * Initialize the autoloader.
      *
      * @throws \RuntimeException
      */
@@ -48,12 +48,13 @@ class Bootstrap
     {
         $vendorPath = static::findParentPath('vendor');
 
-        if (is_readable($vendorPath . '/autoload.php')) {
-            include $vendorPath . '/autoload.php';
+        if (is_readable($vendorPath.'/autoload.php')) {
+            include $vendorPath.'/autoload.php';
+
             return;
         }
 
-        $zf2Path = getenv('ZF2_PATH') ?: (defined('ZF2_PATH') ? ZF2_PATH : (is_dir($vendorPath . '/ZF2/library') ? $vendorPath . '/ZF2/library' : false));
+        $zf2Path = getenv('ZF2_PATH') ?: (defined('ZF2_PATH') ? ZF2_PATH : (is_dir($vendorPath.'/ZF2/library') ? $vendorPath.'/ZF2/library' : false));
 
         if (!$zf2Path) {
             throw new RuntimeException('Unable to load ZF2. Run `php composer.phar install` or define a ZF2_PATH environment variable.');
@@ -61,16 +62,17 @@ class Bootstrap
     }
 
     /**
-     * Find the parent path
+     * Find the parent path.
      *
      * @param $path
+     *
      * @return bool|string
      */
     protected static function findParentPath($path)
     {
-        $dir         = __DIR__;
+        $dir = __DIR__;
         $previousDir = '.';
-        while (!is_dir($dir . '/' . $path)) {
+        while (!is_dir($dir.'/'.$path)) {
             $dir = dirname($dir);
 
             if ($previousDir === $dir) {
@@ -80,7 +82,7 @@ class Bootstrap
             $previousDir = $dir;
         }
 
-        return $dir . '/' . $path;
+        return $dir.'/'.$path;
     }
 }
 

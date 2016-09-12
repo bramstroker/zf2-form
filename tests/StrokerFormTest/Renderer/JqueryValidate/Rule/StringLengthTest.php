@@ -1,14 +1,21 @@
 <?php
+
 /**
- * StringLengthTest
+ * StringLengthTest.
  *
  * @category  StrokerForm
- * @package   StrokerForm\Renderer
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
+
+use StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface;
+use StrokerForm\Renderer\JqueryValidate\Rule\StringLength;
+use Zend\Validator\StringLength as ZendStringLength;
+use Zend\Validator\ValidatorInterface;
 
 class StringLengthTest extends AbstractRuleTest
 {
@@ -17,7 +24,7 @@ class StringLengthTest extends AbstractRuleTest
      */
     protected function createRule()
     {
-        return new \StrokerForm\Renderer\JqueryValidate\Rule\StringLength();
+        return new StringLength();
     }
 
     /**
@@ -25,11 +32,11 @@ class StringLengthTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        return new \Zend\Validator\StringLength();
+        return new ZendStringLength();
     }
 
     /**
-     * Test only minlegth attribute when no max length is set on the validator
+     * Test only minlegth attribute when no max length is set on the validator.
      */
     public function testMinLength()
     {
@@ -42,7 +49,7 @@ class StringLengthTest extends AbstractRuleTest
     }
 
     /**
-     * Test only maxlength attribute when no min length is set on the validator
+     * Test only maxlength attribute when no min length is set on the validator.
      */
     public function testMaxLength()
     {
@@ -55,7 +62,7 @@ class StringLengthTest extends AbstractRuleTest
     }
 
     /**
-     * Test minlength and maxlength are both set
+     * Test minlength and maxlength are both set.
      */
     public function testMinAndMaxLength()
     {
@@ -63,7 +70,9 @@ class StringLengthTest extends AbstractRuleTest
         $max = 20;
         $this->getValidator()->setMin($min);
         $this->getValidator()->setMax($max);
-        $this->assertEquals(array('minlength' => $min, 'maxlength' => $max), $this->getRules());
+        $this->assertEquals(
+            array('minlength' => $min, 'maxlength' => $max), $this->getRules()
+        );
         $this->assertArrayHasKey('maxlength', $this->getMessages());
         $this->assertArrayHasKey('minlength', $this->getMessages());
     }

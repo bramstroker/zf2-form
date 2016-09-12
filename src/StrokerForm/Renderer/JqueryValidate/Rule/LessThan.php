@@ -30,7 +30,7 @@ class LessThan extends AbstractRule
     {
         return array(
             'max' =>
-            sprintf($this->translateMessage('The input is not less than %s'), $validator->getMax())
+                sprintf($this->translateMessage('The input is not less than %s'), $validator->getMax())
         );
     }
 }

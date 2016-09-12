@@ -10,10 +10,10 @@
 
 namespace StrokerForm\Factory;
 
-use Zend\ServiceManager\FactoryInterface;
-use StrokerForm\Options\ModuleOptions;
-use Zend\ServiceManager\ServiceLocatorInterface;
 use RuntimeException;
+use StrokerForm\Options\ModuleOptions;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 class ModuleOptionsFactory implements FactoryInterface
 {
@@ -21,6 +21,7 @@ class ModuleOptionsFactory implements FactoryInterface
      * Create service
      *
      * @param  ServiceLocatorInterface $serviceLocator
+     *
      * @return mixed
      */
     public function createService(ServiceLocatorInterface $serviceLocator)

@@ -1,14 +1,21 @@
 <?php
+
 /**
- * EmailAddressTest
+ * EmailAddressTest.
  *
  * @category  StrokerForm
- * @package   StrokerForm\Renderer
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
+
+use StrokerForm\Renderer\JqueryValidate\Rule\EmailAddress;
+use StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface;
+use Zend\Validator\EmailAddress as ZendEmailAddress;
+use Zend\Validator\ValidatorInterface;
 
 class EmailAddressTest extends AbstractRuleTest
 {
@@ -17,7 +24,7 @@ class EmailAddressTest extends AbstractRuleTest
      */
     protected function createRule()
     {
-        return new \StrokerForm\Renderer\JqueryValidate\Rule\EmailAddress();
+        return new EmailAddress();
     }
 
     /**
@@ -25,11 +32,11 @@ class EmailAddressTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        return new \Zend\Validator\EmailAddress();
+        return new ZendEmailAddress();
     }
 
     /**
-     * Assert that the currect rules are returned
+     * Assert that the currect rules are returned.
      */
     public function testCorrectRulesAreReturned()
     {
@@ -37,7 +44,7 @@ class EmailAddressTest extends AbstractRuleTest
     }
 
     /**
-     * Assert that the correct messages are returned
+     * Assert that the correct messages are returned.
      */
     public function testCorrectMessagesAreReturned()
     {

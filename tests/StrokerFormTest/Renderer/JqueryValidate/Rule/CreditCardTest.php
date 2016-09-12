@@ -1,21 +1,25 @@
 <?php
+
 /**
- * EmailAddressTest
+ * EmailAddressTest.
  *
  * @category  StrokerForm
- * @package   StrokerForm\Renderer
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
 
 use StrokerForm\Renderer\JqueryValidate\Rule\CreditCard;
+use Zend\Validator\CreditCard as ZendCreditCard;
+use Zend\Validator\ValidatorInterface;
 
 class CreditCardTest extends AbstractRuleTest
 {
     /**
-     * @return RuleInterface
+     * @return CreditCard
      */
     protected function createRule()
     {
@@ -27,11 +31,11 @@ class CreditCardTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        return new \Zend\Validator\CreditCard();
+        return new ZendCreditCard();
     }
 
     /**
-     * Assert that the currect rules are returned
+     * Assert that the currect rules are returned.
      */
     public function testCorrectRulesAreReturned()
     {
@@ -39,7 +43,7 @@ class CreditCardTest extends AbstractRuleTest
     }
 
     /**
-     * Assert that the correct messages are returned
+     * Assert that the correct messages are returned.
      */
     public function testCorrectMessagesAreReturned()
     {

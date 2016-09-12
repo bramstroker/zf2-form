@@ -1,35 +1,40 @@
 <?php
+
 /**
- * BetweenTest
+ * BetweenTest.
  *
  * @category  StrokerForm
- * @package   StrokerForm\Renderer
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
 
+use StrokerForm\Renderer\JqueryValidate\Rule\Between;
+use Zend\Validator\Between as ZendBetween;
+
 class BetweenTest extends AbstractRuleTest
 {
     /**
-     * @return RuleInterface
+     * @return Between
      */
     protected function createRule()
     {
-        return new \StrokerForm\Renderer\JqueryValidate\Rule\Between();
+        return new Between();
     }
 
     /**
-     * @return ValidatorInterface
+     * @return ZendBetween
      */
     protected function createValidator()
     {
-        return new \Zend\Validator\Between(0, 100);
+        return new ZendBetween(0, 100);
     }
 
     /**
-     * Assert that the currect rules are returned
+     * Assert that the currect rules are returned.
      */
     public function testBoundariesAreCorrectUsingInclusiveMode()
     {
@@ -38,11 +43,13 @@ class BetweenTest extends AbstractRuleTest
         $this->getValidator()->setMin($min);
         $this->getValidator()->setMax($max);
         $this->getValidator()->setInclusive(true);
-        $this->assertEquals(array('range' => array($min, $max)), $this->getRules());
+        $this->assertEquals(
+            array('range' => array($min, $max)), $this->getRules()
+        );
     }
 
     /**
-     * Assert that the currect rules are returned
+     * Assert that the currect rules are returned.
      */
     public function testBoundariesAreCorrectUsingNonInclusiveMode()
     {
@@ -55,7 +62,7 @@ class BetweenTest extends AbstractRuleTest
     }
 
     /**
-     * Assert that the correct messages are returned
+     * Assert that the correct messages are returned.
      */
     public function testCorrectMessagesAreReturned()
     {

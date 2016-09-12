@@ -1,14 +1,21 @@
 <?php
+
 /**
- * GreaterThanTest
+ * GreaterThanTest.
  *
  * @category  StrokerForm
- * @package   StrokerForm\Renderer
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
+
+use StrokerForm\Renderer\JqueryValidate\Rule\GreaterThan;
+use StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface;
+use Zend\Validator\GreaterThan as ZendGreaterThan;
+use Zend\Validator\ValidatorInterface;
 
 class GreaterThanTest extends AbstractRuleTest
 {
@@ -17,7 +24,7 @@ class GreaterThanTest extends AbstractRuleTest
      */
     protected function createRule()
     {
-        return new \StrokerForm\Renderer\JqueryValidate\Rule\GreaterThan();
+        return new GreaterThan();
     }
 
     /**
@@ -25,11 +32,11 @@ class GreaterThanTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        return new \Zend\Validator\GreaterThan();
+        return new ZendGreaterThan();
     }
 
     /**
-     * Assert that the currect rules are returned
+     * Assert that the currect rules are returned.
      */
     public function testCorrectRulesAreReturned()
     {
@@ -39,7 +46,7 @@ class GreaterThanTest extends AbstractRuleTest
     }
 
     /**
-     * Assert that the correct messages are returned
+     * Assert that the correct messages are returned.
      */
     public function testCorrectMessagesAreReturned()
     {

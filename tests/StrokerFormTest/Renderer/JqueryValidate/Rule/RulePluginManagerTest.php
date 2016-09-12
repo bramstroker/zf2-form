@@ -1,20 +1,23 @@
 <?php
+
 /**
- * Description
+ * Description.
  *
  * @category  StrokerFormTest
- * @package   StrokerFormTest\Renderer
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
 
+use stdClass;
 use StrokerForm\Renderer\JqueryValidate\Rule\NotEmpty;
+use StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface;
 use StrokerForm\Renderer\JqueryValidate\Rule\RulePluginManager;
 use Zend\I18n\Translator\Translator;
 use Zend\ServiceManager\ServiceManager;
-use stdClass;
 
 class RulePluginManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,7 +40,10 @@ class RulePluginManagerTest extends \PHPUnit_Framework_TestCase
         $invokables = $services['invokableClasses'];
         foreach ($invokables as $alias) {
             $instance = $this->pluginManager->get($alias);
-            $this->assertInstanceOf('StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface', $instance);
+            $this->assertInstanceOf(
+                RuleInterface::class,
+                $instance
+            );
         }
     }
 

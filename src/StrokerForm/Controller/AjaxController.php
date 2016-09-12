@@ -66,11 +66,13 @@ class AjaxController extends AbstractActionController
             $messages = $filter->getMessages();
 
             $result = false;
-            array_walk_recursive($messages, function($item) use (&$result) {
+            array_walk_recursive(
+                $messages, function ($item) use (&$result) {
                 if (is_string($item)) {
                     $result = $item;
                 }
-            });
+            }
+            );
         } else {
             $result = true;
         }
@@ -89,9 +91,11 @@ class AjaxController extends AbstractActionController
      *   array('fieldset' => array('field1'))
      *
      * @param $data
+     *
      * @return array
      */
-    protected function convertDataArrayToValidationGroup($data) {
+    protected function convertDataArrayToValidationGroup($data)
+    {
         $ret = array();
         foreach ($data as $key => $value) {
             if (is_array($value)) {

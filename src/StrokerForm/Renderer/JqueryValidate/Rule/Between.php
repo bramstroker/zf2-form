@@ -30,24 +30,26 @@ class Between extends AbstractRule
     {
         return array(
             'range' =>
-            sprintf($this->translateMessage('The input is not between %s and %s'), $this->getMin($validator), $this->getMax($validator))
+                sprintf($this->translateMessage('The input is not between %s and %s'), $this->getMin($validator), $this->getMax($validator))
         );
     }
 
     /**
-     * @param  \Zend\Validator\ValidatorInterface $validator
+     * @param  ValidatorInterface $validator
+     *
      * @return mixed
      */
-    protected function getMin(\Zend\Validator\ValidatorInterface $validator)
+    protected function getMin(ValidatorInterface $validator)
     {
         return $validator->getInclusive() ? $validator->getMin() : $validator->getMin() + 1;
     }
 
     /**
-     * @param  \Zend\Validator\ValidatorInterface $validator
+     * @param  ValidatorInterface $validator
+     *
      * @return mixed
      */
-    protected function getMax(\Zend\Validator\ValidatorInterface $validator)
+    protected function getMax(ValidatorInterface $validator)
     {
         return $validator->getInclusive() ? $validator->getMax() : $validator->getMax() - 1;
     }

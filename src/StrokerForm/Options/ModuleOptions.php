@@ -10,10 +10,10 @@
 
 namespace StrokerForm\Options;
 
-use Zend\Stdlib\AbstractOptions;
-use Zend\ServiceManager\ConfigInterface;
+use InvalidArgumentException;
 use Zend\ServiceManager\Config;
-use \InvalidArgumentException;
+use Zend\ServiceManager\ConfigInterface;
+use Zend\Stdlib\AbstractOptions;
 
 class ModuleOptions extends AbstractOptions
 {
@@ -49,7 +49,7 @@ class ModuleOptions extends AbstractOptions
     }
 
     /**
-     * @return Config
+     * @return ConfigInterface
      * @throws InvalidArgumentException
      */
     public function getForms()
@@ -85,8 +85,9 @@ class ModuleOptions extends AbstractOptions
     }
 
     /**
-     * @param  string                    $renderer
-     * @param  array                     $options
+     * @param  string $renderer
+     * @param  array  $options
+     *
      * @throws \InvalidArgumentException
      */
     public function addRendererOptions($renderer, $options)
@@ -107,6 +108,7 @@ class ModuleOptions extends AbstractOptions
 
     /**
      * @param string $renderer
+     *
      * @return null|AbstractOptions
      * @throws \InvalidArgumentException
      */

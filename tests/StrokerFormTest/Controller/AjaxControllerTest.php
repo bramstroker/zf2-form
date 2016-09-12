@@ -1,20 +1,26 @@
 <?php
+
 /**
- * Description
+ * Description.
  *
  * @category  Acsi
- * @package   Acsi\
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
 namespace StrokerFormTest\Controller;
 
 use StrokerForm\Controller\AjaxController;
+use StrokerForm\FormManager;
+use Zend\Http\Request;
+use Zend\Http\Response;
+use Zend\Mvc\Controller\AbstractController;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
-use Zend\Http\Response;
-use Zend\Http\Request;
+use Zend\Stdlib\RequestInterface;
+use Zend\Stdlib\ResponseInterface;
 
 class AjaxControllerTest extends \PHPUnit_Framework_TestCase
 {
@@ -44,29 +50,33 @@ class AjaxControllerTest extends \PHPUnit_Framework_TestCase
     protected $event;
 
     /**
-     * @var ServiceManager
+     * @var FormManager
      */
     protected $formManager;
 
     /**
-     * Setup
+     * Setup.
      */
     public function setUp()
     {
-        $this->setFormManager(new \StrokerForm\FormManager());
+        $this->setFormManager(new FormManager());
         $this->controller = new AjaxController($this->getFormManager());
-        $this->request    = new Request();
-        $this->response   = new Response();
+        $this->request = new Request();
+        $this->response = new Response();
 
-        $controllerName = strtolower(str_replace('Controller', '', get_class($this->controller)));
-        $this->routeMatch = new RouteMatch(array('controller' => $controllerName));
-        $this->event      = new MvcEvent();
+        $controllerName = strtolower(
+            str_replace('Controller', '', get_class($this->controller))
+        );
+        $this->routeMatch = new RouteMatch(
+            array('controller' => $controllerName)
+        );
+        $this->event = new MvcEvent();
         $this->event->setRouteMatch($this->routeMatch);
         $this->controller->setEvent($this->event);
     }
 
     /**
-     * testExceptionWhenNoPostDataIsProvided
+     * testExceptionWhenNoPostDataIsProvided.
      *
      * @expectedException \InvalidArgumentException
      */
@@ -76,28 +86,33 @@ class AjaxControllerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param  string                               $actionName
+     * @param string $actionName
+     *
      * @return mixed|\Zend\Stdlib\ResponseInterface
      */
     protected function dispatchAction($actionName)
     {
         $this->getRouteMatch()->setParam('action', $actionName);
 
-        return $this->getController()->dispatch($this->getRequest(), $this->getResponse());
+        return $this->getController()->dispatch(
+            $this->getRequest(), $this->getResponse()
+        );
     }
 
     /**
-     * Assert response code matches given responseCode
+     * Assert response code matches given responseCode.
      *
      * @param int $responseCode
      */
     protected function assertResponseCode($responseCode)
     {
-        $this->assertEquals($responseCode, $this->getResponse()->getStatusCode());
+        $this->assertEquals(
+            $responseCode, $this->getResponse()->getStatusCode()
+        );
     }
 
     /**
-     * Assert certain header is found
+     * Assert certain header is found.
      *
      * @param string $expectedValue
      * @param string $headerType
@@ -106,7 +121,7 @@ class AjaxControllerTest extends \PHPUnit_Framework_TestCase
     {
         $header = $this->getResponse()->getHeaders()->get($headerType);
         if ($header === false) {
-            $this->fail('No ' . $headerType . ' header found');
+            $this->fail('No '.$headerType.' header found');
         }
         $this->assertEquals($expectedValue, $header->getFieldValue());
     }
@@ -192,7 +207,7 @@ class AjaxControllerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \StrokerForm\FormManager
+     * @return FormManager
      */
     public function getFormManager()
     {
@@ -200,9 +215,9 @@ class AjaxControllerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \StrokerForm\FormManager $formManager
+     * @param FormManager $formManager
      */
-    public function setFormManager(\StrokerForm\FormManager $formManager)
+    public function setFormManager(FormManager $formManager)
     {
         $this->formManager = $formManager;
     }

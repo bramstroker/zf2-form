@@ -10,9 +10,9 @@
 
 namespace StrokerForm\View\Helper;
 
-use Zend\Form\View\Helper\AbstractHelper;
-use Zend\Form\FormInterface;
 use StrokerForm\Renderer\RendererInterface;
+use Zend\Form\FormInterface;
+use Zend\Form\View\Helper\AbstractHelper;
 
 class FormPrepare extends AbstractHelper
 {
@@ -32,7 +32,7 @@ class FormPrepare extends AbstractHelper
     /**
      * @param string                   $formAlias
      * @param \Zend\Form\FormInterface $form
-     * @param array $options
+     * @param array                    $options
      */
     public function __invoke($formAlias, FormInterface $form = null, array $options = array())
     {

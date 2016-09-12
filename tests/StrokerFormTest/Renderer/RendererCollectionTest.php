@@ -1,16 +1,21 @@
 <?php
+
 /**
- * Description
+ * Description.
  *
  * @category  Acsi
- * @package   Acsi\
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
 namespace StrokerForm\Renderer;
 
 use Mockery;
+use StrokerForm\FormManager;
+use Zend\Form\ElementInterface;
+use Zend\View\Renderer\PhpRenderer;
 
 class RendererCollectionTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,19 +25,23 @@ class RendererCollectionTest extends \PHPUnit_Framework_TestCase
     private $rendererCollection = null;
 
     /**
-     * Setup
+     * Setup.
      */
     public function setUp()
     {
-        $this->rendererCollection = new RendererCollection($this->getMock('StrokerForm\FormManager'));
-        for ($i = 0; $i < 3; $i++) {
-            $renderer = $this->getMock('StrokerForm\Renderer\RendererInterface');
+        $this->rendererCollection = new RendererCollection(
+            $this->createMock(FormManager::class)
+        );
+        for ($i = 0; $i < 3; ++$i) {
+            $renderer = $this->createMock(
+                RendererInterface::class
+            );
             $this->rendererCollection->addRenderer($renderer);
         }
     }
 
     /**
-     * testGetRenderers
+     * testGetRenderers.
      */
     public function testGetRenderers()
     {
@@ -40,35 +49,35 @@ class RendererCollectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * testPreRenderFormIsCalledOnInnerRenderers
+     * testPreRenderFormIsCalledOnInnerRenderers.
      */
     public function testPreRenderFormIsCalledOnInnerRenderers()
     {
         $formAlias = 'testAlias';
-        $viewMock = Mockery::mock('Zend\View\Renderer\PhpRenderer');
+        $viewMock = Mockery::mock(PhpRenderer::class);
 
         /** @var $renderer \PHPUnit_Framework_MockObject_MockObject */
         foreach ($this->rendererCollection->getRenderers() as $renderer) {
             $renderer->expects($this->once())
-                     ->method('preRenderForm')
-                     ->with($formAlias, $this->equalTo($viewMock));
+                ->method('preRenderForm')
+                ->with($formAlias, $this->equalTo($viewMock));
         }
 
         $this->rendererCollection->preRenderForm($formAlias, $viewMock);
     }
 
     /**
-     * testPreRenderInputFieldIsCalledOnInnerRenderers
+     * testPreRenderInputFieldIsCalledOnInnerRenderers.
      */
     public function testPreRenderInputFieldIsCalledOnInnerRenderers()
     {
-        $elemMock = $this->getMock('Zend\Form\ElementInterface');
+        $elemMock = $this->createMock(ElementInterface::class);
 
         /** @var $renderer \PHPUnit_Framework_MockObject_MockObject */
         foreach ($this->rendererCollection->getRenderers() as $renderer) {
             $renderer->expects($this->once())
-                     ->method('preRenderInputField')
-                     ->with($this->equalTo($elemMock));
+                ->method('preRenderInputField')
+                ->with($this->equalTo($elemMock));
         }
 
         $this->rendererCollection->preRenderInputField($elemMock);

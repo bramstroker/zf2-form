@@ -1,10 +1,12 @@
 <?php
+
 /**
- * IdenticalTest
+ * IdenticalTest.
  *
  * @category  StrokerForm
- * @package   StrokerForm\Renderer
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
@@ -36,10 +38,10 @@ class IdenticalTest extends AbstractRuleTest
      */
     protected function createRule()
     {
-        if($this->rule === null)
-        {
+        if ($this->rule === null) {
             $this->rule = new IdenticalRule();
         }
+
         return $this->rule;
     }
 
@@ -48,31 +50,34 @@ class IdenticalTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        if($this->validator === null)
-        {
+        if ($this->validator === null) {
             $this->validator = new IdenticalValidator($this->token);
         }
+
         return $this->validator;
     }
 
     /**
-     * Create Form element
+     * Create Form element.
      */
     protected function createElement()
     {
-        if($this->element === null)
-        {
-            $this->element = new Text("fieldset[element]");
+        if ($this->element === null) {
+            $this->element = new Text('fieldset[element]');
         }
+
         return $this->element;
     }
 
     /**
-     * Test only minlegth attribute when no max length is set on the validator
+     * Test only minlegth attribute when no max length is set on the validator.
      */
     public function testToken()
     {
-        $this->assertEquals(array('equalTo' => '[name="fieldset[' . $this->token . ']"]'), $this->getRules());
+        $this->assertEquals(
+            array('equalTo' => '[name="fieldset['.$this->token.']"]'),
+            $this->getRules()
+        );
         $this->assertArrayHasKey('equalTo', $this->getMessages());
     }
 }

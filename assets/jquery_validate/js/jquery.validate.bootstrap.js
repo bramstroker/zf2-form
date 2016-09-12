@@ -1,6 +1,6 @@
 $.extend($.validator.prototype, {
-    showLabel: function(element, message) {
-        var label = this.errorsFor( element );
+    showLabel: function (element, message) {
+        var label = this.errorsFor(element);
 
         if (label.length == 0) {
             var railsGenerated = $(element).next('span.help-inline');
@@ -19,7 +19,7 @@ $.extend($.validator.prototype, {
         } else {
             // create label
             label = $('<' + this.settings.errorElement + '/>')
-                .attr({'for':  this.idOrName(element), generated: true})
+                .attr({'for': this.idOrName(element), generated: true})
                 .addClass(this.settings.errorClass)
                 .addClass('help-inline')
                 .html(message || '');
@@ -54,7 +54,7 @@ $.extend($.validator.defaults, {
     highlight: function (element, errorClass, validClass) {
         if (element.type === 'radio') {
             this.findByName(element.name).closest('div.control-group').removeClass(validClass).addClass(errorClass);
-        }else {
+        } else {
             $(element).closest('div.control-group').removeClass(validClass).addClass(errorClass);
         }
     },
@@ -67,23 +67,23 @@ $.extend($.validator.defaults, {
             $(element).next('span.help-inline').text('');
         }
     },
-    errorPlacement: function(error, element) {
+    errorPlacement: function (error, element) {
         var isInputAppend = ($(element).parent('div.input-append').length > 0);
         var isRadio = ($(element).attr('type') == 'radio');
         var iMultiCheckbox = ($(element).attr('type') == 'checkbox' && $(element).attr('name').endsWith('[]'));
         if (isRadio || iMultiCheckbox) {
             afterElement = $(element).closest('div.controls').children('label').filter(':last');
             error.insertAfter(afterElement);
-        }else if (isInputAppend) {
+        } else if (isInputAppend) {
             appendElement = $(element).next('span.add-on');
             error.insertAfter(appendElement);
-        }else {
+        } else {
             error.insertAfter(element);
         }
     }
 });
 
-String.prototype.endsWith = function(pattern) {
+String.prototype.endsWith = function (pattern) {
     var d = this.length - pattern.length;
     return d >= 0 && this.lastIndexOf(pattern) === d;
 };

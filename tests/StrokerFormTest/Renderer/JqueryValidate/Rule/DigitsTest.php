@@ -1,14 +1,21 @@
 <?php
+
 /**
- * DigitsTest
+ * DigitsTest.
  *
  * @category  StrokerForm
- * @package   StrokerForm\Renderer
+ *
  * @copyright 2012 Bram Gerritsen
+ *
  * @version   SVN: $Id$
  */
 
 namespace StrokerFormTest\Renderer\JqueryValidate\Rule;
+
+use StrokerForm\Renderer\JqueryValidate\Rule\Digits;
+use StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface;
+use Zend\Validator\Digits as ZendDigits;
+use Zend\Validator\ValidatorInterface;
 
 class DigitsTest extends AbstractRuleTest
 {
@@ -17,7 +24,7 @@ class DigitsTest extends AbstractRuleTest
      */
     protected function createRule()
     {
-        return new \StrokerForm\Renderer\JqueryValidate\Rule\Digits();
+        return new Digits();
     }
 
     /**
@@ -25,11 +32,11 @@ class DigitsTest extends AbstractRuleTest
      */
     protected function createValidator()
     {
-        return new \Zend\Validator\Digits();
+        return new ZendDigits();
     }
 
     /**
-     * Assert that the currect rules are returned
+     * Assert that the currect rules are returned.
      */
     public function testCorrectRulesAreReturned()
     {
@@ -37,7 +44,7 @@ class DigitsTest extends AbstractRuleTest
     }
 
     /**
-     * Assert that the correct messages are returned
+     * Assert that the correct messages are returned.
      */
     public function testCorrectMessagesAreReturned()
     {
