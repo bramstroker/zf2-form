@@ -6,3 +6,4 @@ composer.lock
 composer.phar
 /.project
 .idea/
+build/

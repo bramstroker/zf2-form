@@ -156,4 +156,12 @@ abstract class AbstractRuleTest extends \PHPUnit_Framework_TestCase
         $this->getRule()->setTranslator(null);
         $this->assertFalse($this->getRule()->hasTranslator());
     }
+
+    /**
+     * Assert that the Rule is allowed to handle the validator
+     */
+    public function testCanHandleReturnsTrue()
+    {
+        $this->assertTrue($this->getRule()->canHandle($this->getValidator()));
+    }
 }

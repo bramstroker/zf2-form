@@ -34,4 +34,12 @@ interface RuleInterface extends TranslatorAwareInterface
      * @return array
      */
     public function getMessages(ValidatorInterface $validator);
+
+    /**
+     * Whether this rule supports certain validators
+     *
+     * @param ValidatorInterface $validator
+     * @return mixed
+     */
+    public function canHandle(ValidatorInterface $validator);
 }

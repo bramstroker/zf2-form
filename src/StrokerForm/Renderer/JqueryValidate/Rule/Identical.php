@@ -12,6 +12,7 @@ namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
 use Zend\Form\ElementInterface;
 use Zend\Validator\ValidatorInterface;
+use Zend\Validator\Identical as IdenticalValidator;
 
 class Identical extends AbstractRule
 {
@@ -35,5 +36,16 @@ class Identical extends AbstractRule
     public function getMessages(ValidatorInterface $validator)
     {
         return array('equalTo' => $this->translateMessage('Please enter the same value again.'));
+    }
+
+    /**
+     * Whether this rule supports certain validators
+     *
+     * @param ValidatorInterface $validator
+     * @return mixed
+     */
+    public function canHandle(ValidatorInterface $validator)
+    {
+        return $validator instanceof IdenticalValidator;
     }
 }
