@@ -215,6 +215,37 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('POST', $rules['name']['remote']['type']);
     }
 
+    public function testDisableAjaxFallback()
+    {
+        $form = $this->createForm('test');
+
+        $this->routerMock
+            ->shouldReceive('assemble')
+            ->andReturn('/the/uri/to/ajax');
+
+        $inputFilter = new InputFilter();
+        $inputFilter->add(
+            [
+                'name' => 'name',
+                'validators' => [
+                    [
+                        'name' => 'isbn',
+                    ],
+                ],
+            ]
+        );
+
+        $form->setInputFilter($inputFilter);
+
+        $this->renderer->preRenderForm('test', $this->view, null, ['disable_ajax_fallback' => true]);
+
+        $matches = $this->getMatchesFromInlineScript();
+
+        $rules = $matches['rules'];
+
+        $this->assertArrayNotHasKey('remote', $rules['name']);
+    }
+
     public function testCsrfValidatorIsSkipped()
     {
         $form = $this->createForm('test');

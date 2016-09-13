@@ -12,6 +12,11 @@ You only need to define your validation rules server side with ZF2 and this modu
 In case a client side version of the validation rule doesn't exist a fallback is done using ajax.
 For basic usage examples see the sandbox project [StrokerFormSandbox](https://github.com/bramstroker/zf2-form-sandbox).
 
+## BC Breaks since 1.0.0
+
+- Support for PHP versions lower than 5.6 is dropped.
+- `StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface` has been extended with a new method `canHandle`. This method is called on a rule to check if it can process a certain validator. When you have some custom rules you'll need to update them to implement this new method.
+
 ## BC Breaks since 0.1.0
 
 For the new version you need to copy `config/strokerform.global.php.dist` to your projects `config/autoload` dir.
@@ -117,7 +122,8 @@ Currently only the jqueryValidate renderer is available. Support for other valid
 
 - `include_assets`: Whether you want the view helper to include the needed assets or you like to do it yourself using a asset manager
 - `use_twitter_bootstrap`: Set this to true if you are using twitter bootstrap. 
-- `validate_options`: Options for the jquery validate plugin. See [jqueryValidate options](http://docs.jquery.com/Plugins/Validation/validate#toptions) for all possible options. i.e. if you also want to validate on keypress you can set onkeyup to true. 
+- `validate_options`: Options for the jquery validate plugin. See [jqueryValidate options](http://docs.jquery.com/Plugins/Validation/validate#toptions) for all possible options. i.e. if you also want to validate on keypress you can set onkeyup to true.
+- `disable_ajax_fallback`: Disables AJAX fallback for non available client side validators
 
 #### Styling
 

@@ -11,6 +11,7 @@
 namespace StrokerForm\Renderer\JqueryValidate;
 
 use StrokerForm\Renderer\AbstractValidateRenderer;
+use StrokerForm\Renderer\JqueryValidate\Rule\RuleInterface;
 use StrokerForm\Renderer\JqueryValidate\Rule\RulePluginManager;
 use Zend\Form\Element\Email;
 use Zend\Form\ElementInterface;
@@ -27,21 +28,20 @@ class Renderer extends AbstractValidateRenderer
     /**
      * @var array
      */
-    protected $skipValidators
-        = array(
-            'Explode',
-            'Upload'
-        );
+    protected $skipValidators = [
+        'Explode',
+        'Upload'
+    ];
 
     /**
      * @var array
      */
-    protected $rules = array();
+    protected $rules = [];
 
     /**
      * @var array
      */
-    protected $messages = array();
+    protected $messages = [];
 
     /**
      * @var RulePluginManager
@@ -74,7 +74,7 @@ class Renderer extends AbstractValidateRenderer
      *
      * @return FormInterface
      */
-    public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = array())
+    public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = [])
     {
         $form = parent::preRenderForm($formAlias, $view, $form, $options);
 
@@ -85,7 +85,7 @@ class Renderer extends AbstractValidateRenderer
         $inlineScript->appendScript($this->buildInlineJavascript($form, $options));
 
         if ($options->getIncludeAssets()) {
-            $assetBaseUri = $this->getHttpRouter()->assemble(array(), array('name' => 'strokerform-asset'));
+            $assetBaseUri = $this->getHttpRouter()->assemble([], ['name' => 'strokerform-asset']);
             $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.js');
             $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/custom_rules.js');
             if ($options->isUseTwitterBootstrap() === true) {
@@ -105,7 +105,7 @@ class Renderer extends AbstractValidateRenderer
      */
     protected function buildInlineJavascript(FormInterface $form, Options $options)
     {
-        $validateOptions = array();
+        $validateOptions = [];
         foreach ($options->getValidateOptions() as $key => $value) {
             $value = (is_string($value)) ? $value : var_export($value, true);
             $validateOptions[] = '"' . $key . '": ' . $value;
@@ -140,19 +140,20 @@ class Renderer extends AbstractValidateRenderer
         }
 
         $rule = $this->getRule($validator);
+        $rules = [];
         if ($rule !== null) {
             $rules = $rule->getRules($validator, $element);
             $messages = $rule->getMessages($validator);
         } else {
             //fallback ajax
-            $ajaxUri = $this->getHttpRouter()->assemble(array('form' => $formAlias), array('name' => 'strokerform-ajax-validate'));
-            $rules = array(
-                'remote' => array(
+            $ajaxUri = $this->getHttpRouter()->assemble(['form' => $formAlias], ['name' => 'strokerform-ajax-validate']);
+            $rules = [
+                'remote' => [
                     'url'  => $ajaxUri,
                     'type' => 'POST'
-                )
-            );
-            $messages = array();
+                ]
+            ];
+            $messages = [];
         }
 
         $elementName = $this->getElementName($element);
@@ -163,7 +164,7 @@ class Renderer extends AbstractValidateRenderer
     /**
      * @param  \Zend\Validator\ValidatorInterface $validator
      *
-     * @return null|Rule\AbstractRule
+     * @return null|RuleInterface
      */
     public function getRule(ValidatorInterface $validator = null)
     {
@@ -182,10 +183,10 @@ class Renderer extends AbstractValidateRenderer
      * @param string $elementName
      * @param array  $rules
      */
-    protected function addRules($elementName, array $rules = array())
+    protected function addRules($elementName, array $rules = [])
     {
         if (!isset($this->rules[$elementName])) {
-            $this->rules[$elementName] = array();
+            $this->rules[$elementName] = [];
         }
         $this->rules[$elementName] = array_merge($this->rules[$elementName], $rules);
     }
@@ -194,10 +195,10 @@ class Renderer extends AbstractValidateRenderer
      * @param string $elementName
      * @param array  $messages
      */
-    protected function addMessages($elementName, array $messages = array())
+    protected function addMessages($elementName, array $messages = [])
     {
         if (!isset($this->messages[$elementName])) {
-            $this->messages[$elementName] = array();
+            $this->messages[$elementName] = [];
         }
         $this->messages[$elementName] = array_merge($this->messages[$elementName], $messages);
     }
@@ -207,7 +208,7 @@ class Renderer extends AbstractValidateRenderer
      */
     protected function reset()
     {
-        $this->rules = array();
-        $this->messages = array();
+        $this->rules = [];
+        $this->messages = [];
     }
 }
