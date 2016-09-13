@@ -17,25 +17,26 @@
         }
     ],
     "require": {
-        "php": ">=5.5 || >= 7.0",
-        "zendframework/zend-form": "~2.3",
-        "zendframework/zend-http": "~2.3",
-        "zendframework/zend-json": "~2.3",
-        "zendframework/zend-mvc": "~2.3",
-        "zendframework/zend-cache": "~2.3",
-        "zendframework/zend-config": "~2.3",
-        "zendframework/zend-i18n": "~2.3",
-        "zendframework/zend-i18n-resources": "~2.3",
-        "zendframework/zend-inputfilter": "~2.3",
-        "zendframework/zend-servicemanager": "~2.3",
-        "zendframework/zend-validator": "~2.3",
-        "zendframework/zend-view": "~2.3"
+        "php": ">=5.6 || >= 7.0",
+        "zendframework/zend-eventmanager": "~2",
+        "zendframework/zend-form": "~2",
+        "zendframework/zend-http": "~2",
+        "zendframework/zend-json": "~2",
+        "zendframework/zend-mvc": "~2",
+        "zendframework/zend-cache": "~2",
+        "zendframework/zend-config": "~2",
+        "zendframework/zend-i18n": "~2",
+        "zendframework/zend-i18n-resources": "~2",
+        "zendframework/zend-inputfilter": "~2",
+        "zendframework/zend-servicemanager": "~2",
+        "zendframework/zend-validator": "~2",
+        "zendframework/zend-view": "~2"
     },
     "require-dev": {
         "mockery/mockery": "~0.9",
         "satooshi/php-coveralls": "~1.0",
-        "phpunit/phpunit": "^4.6 || 5.5.*",
-        "friendsofphp/php-cs-fixer": "1.9.*"
+        "phpunit/phpunit": "~5.5",
+        "friendsofphp/php-cs-fixer": "~1.9"
     },
     "autoload": {
         "psr-0": {
