@@ -144,7 +144,7 @@ class Renderer extends AbstractValidateRenderer
         if ($rule !== null) {
             $rules = $rule->getRules($validator, $element);
             $messages = $rule->getMessages($validator);
-        } else {
+        } elseif (!$this->getOptions()->isDisableAjaxFallback()) {
             //fallback ajax
             $ajaxUri = $this->getHttpRouter()->assemble(['form' => $formAlias], ['name' => 'strokerform-ajax-validate']);
             $rules = [
@@ -156,9 +156,11 @@ class Renderer extends AbstractValidateRenderer
             $messages = [];
         }
 
-        $elementName = $this->getElementName($element);
-        $this->addRules($elementName, $rules);
-        $this->addMessages($elementName, $messages);
+        if (count($rules) > 0) {
+            $elementName = $this->getElementName($element);
+            $this->addRules($elementName, $rules);
+            $this->addMessages($elementName, $messages);
+        }
     }
 
     /**
@@ -168,14 +170,15 @@ class Renderer extends AbstractValidateRenderer
      */
     public function getRule(ValidatorInterface $validator = null)
     {
-        $validatorName = lcfirst($this->getValidatorClassName($validator));
-        if ($this->getRulePluginManager()->has($validatorName)) {
-            $rule = $this->getRulePluginManager()->get($validatorName);
-            if ($rule instanceof TranslatorAwareInterface) {
-                $rule->setTranslatorTextDomain($this->getTranslatorTextDomain());
+        foreach ($this->getRulePluginManager()->getRegisteredServices() as $rules) {
+            foreach ($rules as $rule) {
+                $ruleInstance = $this->getRulePluginManager()->get($rule);
+                if ($ruleInstance->canHandle($validator)) {
+                    return $ruleInstance;
+                }
             }
-            return $rule;
         }
+
         return null;
     }
 

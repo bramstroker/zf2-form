@@ -21,20 +21,22 @@ class RulePluginManager extends AbstractPluginManager
      *
      * @var array
      */
-    protected $invokableClasses
-        = array(
-            'between'      => 'StrokerForm\Renderer\JqueryValidate\Rule\Between',
-            'creditcard'   => 'StrokerForm\Renderer\JqueryValidate\Rule\CreditCard',
-            'digits'       => 'StrokerForm\Renderer\JqueryValidate\Rule\Digits',
-            'emailaddress' => 'StrokerForm\Renderer\JqueryValidate\Rule\EmailAddress',
-            'greaterthan'  => 'StrokerForm\Renderer\JqueryValidate\Rule\GreaterThan',
-            'identical'    => 'StrokerForm\Renderer\JqueryValidate\Rule\Identical',
-            'lessthan'     => 'StrokerForm\Renderer\JqueryValidate\Rule\LessThan',
-            'notempty'     => 'StrokerForm\Renderer\JqueryValidate\Rule\NotEmpty',
-            'stringlength' => 'StrokerForm\Renderer\JqueryValidate\Rule\StringLength',
-            'uri'          => 'StrokerForm\Renderer\JqueryValidate\Rule\Uri',
-            'inarray'      => 'StrokerForm\Renderer\JqueryValidate\Rule\InArray',
-        );
+
+    protected $invokableClasses = [
+        'between' => 'StrokerForm\Renderer\JqueryValidate\Rule\Between',
+        'creditcard' => 'StrokerForm\Renderer\JqueryValidate\Rule\CreditCard',
+        'digits' => 'StrokerForm\Renderer\JqueryValidate\Rule\Digits',
+        'emailaddress' => 'StrokerForm\Renderer\JqueryValidate\Rule\EmailAddress',
+        'greaterthan' => 'StrokerForm\Renderer\JqueryValidate\Rule\GreaterThan',
+        'identical' => 'StrokerForm\Renderer\JqueryValidate\Rule\Identical',
+        'lessthan' => 'StrokerForm\Renderer\JqueryValidate\Rule\LessThan',
+        'notempty' => 'StrokerForm\Renderer\JqueryValidate\Rule\NotEmpty',
+        'stringlength' => 'StrokerForm\Renderer\JqueryValidate\Rule\StringLength',
+        'uri' => 'StrokerForm\Renderer\JqueryValidate\Rule\Uri',
+        'inarray' => 'StrokerForm\Renderer\JqueryValidate\Rule\InArray',
+        'regex' => 'StrokerForm\Renderer\JqueryValidate\Rule\Regex',
+    ];
+
 
     /**
      * Constructor

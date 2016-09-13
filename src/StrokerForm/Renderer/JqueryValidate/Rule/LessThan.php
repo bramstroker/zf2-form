@@ -12,6 +12,7 @@ namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
 use Zend\Form\ElementInterface;
 use Zend\Validator\ValidatorInterface;
+use Zend\Validator\LessThan as LessThanValidator;
 
 class LessThan extends AbstractRule
 {
@@ -32,5 +33,16 @@ class LessThan extends AbstractRule
             'max' =>
                 sprintf($this->translateMessage('The input is not less than %s'), $validator->getMax())
         );
+    }
+
+    /**
+     * Whether this rule supports certain validators
+     *
+     * @param ValidatorInterface $validator
+     * @return mixed
+     */
+    public function canHandle(ValidatorInterface $validator)
+    {
+        return $validator instanceof LessThanValidator;
     }
 }

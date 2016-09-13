@@ -12,6 +12,7 @@ namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
 use Zend\Form\ElementInterface;
 use Zend\Validator\ValidatorInterface;
+use Zend\Validator\Between as BetweenValidator;
 
 class Between extends AbstractRule
 {
@@ -52,5 +53,16 @@ class Between extends AbstractRule
     protected function getMax(ValidatorInterface $validator)
     {
         return $validator->getInclusive() ? $validator->getMax() : $validator->getMax() - 1;
+    }
+
+    /**
+     * Whether this rule supports certain validators
+     *
+     * @param ValidatorInterface $validator
+     * @return mixed
+     */
+    public function canHandle(ValidatorInterface $validator)
+    {
+        return $validator instanceof BetweenValidator;
     }
 }

@@ -20,17 +20,20 @@ class ModuleOptions extends AbstractOptions
     /**
      * @var array
      */
-    private $activeRenderers = array();
+    private $activeRenderers = [];
 
     /**
      * @var array
      */
-    private $forms = array();
+    private $forms = [];
 
     /**
      * @var array
      */
-    private $rendererOptions = array();
+    private $rendererOptions = [];
+
+    /** @var array */
+    private $jqueryValidateRulePlugins = [];
 
     /**
      * @return array
@@ -78,7 +81,7 @@ class ModuleOptions extends AbstractOptions
      */
     public function setRendererOptions(array $options)
     {
-        $this->rendererOptions = array();
+        $this->rendererOptions = [];
         foreach ($options as $renderer => $rendererOptions) {
             $this->addRendererOptions($renderer, $rendererOptions);
         }
@@ -115,5 +118,21 @@ class ModuleOptions extends AbstractOptions
     public function getRendererOptions($renderer)
     {
         return $this->rendererOptions[$renderer];
+    }
+
+    /**
+     * @return array
+     */
+    public function getJqueryValidateRulePlugins()
+    {
+        return $this->jqueryValidateRulePlugins;
+    }
+
+    /**
+     * @param array $jqueryValidateRulePlugins
+     */
+    public function setJqueryValidateRulePlugins(array $jqueryValidateRulePlugins)
+    {
+        $this->jqueryValidateRulePlugins = $jqueryValidateRulePlugins;
     }
 }

@@ -12,6 +12,7 @@ namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
 use Zend\Form\ElementInterface;
 use Zend\Validator\ValidatorInterface;
+use Zend\Validator\StringLength as StringLengthValidator;
 
 class StringLength extends AbstractRule
 {
@@ -45,5 +46,16 @@ class StringLength extends AbstractRule
         }
 
         return $messages;
+    }
+
+    /**
+     * Whether this rule supports certain validators
+     *
+     * @param ValidatorInterface $validator
+     * @return mixed
+     */
+    public function canHandle(ValidatorInterface $validator)
+    {
+        return $validator instanceof StringLengthValidator;
     }
 }

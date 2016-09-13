@@ -12,6 +12,7 @@ namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
 use Zend\Form\ElementInterface;
 use Zend\Validator\ValidatorInterface;
+use Zend\Validator\EmailAddress as EmailAddressValidator;
 
 class EmailAddress extends AbstractRule
 {
@@ -29,5 +30,16 @@ class EmailAddress extends AbstractRule
     public function getMessages(ValidatorInterface $validator)
     {
         return array('email' => $this->translateMessage('Email address is invalid'));
+    }
+
+    /**
+     * Whether this rule supports certain validators
+     *
+     * @param ValidatorInterface $validator
+     * @return mixed
+     */
+    public function canHandle(ValidatorInterface $validator)
+    {
+        return $validator instanceof EmailAddressValidator;
     }
 }

@@ -12,6 +12,7 @@ namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
 use Zend\Form\ElementInterface;
 use Zend\Validator\ValidatorInterface;
+use Zend\Validator\Uri as UriValidator;
 
 class Uri extends AbstractRule
 {
@@ -29,5 +30,16 @@ class Uri extends AbstractRule
     public function getMessages(ValidatorInterface $validator)
     {
         return array('url' => $this->translateMessage('This is not a valid URI'));
+    }
+
+    /**
+     * Whether this rule supports certain validators
+     *
+     * @param ValidatorInterface $validator
+     * @return mixed
+     */
+    public function canHandle(ValidatorInterface $validator)
+    {
+        return $validator instanceof UriValidator;
     }
 }

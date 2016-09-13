@@ -12,6 +12,7 @@ namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
 use Zend\Form\ElementInterface;
 use Zend\Validator\ValidatorInterface;
+use Zend\Validator\Digits as DigitsValidator;
 
 class Digits extends AbstractRule
 {
@@ -29,5 +30,16 @@ class Digits extends AbstractRule
     public function getMessages(ValidatorInterface $validator)
     {
         return array('digits' => $this->translateMessage('The input must contain only digits'));
+    }
+
+    /**
+     * Whether this rule supports certain validators
+     *
+     * @param ValidatorInterface $validator
+     * @return mixed
+     */
+    public function canHandle(ValidatorInterface $validator)
+    {
+        return $validator instanceof DigitsValidator;
     }
 }

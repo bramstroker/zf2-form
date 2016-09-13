@@ -12,6 +12,7 @@ namespace StrokerForm\Renderer\JqueryValidate\Rule;
 
 use Zend\Form\ElementInterface;
 use Zend\Validator\ValidatorInterface;
+use Zend\Validator\InArray as InArrayValidator;
 
 class InArray extends AbstractRule
 {
@@ -47,5 +48,16 @@ class InArray extends AbstractRule
             'in_array' =>
                 $this->translateMessage('The input is not a valid option')
         );
+    }
+
+    /**
+     * Whether this rule supports certain validators
+     *
+     * @param ValidatorInterface $validator
+     * @return mixed
+     */
+    public function canHandle(ValidatorInterface $validator)
+    {
+        return $validator instanceof InArrayValidator;
     }
 }
