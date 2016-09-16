@@ -40,7 +40,7 @@ class EmailAddressTest extends AbstractRuleTest
      */
     public function testCorrectRulesAreReturned()
     {
-        $this->assertEquals(array('email' => true), $this->getRules());
+        $this->assertEquals(['email' => true], $this->getRules());
     }
 
     /**

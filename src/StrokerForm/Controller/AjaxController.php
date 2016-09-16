@@ -68,10 +68,10 @@ class AjaxController extends AbstractActionController
             $result = false;
             array_walk_recursive(
                 $messages, function ($item) use (&$result) {
-                if (is_string($item)) {
-                    $result = $item;
+                    if (is_string($item)) {
+                        $result = $item;
+                    }
                 }
-            }
             );
         } else {
             $result = true;
@@ -96,7 +96,7 @@ class AjaxController extends AbstractActionController
      */
     protected function convertDataArrayToValidationGroup($data)
     {
-        $ret = array();
+        $ret = [];
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 $ret[$key] = $this->convertDataArrayToValidationGroup($value);

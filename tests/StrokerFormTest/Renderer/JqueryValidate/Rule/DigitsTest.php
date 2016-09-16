@@ -40,7 +40,7 @@ class DigitsTest extends AbstractRuleTest
      */
     public function testCorrectRulesAreReturned()
     {
-        $this->assertEquals(array('digits' => true), $this->getRules());
+        $this->assertEquals(['digits' => true], $this->getRules());
     }
 
     /**

@@ -28,7 +28,7 @@ interface RendererInterface
      *
      * @return
      */
-    public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = array());
+    public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = []);
 
     /**
      * Excecuted before the ZF2 view helper renders the element

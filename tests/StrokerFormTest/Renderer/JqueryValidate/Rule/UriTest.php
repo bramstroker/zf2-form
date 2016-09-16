@@ -40,7 +40,7 @@ class UriTest extends AbstractRuleTest
      */
     public function testCorrectRulesAreReturned()
     {
-        $this->assertEquals(array('url' => true), $this->getRules());
+        $this->assertEquals(['url' => true], $this->getRules());
     }
 
     /**

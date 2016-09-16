@@ -50,7 +50,7 @@ class RulePluginManager extends AbstractPluginManager
     {
         parent::__construct($configuration);
 
-        $this->addInitializer(array($this, 'injectTranslator'));
+        $this->addInitializer([$this, 'injectTranslator']);
     }
 
     /**

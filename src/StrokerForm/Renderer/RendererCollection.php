@@ -19,7 +19,7 @@ class RendererCollection extends AbstractRenderer
     /**
      * @var RendererInterface[]
      */
-    private $renderers = array();
+    private $renderers = [];
 
     /**
      * Get inner renderers
@@ -51,7 +51,7 @@ class RendererCollection extends AbstractRenderer
      *
      * @return mixed
      */
-    public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = array())
+    public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = [])
     {
         foreach ($this->getRenderers() as $renderer) {
             $renderer->preRenderForm($formAlias, $view, $form, $options);

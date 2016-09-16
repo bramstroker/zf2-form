@@ -43,7 +43,7 @@ class StringLengthTest extends AbstractRuleTest
         $min = 12;
         $this->getValidator()->setMax(null);
         $this->getValidator()->setMin($min);
-        $this->assertEquals(array('minlength' => $min), $this->getRules());
+        $this->assertEquals(['minlength' => $min], $this->getRules());
         $this->assertArrayHasKey('minlength', $this->getMessages());
         $this->assertArrayNotHasKey('maxlength', $this->getMessages());
     }
@@ -56,7 +56,7 @@ class StringLengthTest extends AbstractRuleTest
         $max = 12;
         $this->getValidator()->setMin(null);
         $this->getValidator()->setMax($max);
-        $this->assertEquals(array('maxlength' => $max), $this->getRules());
+        $this->assertEquals(['maxlength' => $max], $this->getRules());
         $this->assertArrayHasKey('maxlength', $this->getMessages());
         $this->assertArrayNotHasKey('minlength', $this->getMessages());
     }
@@ -71,7 +71,7 @@ class StringLengthTest extends AbstractRuleTest
         $this->getValidator()->setMin($min);
         $this->getValidator()->setMax($max);
         $this->assertEquals(
-            array('minlength' => $min, 'maxlength' => $max), $this->getRules()
+            ['minlength' => $min, 'maxlength' => $max], $this->getRules()
         );
         $this->assertArrayHasKey('maxlength', $this->getMessages());
         $this->assertArrayHasKey('minlength', $this->getMessages());

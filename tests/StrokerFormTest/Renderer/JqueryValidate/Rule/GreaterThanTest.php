@@ -42,7 +42,7 @@ class GreaterThanTest extends AbstractRuleTest
     {
         $min = 20;
         $this->getValidator()->setMin($min);
-        $this->assertEquals(array('min' => $min), $this->getRules());
+        $this->assertEquals(['min' => $min], $this->getRules());
     }
 
     /**

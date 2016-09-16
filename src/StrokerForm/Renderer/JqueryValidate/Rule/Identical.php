@@ -27,7 +27,7 @@ class Identical extends AbstractRule
             $token = preg_replace('#\[[^\]]+\]$#i', "[" . $token . "]", $element->getName());
         }
 
-        return array('equalTo' => '[name="' . $token . '"]');
+        return ['equalTo' => '[name="' . $token . '"]'];
     }
 
     /**
@@ -35,7 +35,7 @@ class Identical extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return array('equalTo' => $this->translateMessage('Please enter the same value again.'));
+        return ['equalTo' => $this->translateMessage('Please enter the same value again.')];
     }
 
     /**

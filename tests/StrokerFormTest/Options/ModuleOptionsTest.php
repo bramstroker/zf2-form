@@ -20,9 +20,9 @@ class ModuleOptionsTest extends PHPUnit_Framework_TestCase
     public function testCanSetActiveRenderers()
     {
         $options = new ModuleOptions();
-        $options->setActiveRenderers(array('foo', 'bar'));
+        $options->setActiveRenderers(['foo', 'bar']);
         $this->assertEquals(
-            array('foo', 'bar'), $options->getActiveRenderers()
+            ['foo', 'bar'], $options->getActiveRenderers()
         );
     }
 }

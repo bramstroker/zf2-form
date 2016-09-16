@@ -21,7 +21,7 @@ class Uri extends AbstractRule
      */
     public function getRules(ValidatorInterface $validator, ElementInterface $element = null)
     {
-        return array('url' => true);
+        return ['url' => true];
     }
 
     /**
@@ -29,7 +29,7 @@ class Uri extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return array('url' => $this->translateMessage('This is not a valid URI'));
+        return ['url' => $this->translateMessage('This is not a valid URI')];
     }
 
     /**

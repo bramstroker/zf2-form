@@ -16,7 +16,7 @@ class Options extends \StrokerForm\Renderer\Options
     /**
      * @var array
      */
-    private $validateOptions = array();
+    private $validateOptions = [];
 
     /**
      * @var bool
@@ -31,7 +31,7 @@ class Options extends \StrokerForm\Renderer\Options
     /**
      * @var array
      */
-    private $customValidationRules = array();
+    private $customValidationRules = [];
 
     /**
      * @var boolean

@@ -21,7 +21,7 @@ class GreaterThan extends AbstractRule
      */
     public function getRules(ValidatorInterface $validator, ElementInterface $element = null)
     {
-        return array('min' => $validator->getMin());
+        return ['min' => $validator->getMin()];
     }
 
     /**
@@ -29,10 +29,10 @@ class GreaterThan extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return array(
+        return [
             'min' =>
                 sprintf($this->translateMessage('The input is not greater than %s'), $validator->getMin())
-        );
+        ];
     }
 
     /**

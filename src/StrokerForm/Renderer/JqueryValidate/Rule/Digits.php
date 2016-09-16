@@ -21,7 +21,7 @@ class Digits extends AbstractRule
      */
     public function getRules(ValidatorInterface $validator, ElementInterface $element = null)
     {
-        return array('digits' => true);
+        return ['digits' => true];
     }
 
     /**
@@ -29,7 +29,7 @@ class Digits extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return array('digits' => $this->translateMessage('The input must contain only digits'));
+        return ['digits' => $this->translateMessage('The input must contain only digits')];
     }
 
     /**

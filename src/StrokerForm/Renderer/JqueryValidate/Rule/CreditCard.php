@@ -21,7 +21,7 @@ class CreditCard extends AbstractRule
      */
     public function getRules(ValidatorInterface $validator, ElementInterface $element = null)
     {
-        return array('creditcard' => true);
+        return ['creditcard' => true];
     }
 
     /**
@@ -29,7 +29,7 @@ class CreditCard extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return array('creditcard' => $this->translateMessage('The creditcard number is invalid'));
+        return ['creditcard' => $this->translateMessage('The creditcard number is invalid')];
     }
 
     /**

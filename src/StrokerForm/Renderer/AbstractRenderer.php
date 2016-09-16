@@ -28,7 +28,7 @@ abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInt
     /**
      * @var AbstractOptions
      */
-    protected $defaultOptions = array();
+    protected $defaultOptions = [];
 
     /**
      * @var Options
@@ -69,7 +69,7 @@ abstract class AbstractRenderer implements RendererInterface, TranslatorAwareInt
     /**
      * @param array $options
      */
-    public function setOptions(array $options = array())
+    public function setOptions(array $options = [])
     {
         if ($this->options === null) {
             $this->options = clone $this->defaultOptions;

@@ -44,7 +44,7 @@ class BetweenTest extends AbstractRuleTest
         $this->getValidator()->setMax($max);
         $this->getValidator()->setInclusive(true);
         $this->assertEquals(
-            array('range' => array($min, $max)), $this->getRules()
+            ['range' => [$min, $max]], $this->getRules()
         );
     }
 
@@ -58,7 +58,7 @@ class BetweenTest extends AbstractRuleTest
         $this->getValidator()->setMin($min);
         $this->getValidator()->setMax($max);
         $this->getValidator()->setInclusive(false);
-        $this->assertEquals(array('range' => array(6, 9)), $this->getRules());
+        $this->assertEquals(['range' => [6, 9]], $this->getRules());
     }
 
     /**

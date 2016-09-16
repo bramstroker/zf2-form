@@ -40,7 +40,7 @@ class NotEmptyTest extends AbstractRuleTest
      */
     public function testCorrectRulesAreReturned()
     {
-        $this->assertEquals(array('required' => true), $this->getRules());
+        $this->assertEquals(['required' => true], $this->getRules());
     }
 
     /**

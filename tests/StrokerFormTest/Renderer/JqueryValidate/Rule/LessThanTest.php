@@ -42,7 +42,7 @@ class LessThanTest extends AbstractRuleTest
     {
         $max = 20;
         $this->getValidator()->setMax($max);
-        $this->assertEquals(array('max' => $max), $this->getRules());
+        $this->assertEquals(['max' => $max], $this->getRules());
     }
 
     /**

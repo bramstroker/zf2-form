@@ -16,7 +16,6 @@ use StrokerForm\Renderer\JqueryValidate\Rule\RulePluginManager;
 use Zend\Form\Element\Email;
 use Zend\Form\ElementInterface;
 use Zend\Form\FormInterface;
-use Zend\I18n\Translator\TranslatorAwareInterface;
 use Zend\Json\Json;
 use Zend\Validator\EmailAddress;
 use Zend\Validator\Regex;
@@ -179,7 +178,7 @@ class Renderer extends AbstractValidateRenderer
             }
         }
 
-        return null;
+        return;
     }
 
     /**

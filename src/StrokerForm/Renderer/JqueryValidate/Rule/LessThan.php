@@ -21,7 +21,7 @@ class LessThan extends AbstractRule
      */
     public function getRules(ValidatorInterface $validator, ElementInterface $element = null)
     {
-        return array('max' => $validator->getMax());
+        return ['max' => $validator->getMax()];
     }
 
     /**
@@ -29,10 +29,10 @@ class LessThan extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return array(
+        return [
             'max' =>
                 sprintf($this->translateMessage('The input is not less than %s'), $validator->getMax())
-        );
+        ];
     }
 
     /**

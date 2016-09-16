@@ -34,7 +34,7 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
      *
      * @return FormInterface
      */
-    public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = array())
+    public function preRenderForm($formAlias, View $view, FormInterface $form = null, array $options = [])
     {
         $this->setOptions($options);
 
@@ -69,14 +69,14 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
      */
     public function extractValidatorsForForm(FieldsetInterface $formOrFieldset, InputFilterInterface $inputFilter)
     {
-        $foundValidators = array();
+        $foundValidators = [];
         foreach ($formOrFieldset->getElements() as $element) {
             $validators = $this->getValidatorsForElement($inputFilter, $element);
             if (count($validators) > 0) {
-                $foundValidators[] = array(
+                $foundValidators[] = [
                     'element'    => $element,
                     'validators' => $validators
-                );
+                ];
             }
         }
 

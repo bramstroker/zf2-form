@@ -29,7 +29,7 @@ class Regex extends AbstractRule
         /**@var RegexValidator $validator */
         $pattern = $validator->getPattern();
         preg_match('/\/(.*)\/[imosxg]{0,}/', $pattern, $matches);
-        return array('regex' => $matches[1]);
+        return ['regex' => $matches[1]];
     }
 
     /**
@@ -40,7 +40,7 @@ class Regex extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return array('regex' => $this->translateMessage('Field does not match expected pattern'));
+        return ['regex' => $this->translateMessage('Field does not match expected pattern')];
     }
 
     /**

@@ -29,10 +29,10 @@ class InArray extends AbstractRule
         // Javascript doesn't support associative arrays. Therefore, check if the array is associative,
         // and if so, transform it to a non-associative one.
         if (array_keys($validator->getHaystack()) !== range(0, count($validator->getHaystack()) - 1)) {
-            return array('in_array' => array_values($validator->getHaystack()));
+            return ['in_array' => array_values($validator->getHaystack())];
         }
 
-        return array('in_array' => (array)$validator->getHaystack());
+        return ['in_array' => (array)$validator->getHaystack()];
     }
 
     /**
@@ -44,10 +44,10 @@ class InArray extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return array(
+        return [
             'in_array' =>
                 $this->translateMessage('The input is not a valid option')
-        );
+        ];
     }
 
     /**

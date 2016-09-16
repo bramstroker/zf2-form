@@ -103,29 +103,29 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $factory = new Factory();
         /** @var \Zend\Form\FormInterface $form */
         $form = $factory->createForm(
-            array(
+            [
                 'hydrator' => ArraySerializable::class,
                 'name' => $alias,
-                'elements' => array(
-                    array(
-                        'spec' => array(
+                'elements' => [
+                    [
+                        'spec' => [
                             'name' => 'name',
-                            'options' => array(
+                            'options' => [
                                 'label' => 'Your name',
-                            ),
-                        ),
-                    ),
-                    array(
-                        'spec' => array(
+                            ],
+                        ],
+                    ],
+                    [
+                        'spec' => [
                             'name' => 'email',
                             'type' => Email::class,
-                            'options' => array(
+                            'options' => [
                                 'label' => 'Your email address',
-                            ),
-                        ),
-                    ),
-                ),
-            )
+                            ],
+                        ],
+                    ],
+                ],
+            ]
         );
 
         // Register form to the form manager
@@ -143,24 +143,24 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
         $inputFilter = new InputFilter();
         $inputFilter->add(
-            array(
+            [
                 'name' => 'email',
                 'required' => true,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'emailAddress',
-                    ),
-                    array(
+                    ],
+                    [
                         'name' => 'Csrf',
-                    ),
-                ),
-            )
+                    ],
+                ],
+            ]
         );
         $inputFilter->add(
-            array(
+            [
                 'name' => 'name',
                 'required' => true,
-            )
+            ]
         );
 
         $form->setInputFilter($inputFilter);
@@ -191,14 +191,14 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
         $inputFilter = new InputFilter();
         $inputFilter->add(
-            array(
+            [
                 'name' => 'name',
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'isbn',
-                    ),
-                ),
-            )
+                    ],
+                ],
+            ]
         );
 
         $form->setInputFilter($inputFilter);
@@ -252,15 +252,15 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
         $inputFilter = new InputFilter();
         $inputFilter->add(
-            array(
+            [
                 'name' => 'fieldName',
                 'required' => false,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'csrf',
-                    ),
-                ),
-            )
+                    ],
+                ],
+            ]
         );
 
         $form->setInputFilter($inputFilter);
@@ -278,7 +278,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $this->rendererOptions->setIncludeAssets(false);
 
         $this->renderer->preRenderForm(
-            'test', $this->view, null, array('include_assets' => true)
+            'test', $this->view, null, ['include_assets' => true]
         );
 
         $this->assertTrue($this->renderer->getOptions()->getIncludeAssets());
@@ -288,10 +288,10 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     {
         $this->createForm('test');
         $this->rendererOptions->setValidateOptions(
-            array(
+            [
                 'onsubmit' => false,
                 'submitHandler' => 'myHandler',
-            )
+            ]
         );
         $this->renderer->preRenderForm('test', $this->view);
         $matches = $this->getMatchesFromInlineScript();
@@ -336,7 +336,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     {
         $form = $this->createForm('test');
         $nameElement = $form->get('name');
-        $nameElement->setOptions(array('strokerform-exclude' => true));
+        $nameElement->setOptions(['strokerform-exclude' => true]);
         $this->renderer->preRenderForm('test', $this->view);
 
         $matches = $this->getMatchesFromInlineScript();
@@ -474,18 +474,18 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
     public function testIfSetOptionsAddsOptions()
     {
-        $options = array(
+        $options = [
             'include_assets' => true,
-        );
+        ];
 
         $this->renderer->setOptions($options);
 
-        $expectedOptions = array(
-            'validate_options' => array(
+        $expectedOptions = [
+            'validate_options' => [
                 'foo' => 'bar',
                 'bar' => 'baz',
-            ),
-        );
+            ],
+        ];
 
         $this->renderer->setOptions($expectedOptions);
 
@@ -497,24 +497,24 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
     public function testIfSetOptionsReplacesRecursively()
     {
-        $options = array(
+        $options = [
             'include_assets' => false,
-            'validate_options' => array(
+            'validate_options' => [
                 'foo' => 'bar',
                 'bar' => 'baz',
-            ),
-        );
+            ],
+        ];
 
         $this->renderer->setOptions($options);
 
-        $expectedOptions = array(
+        $expectedOptions = [
             'include_assets' => true,
-            'validate_options' => array(
+            'validate_options' => [
                 'foo' => 'fuu',
                 'bar' => 'baz',
                 'baz' => 'bar',
-            ),
-        );
+            ],
+        ];
 
         $this->renderer->setOptions($expectedOptions);
 
@@ -530,39 +530,39 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
     public function testIfSetOptionsAddsRecursively()
     {
-        $options = array(
+        $options = [
             'include_assets' => true,
-            'validate_options' => array(
-                'foo' => array(
+            'validate_options' => [
+                'foo' => [
                     'foo' => 'bar',
-                ),
+                ],
                 'bar' => 'baz',
-            ),
-        );
+            ],
+        ];
 
         $this->renderer->setOptions($options);
 
-        $extraOptions = array(
-            'validate_options' => array(
-                'foo' => array(
+        $extraOptions = [
+            'validate_options' => [
+                'foo' => [
                     'bar' => 'baz',
-                ),
+                ],
                 'baz' => 'bar',
-            ),
-        );
+            ],
+        ];
 
         $this->renderer->setOptions($extraOptions);
 
-        $expectedOptions = array(
-            'validate_options' => array(
-                'foo' => array(
+        $expectedOptions = [
+            'validate_options' => [
+                'foo' => [
                     'foo' => 'bar',
                     'bar' => 'baz',
-                ),
+                ],
                 'bar' => 'baz',
                 'baz' => 'bar',
-            ),
-        );
+            ],
+        ];
 
         $this->assertEquals(
             $expectedOptions['validate_options'],
@@ -576,21 +576,21 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
         $inputFilter1 = new InputFilter();
         $inputFilter1->add(
-            array(
+            [
                 'name' => 'email',
                 'required' => true,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'emailAddress',
-                    ),
-                ),
-            )
+                    ],
+                ],
+            ]
         );
         $inputFilter1->add(
-            array(
+            [
                 'name' => 'name',
                 'required' => true,
-            )
+            ]
         );
 
         $form1->setInputFilter($inputFilter1);
@@ -601,21 +601,21 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
         $inputFilter2 = new InputFilter();
         $inputFilter2->add(
-            array(
+            [
                 'name' => 'otherfieldname',
                 'required' => true,
-                'validators' => array(
-                    array(
+                'validators' => [
+                    [
                         'name' => 'emailAddress',
-                    ),
-                ),
-            )
+                    ],
+                ],
+            ]
         );
         $inputFilter2->add(
-            array(
+            [
                 'name' => 'name',
                 'required' => true,
-            )
+            ]
         );
 
         $form2->setInputFilter($inputFilter2);
@@ -691,7 +691,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
             return $matches;
         }
 
-        return array();
+        return [];
     }
 
     /**

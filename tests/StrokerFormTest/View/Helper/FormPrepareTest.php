@@ -25,13 +25,13 @@ class FormPrepareTest extends PHPUnit_Framework_TestCase
         $viewRenderer = M::mock(PhpRenderer::class);
         $rendererMock = M::mock(RendererInterface::class)
             ->shouldReceive('preRenderForm')
-            ->with('form-alias', $viewRenderer, null, array())
+            ->with('form-alias', $viewRenderer, null, [])
             ->once()
             ->getMock();
         $helper = new FormPrepare($rendererMock);
 
         $helper->setView($viewRenderer);
 
-        $helper->__invoke('form-alias', null, array());
+        $helper->__invoke('form-alias', null, []);
     }
 }

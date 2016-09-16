@@ -21,7 +21,7 @@ class NotEmpty extends AbstractRule
      */
     public function getRules(ValidatorInterface $validator, ElementInterface $element = null)
     {
-        return array('required' => true);
+        return ['required' => true];
     }
 
     /**
@@ -29,7 +29,7 @@ class NotEmpty extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return array('required' => $this->translateMessage('The input is required and cannot be empty'));
+        return ['required' => $this->translateMessage('The input is required and cannot be empty')];
     }
 
     /**

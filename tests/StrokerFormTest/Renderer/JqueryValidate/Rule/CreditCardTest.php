@@ -39,7 +39,7 @@ class CreditCardTest extends AbstractRuleTest
      */
     public function testCorrectRulesAreReturned()
     {
-        $this->assertEquals(array('creditcard' => true), $this->getRules());
+        $this->assertEquals(['creditcard' => true], $this->getRules());
     }
 
     /**

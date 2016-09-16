@@ -68,7 +68,7 @@ class AjaxControllerTest extends \PHPUnit_Framework_TestCase
             str_replace('Controller', '', get_class($this->controller))
         );
         $this->routeMatch = new RouteMatch(
-            array('controller' => $controllerName)
+            ['controller' => $controllerName]
         );
         $this->event = new MvcEvent();
         $this->event->setRouteMatch($this->routeMatch);

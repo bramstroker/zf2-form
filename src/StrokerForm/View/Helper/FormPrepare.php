@@ -34,7 +34,7 @@ class FormPrepare extends AbstractHelper
      * @param \Zend\Form\FormInterface $form
      * @param array                    $options
      */
-    public function __invoke($formAlias, FormInterface $form = null, array $options = array())
+    public function __invoke($formAlias, FormInterface $form = null, array $options = [])
     {
         $this->renderer->preRenderForm($formAlias, $this->getView(), $form, $options);
     }

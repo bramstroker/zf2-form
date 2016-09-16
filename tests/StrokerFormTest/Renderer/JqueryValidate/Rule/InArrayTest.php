@@ -33,7 +33,7 @@ class InArrayTest extends AbstractRuleTest
     protected function createValidator()
     {
         $validator = new ZendInArray();
-        $validator->setHaystack(array(1, 2, 3, 4, 5));
+        $validator->setHaystack([1, 2, 3, 4, 5]);
 
         return $validator;
     }
@@ -44,7 +44,7 @@ class InArrayTest extends AbstractRuleTest
     public function testCorrectRulesAreReturned()
     {
         $this->assertEquals(
-            array('in_array' => array(1, 2, 3, 4, 5)), $this->getRules()
+            ['in_array' => [1, 2, 3, 4, 5]], $this->getRules()
         );
     }
 
@@ -59,12 +59,12 @@ class InArrayTest extends AbstractRuleTest
     public function testIfAssociativeArrayTransformed()
     {
         $validator = new ZendInArray();
-        $validator->setHaystack(array('foo' => 'bar', 'fuu' => 'buz'));
+        $validator->setHaystack(['foo' => 'bar', 'fuu' => 'buz']);
 
         $this->validator = $validator;
 
         $this->assertEquals(
-            array('in_array' => array(0 => 'bar', 1 => 'buz')),
+            ['in_array' => [0 => 'bar', 1 => 'buz']],
             $this->getRules()
         );
     }

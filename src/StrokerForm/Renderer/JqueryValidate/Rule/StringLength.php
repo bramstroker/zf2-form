@@ -21,7 +21,7 @@ class StringLength extends AbstractRule
      */
     public function getRules(ValidatorInterface $validator, ElementInterface $element = null)
     {
-        $rules = array();
+        $rules = [];
         if ($validator->getMin() > 0) {
             $rules['minlength'] = $validator->getMin();
         }
@@ -37,7 +37,7 @@ class StringLength extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        $messages = array();
+        $messages = [];
         if ($validator->getMin() > 0) {
             $messages['minlength'] = sprintf($this->translateMessage('At least %s characters are required'), $validator->getMin());
         }

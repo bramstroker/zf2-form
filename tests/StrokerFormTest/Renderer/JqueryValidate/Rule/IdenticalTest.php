@@ -75,7 +75,7 @@ class IdenticalTest extends AbstractRuleTest
     public function testToken()
     {
         $this->assertEquals(
-            array('equalTo' => '[name="fieldset['.$this->token.']"]'),
+            ['equalTo' => '[name="fieldset['.$this->token.']"]'],
             $this->getRules()
         );
         $this->assertArrayHasKey('equalTo', $this->getMessages());

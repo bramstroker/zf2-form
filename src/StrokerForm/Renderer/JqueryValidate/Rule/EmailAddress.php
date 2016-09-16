@@ -21,7 +21,7 @@ class EmailAddress extends AbstractRule
      */
     public function getRules(ValidatorInterface $validator, ElementInterface $element = null)
     {
-        return array('email' => true);
+        return ['email' => true];
     }
 
     /**
@@ -29,7 +29,7 @@ class EmailAddress extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return array('email' => $this->translateMessage('Email address is invalid'));
+        return ['email' => $this->translateMessage('Email address is invalid')];
     }
 
     /**

@@ -21,7 +21,7 @@ class Between extends AbstractRule
      */
     public function getRules(ValidatorInterface $validator, ElementInterface $element = null)
     {
-        return array('range' => array($this->getMin($validator), $this->getMax($validator)));
+        return ['range' => [$this->getMin($validator), $this->getMax($validator)]];
     }
 
     /**
@@ -29,10 +29,10 @@ class Between extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return array(
+        return [
             'range' =>
                 sprintf($this->translateMessage('The input is not between %s and %s'), $this->getMin($validator), $this->getMax($validator))
-        );
+        ];
     }
 
     /**
