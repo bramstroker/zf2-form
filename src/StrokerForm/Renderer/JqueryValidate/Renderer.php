@@ -107,7 +107,7 @@ class Renderer extends AbstractValidateRenderer
         $validateOptions = [];
         foreach ($options->getValidateOptions() as $key => $value) {
             $value = (is_string($value)) ? $value : var_export($value, true);
-            $validateOptions[] = '"' . $key . '": ' . $value;
+            $validateOptions[] = '"' . $key . '": "' . $value.'"';
         }
 
         return sprintf(

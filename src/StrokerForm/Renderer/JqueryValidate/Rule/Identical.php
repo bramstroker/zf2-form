@@ -35,7 +35,7 @@ class Identical extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return ['equalTo' => $this->translateMessage('Please enter the same value again.')];
+        return ['equalTo' => $validator->getMessageTemplates()[\Zend\Validator\Identical::NOT_SAME]];
     }
 
     /**

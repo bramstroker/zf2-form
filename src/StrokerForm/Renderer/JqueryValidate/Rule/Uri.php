@@ -29,7 +29,7 @@ class Uri extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return ['url' => $this->translateMessage('This is not a valid URI')];
+        return ['url' => $validator->getMessageTemplates()[\Zend\Validator\Uri::NOT_URI]];
     }
 
     /**

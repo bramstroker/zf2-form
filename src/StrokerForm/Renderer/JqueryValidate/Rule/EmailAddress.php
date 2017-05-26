@@ -29,7 +29,7 @@ class EmailAddress extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return ['email' => $this->translateMessage('Email address is invalid')];
+        return ['email' => $validator->getMessageTemplates()[\Zend\Validator\EmailAddress::INVALID_FORMAT]];
     }
 
     /**

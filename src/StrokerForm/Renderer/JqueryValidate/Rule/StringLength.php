@@ -39,10 +39,10 @@ class StringLength extends AbstractRule
     {
         $messages = [];
         if ($validator->getMin() > 0) {
-            $messages['minlength'] = sprintf($this->translateMessage('At least %s characters are required'), $validator->getMin());
+            $messages['minlength'] = sprintf($validator->getMessageTemplates()[\Zend\Validator\StringLength::TOO_SHORT], $validator->getMin());
         }
         if ($validator->getMax() > 0) {
-            $messages['maxlength'] = sprintf($this->translateMessage('At most %s characters are allowed'), $validator->getMax());
+            $messages['maxlength'] = sprintf($validator->getMessageTemplates()[\Zend\Validator\StringLength::TOO_LONG], $validator->getMax());
         }
 
         return $messages;

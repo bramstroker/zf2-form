@@ -29,7 +29,7 @@ class NotEmpty extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return ['required' => $this->translateMessage('The input is required and cannot be empty')];
+        return ['required' => $validator->getMessageTemplates()[\Zend\Validator\NotEmpty::IS_EMPTY]];
     }
 
     /**

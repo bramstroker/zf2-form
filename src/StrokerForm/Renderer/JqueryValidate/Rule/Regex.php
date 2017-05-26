@@ -40,7 +40,7 @@ class Regex extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return ['regex' => $this->translateMessage('Field does not match expected pattern')];
+        return ['regex' => $validator->getMessageTemplates()[\Zend\Validator\Regex::NOT_MATCH]];
     }
 
     /**

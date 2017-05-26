@@ -29,7 +29,7 @@ class Digits extends AbstractRule
      */
     public function getMessages(ValidatorInterface $validator)
     {
-        return ['digits' => $this->translateMessage('The input must contain only digits')];
+        return ['digits' => $validator->getMessageTemplates()[\Zend\Validator\Digits::NOT_DIGITS]];
     }
 
     /**
