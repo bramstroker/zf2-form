@@ -85,7 +85,7 @@ class Renderer extends AbstractValidateRenderer
 
         if ($options->getIncludeAssets()) {
             $assetBaseUri = $this->getHttpRouter()->assemble([], ['name' => 'strokerform-asset']);
-            $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.min.js');
+            $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/jquery.validate.js');
             //$inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/additional-methods.min.js');
             $inlineScript->appendFile($assetBaseUri . '/jquery_validate/js/custom_rules.js');
             if ($options->isUseTwitterBootstrap() === true) {
