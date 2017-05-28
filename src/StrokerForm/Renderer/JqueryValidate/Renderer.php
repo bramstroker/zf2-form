@@ -114,7 +114,7 @@ class Renderer extends AbstractValidateRenderer
                     $value = '"' . $value .'"';
                 }
             } else {
-                $value = var_export($value, true);
+                $value = json_encode($value);
             }
             $validateOptions[] = '"' . $key . '": ' . $value;
         }
