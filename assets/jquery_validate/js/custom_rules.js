@@ -17,8 +17,7 @@ $.validator.addMethod("in_array", function(value, element, haystack) {
 $.validator.addMethod(
     "regex",
     function(value, element, pattern) {
-        var check = false;
-        var regexp = new RegExp(pattern);
+        var regexp = new RegExp(pattern[0], pattern[1]);
         return this.optional(element) || regexp.test(value);
     }
 );
