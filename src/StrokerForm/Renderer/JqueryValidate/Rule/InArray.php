@@ -45,8 +45,7 @@ class InArray extends AbstractRule
     public function getMessages(ValidatorInterface $validator)
     {
         return [
-            'in_array' =>
-                $this->translateMessage('The input is not a valid option')
+            'in_array' => $validator->getMessageTemplates()[\Zend\Validator\InArray::NOT_IN_ARRAY]
         ];
     }
 

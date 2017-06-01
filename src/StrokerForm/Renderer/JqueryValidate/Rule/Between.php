@@ -30,8 +30,7 @@ class Between extends AbstractRule
     public function getMessages(ValidatorInterface $validator)
     {
         return [
-            'range' =>
-                sprintf($this->translateMessage('The input is not between %s and %s'), $this->getMin($validator), $this->getMax($validator))
+            'range' => sprintf($validator->getMessageTemplates()[\Zend\Validator\Between::NOT_BETWEEN], $this->getMin($validator), $this->getMax($validator))
         ];
     }
 

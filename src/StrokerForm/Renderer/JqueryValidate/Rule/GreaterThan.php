@@ -30,8 +30,7 @@ class GreaterThan extends AbstractRule
     public function getMessages(ValidatorInterface $validator)
     {
         return [
-            'min' =>
-                sprintf($this->translateMessage('The input is not greater than %s'), $validator->getMin())
+            'min' => sprintf($validator->getMessageTemplates()[\Zend\Validator\GreaterThan::NOT_GREATER], $validator->getMin())
         ];
     }
 
