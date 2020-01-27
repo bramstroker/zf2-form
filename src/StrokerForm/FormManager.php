@@ -57,6 +57,14 @@ class FormManager extends AbstractPluginManager
                 return $form;
             }
         }
+        
+        //allow use of form factory
+        if($this->getServiceLocator()->has($name)){
+            $form = $this->getServiceLocator()->get($name);
+
+            return $form;
+        }
+        
         return parent::get($name, $options, $usePeeringServiceManagers);
     }
 }
