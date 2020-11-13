@@ -100,7 +100,7 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
     public function getValidatorsForElement(InputFilterInterface $inputFilter, ElementInterface $element)
     {
         if ($element->getOption('strokerform-exclude')) {
-            return;
+            return [];
         }
 
         // Check if we are dealing with a fieldset element
@@ -111,7 +111,7 @@ abstract class AbstractValidateRenderer extends AbstractRenderer
         }
 
         if (!$inputFilter->has($elementName)) {
-            return;
+            return [];
         }
 
         $input = $inputFilter->get($elementName);
